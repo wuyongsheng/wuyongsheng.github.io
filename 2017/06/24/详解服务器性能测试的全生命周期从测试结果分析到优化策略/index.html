@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="测试文档" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="服务器性能测试是一项非常重要而且必要的工作，本文是作者Micheal在对服务器进行性能测试的过程中不断摸索出来的一些实用策略，通过定位问题，分析原因以及解决问题，实现对服务器进行更有针对性的优化，提升服务器的性能。    1. 服务器性能测试小结 讲到服务器性能大部分人会想到这个服务器的架构是什么样子的，用的什么epoll，select，spring，tornado之类的。其实从本质上来看的话目">
+<meta name="keywords" content="测试文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解服务器性能测试的全生命周期？——从测试、结果分析到优化策略">
+<meta property="og:url" content="http://wysh.site/2017/06/24/详解服务器性能测试的全生命周期从测试结果分析到优化策略/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="服务器性能测试是一项非常重要而且必要的工作，本文是作者Micheal在对服务器进行性能测试的过程中不断摸索出来的一些实用策略，通过定位问题，分析原因以及解决问题，实现对服务器进行更有针对性的优化，提升服务器的性能。    1. 服务器性能测试小结 讲到服务器性能大部分人会想到这个服务器的架构是什么样子的，用的什么epoll，select，spring，tornado之类的。其实从本质上来看的话目">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7OGDJykZM7QvZRFPOjExHgjvKXhGN4bW1s3ic0rqM7OhhhKLkIia9jOrQ/0?wx_fmt=gif">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7Sf2V9LvI1Hcb0PibfLTRj1L8OlS5on0wpP0kFl452ODdlPRd4kjCA4A/0?wx_fmt=gif">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7aUzjib2mpwyibh8GDrDrp8MoTalMAJRBH2zvO0SQhdabMSGg4feOsxbA/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7uyVhIzfMjOK5qEMjEMbbicwhDl3KozIE9Yg8VZbSAPg8yibzczD8vKlg/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7ZNdk6KukibDGHBqPDPFPLJpHqib3iaAYE9yhcrsAia0s7Te9rVYMOxrS2g/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7QcDjcBdOpd4ReiaVQMeoxYtZ5gtaZe17hKEzBoXKtpmOhRfm4Lc7Olg/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc74HZibcLbxKLdyY0AszSFmlWtrS2roXKABh9GJvGPdGHIZKibOibFzf8TQ/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7wsOoyicvK4ugliayMCaJGTTAMlXY05ytmUg1rkx6jGbGpl2DwrrdJHpA/640?wx_fmt=jpeg">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7MHDxSkicjSIYGFibxxmCB9ib1Qz2scSZqJLnPG1o7ibP8SBjibq03KkKZ0w/0?wx_fmt=gif">
+<meta property="og:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7TS8Sab5XbCibHdGgb6HvWNASNPhmkGSib0ibFibibEBfcDgTX7GjlmkesOg/0?wx_fmt=gif">
+<meta property="og:updated_time" content="2018-05-01T17:47:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详解服务器性能测试的全生命周期？——从测试、结果分析到优化策略">
+<meta name="twitter:description" content="服务器性能测试是一项非常重要而且必要的工作，本文是作者Micheal在对服务器进行性能测试的过程中不断摸索出来的一些实用策略，通过定位问题，分析原因以及解决问题，实现对服务器进行更有针对性的优化，提升服务器的性能。    1. 服务器性能测试小结 讲到服务器性能大部分人会想到这个服务器的架构是什么样子的，用的什么epoll，select，spring，tornado之类的。其实从本质上来看的话目">
+<meta name="twitter:image" content="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7OGDJykZM7QvZRFPOjExHgjvKXhGN4bW1s3ic0rqM7OhhhKLkIia9jOrQ/0?wx_fmt=gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2017/06/24/详解服务器性能测试的全生命周期从测试结果分析到优化策略/"/>
+
+
+
+
+
+  <title>详解服务器性能测试的全生命周期？——从测试、结果分析到优化策略 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2017/06/24/详解服务器性能测试的全生命周期从测试结果分析到优化策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">详解服务器性能测试的全生命周期？——从测试、结果分析到优化策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-24T14:20:17+08:00">
+                2017-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试文档/" itemprop="url" rel="index">
+                    <span itemprop="name">测试文档</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,896
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>服务器性能测试是一项非常重要而且必要的工作，本文是作者Micheal在对服务器进行性能测试的过程中不断摸索出来的一些实用策略，通过定位问题，分析原因以及解决问题，实现对服务器进行更有针对性的优化，提升服务器的性能。  </p>
+</blockquote>
+<h2 id="1-服务器性能测试小结"><a href="#1-服务器性能测试小结" class="headerlink" title="1. 服务器性能测试小结"></a>1. 服务器性能测试小结</h2><p> 讲到服务器性能大部分人会想到这个服务器的架构是什么样子的，用的什么epoll，select，spring，tornado之类的。其实从本质上来看的话目前大部分的服务器主要包括逻辑层以及DB层，我们采用的各种框架组件处于逻辑服务器中，如下图所示。<br> <img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7OGDJykZM7QvZRFPOjExHgjvKXhGN4bW1s3ic0rqM7OhhhKLkIia9jOrQ/0?wx_fmt=gif" alt="image">  </p>
+<p> 服务器性能测试是一项比较繁琐的事情，作为没有做过性能测试的同学可能需要理清楚以下几个事情。</p>
+<h3 id="1-1-协议分析"><a href="#1-1-协议分析" class="headerlink" title="1.1. 协议分析"></a>1.1. 协议分析</h3><p>首先是协议分析，性能测试本质上是我们用代码来模拟真实的用户请求，所以我们必须要知道发送出去的请求内容才能模拟。在典型的CS服务器中很多使用了protobuf，thrift，tdr（腾讯自研）来序列化以及反序列号请求内容。  </p>
+<p>序列化之后一方面可以对数据进行压缩处理，另一方面也避免请求内容明文传输造成被抓包·泄漏数据的危险。之前有过服务器传输数据的时候使用的是明文直接发送，而且这个数据是一些敏感的sql语句，这样首先暴露了数据库的表结构，同时不法分子可以通过模拟发包造成“脱裤”甚至是数据被清空。  </p>
+<h4 id="1-1-1-Protobuf"><a href="#1-1-1-Protobuf" class="headerlink" title="1.1.1.   Protobuf"></a>1.1.1.   Protobuf</h4><p>谷歌出品，必属精品。Protobuf使用起来很方便，学习成本非常低，而且序列化和反序列号的接口很容易使用。同时它相对于xml以及json，极大的的减小了数据占用的空间，减少了传输成本。目前支持包括C，java以及python等多个语言。Protobuf目前用的比较多，打解包也很方便，比较推荐使用。  </p>
+<h4 id="1-1-2-Thrift"><a href="#1-1-2-Thrift" class="headerlink" title="1.1.2.   Thrift"></a>1.1.2.   Thrift</h4><p>Thrift是一个跨语言的轻量级rpc消息和数据交换框架。Thrift支持几乎绝大部分主流的语言，包括C, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, Smalltalk, and OCaml，虽然大部分我都没有用过。相对于protobuf，thrift提供了全套RPC解决方案，包括序列化机制、传输层、并发处理框架等，也因为如此thrift的学习成本比较高。  </p>
+<h4 id="1-1-3-腾讯自研协议tdr"><a href="#1-1-3-腾讯自研协议tdr" class="headerlink" title="1.1.3.   腾讯自研协议tdr"></a>1.1.3.   腾讯自研协议tdr</h4><p>Tdr是腾讯自研跨平台多语言数据表示组件，主要用于基于数据的序列化反序列化（支持二进制方式和XML文本方式）以及ORM数据存储。广泛用于互娱自研游戏和部分代理游戏。在性能上基本和protobuf差不多，主要应用在C程序中。<br>在做服务器性能测试之前，我们需要了解它的协议是怎么定义的。</p>
+<h3 id="1-2-机器人管理"><a href="#1-2-机器人管理" class="headerlink" title="1.2.  机器人管理"></a>1.2.  机器人管理</h3><p>本质上机器人管理就是一个调度控制器，在获取需要发送的请求协议之后，需要有一个框架来管理所有的机器人，控制机器人的启动，发送请求以及停止的动作。框架的选择需要根据服务器的实际情况来，不同的业务场景，使用不同的框架产生的压力上限也会不一样。  </p>
+<p><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7Sf2V9LvI1Hcb0PibfLTRj1L8OlS5on0wpP0kFl452ODdlPRd4kjCA4A/0?wx_fmt=gif" alt="image">   </p>
+<p>以一个简单的多线程框架为例，主线程负责控制逻辑，管理所有的机器人状态信息。子线程执行每个机器人的任务，包括连接服务器，发送数据，接收数据，断开连接等。</p>
+<h3 id="1-3-结果统计"><a href="#1-3-结果统计" class="headerlink" title="1.3.  结果统计"></a>1.3.  结果统计</h3><p>机器人发送请求包之后，一般是要等待服务器的响应回包。服务器那边可以计算本次压测过程中各项业务数据，包括TPS，总的收发包量等。    </p>
+<p>不可能在测试过程中一直盯着各个数据看，我们需要把每项数据记录下来，后续综合各项结果进行分析。<br>这里的结果统计除了需要统计每个机器人收到回包的结果，还需要统计服务器在压测过程中的各项性能数据变化。一旦客户端的压力上到一定值时，服务器某项资源支撑不了的话，说明这个资源可能存在短板，存在可以优化的空间。    </p>
+<p>性能结果分析是一个比较复杂的过程。需要综合硬件、操作系统、应用程序等多方面来定位。  </p>
+<h3 id="2-1-硬件的影响"><a href="#2-1-硬件的影响" class="headerlink" title="2.1.  硬件的影响"></a>2.1.  硬件的影响</h3><p>硬件对服务器性能影响还是蛮大的，如果是土豪的话，可以直接买最好的。我们分析硬件主要是希望选择合适的配置，节约资源，避免出现高射炮打蚊子的情况。  </p>
+<h5 id="2-1-1-CPU"><a href="#2-1-1-CPU" class="headerlink" title="2.1.1.   CPU"></a>2.1.1.   CPU</h5><p>在资金的充足下，一般来说CPU的数量越多，主频越高，那么服务器的性能也就会越好。在实际测试过程中，如果在大压力下持续观察CPU的使用率很低，那么CPU的资源基本上是可以满足服务器要求的。这样的情况其实是有点浪费CPU资源的，比较理想的情况是压力不大的时候CPU利用率比较低，压力上来之后CPU利用率保持在60%-70%。  </p>
+<p>大部分的CPU在同一时间内只能运行一个线程，但是超线程的处理器可以在同一个时间运行多个线程，我们可以利用处理前超线程特性提高系统性能。虽然采用超线程技术能同时执行两个线程，但它并不象两个真正的CPU那样，每个CPU都具有独立的资源。当两个线程都同时需要某一个资源时，其中一个要暂时停止，并让出资源，直到这些资源闲置后才能继续。因此超线程的性能并不等于两颗CPU的性能。  </p>
+<h4 id="2-1-2-内存"><a href="#2-1-2-内存" class="headerlink" title="2.1.2.   内存"></a>2.1.2.   内存</h4><p>内存的大小也是影响服务器性能的一个重要因素。内存太小，系统进程要被阻塞，应用程序会变得缓慢，甚至是失去响应；如果太大的话，也是造成一种浪费。Linux系统中采用物理内存和虚拟内存两种方式，使用虚拟内存可以缓解物理内存的不足，但是如果占用过多的虚拟内存的话，应用程序的性能会明显的下降。  </p>
+<h4 id="2-1-3-网络带宽"><a href="#2-1-3-网络带宽" class="headerlink" title="2.1.3.   网络带宽"></a>2.1.3.   网络带宽</h4><p>网络带宽的大小限制了客户端与服务器交互的流量，相对其他硬件资源，网络带宽在价格上更贵。这需要我们合理预估服务器的可服务器能力，需要占用的带宽资源。  </p>
+<h4 id="2-1-4-磁盘IO"><a href="#2-1-4-磁盘IO" class="headerlink" title="2.1.4.   磁盘IO"></a>2.1.4.   磁盘IO</h4><p>目前磁盘都是机械方式运作的，主要体现在磁盘读写前寻找磁道的过程。磁盘自带的读写缓存大小，对于磁盘读写速度至关重要。读写速度快的磁盘，通常都带有较大的读写缓存。磁盘的寻道过程是机械方式，决定了其随机读写速度将明显低于顺序读写。在我们做系统设计和实现时，需要考虑到磁盘的这一特性  </p>
+<h3 id="2-2-操作系统及软件"><a href="#2-2-操作系统及软件" class="headerlink" title="2.2.  操作系统及软件"></a>2.2.  操作系统及软件</h3><h5 id="2-2-1-版本"><a href="#2-2-1-版本" class="headerlink" title="2.2.1.   版本"></a>2.2.1.   版本</h5><p>不同的操作系统在内核实现上可能各不相同，因而对运行在上面的应用程序来说可能影响比较大。  </p>
+<p>笔者并没有做过分析不同操作系统对服务器性能的影响，因为只用过Linux开发服务器程序。Linux操作系统在这十几年发展的异常迅猛，目前大部分的服务器都是运行在Linux操作系统上的。Linux目前具有最好的生态系统，服务器端的各种软件都为它而设计，默认都认为你是在 Linux 上跑，你要是整一个非 Linux 的服务器，你得有足够的心理准备，因为出现任何问题，你可能未必能找到能帮你解决问题的人。  </p>
+<h4 id="2-2-2-参数配置"><a href="#2-2-2-参数配置" class="headerlink" title="2.2.2.   参数配置"></a>2.2.2.   参数配置</h4><p>先说一个小故事。福特公司一套重要设备出现故障，找了很多人来维修，结果都没有维修好，没办法了，就在购买设备的英国公司高价聘请一位工程师过来维修，工程师来到之后，反复查找原因，最后在一个小零件上划了一条线，然后对旁边福特公司的人说，在划线的地方切掉就好了，果不其然，切掉之后故障真的解除了，按照合约，福特公司应支付公司一万美元，周围的人都唏嘘不已，感叹一条线就可以价值一万美元，工程师回答到：那条线只值一美元，而怎样找到那条线值9999美元。  </p>
+<p>我们在测试服务器的过程中，经常会遇到性能上不去。查看CPU，网络，IO消耗都挺低的，就是定位不到问题的原因。有经验的程序员可能会告诉你你把某个参数修改一下，立马性能噌噌噌上去了。比如mysql相关设置，系统文件描述符，缓冲区大小，time_wait快速回收设置等，甚至是线程池配置的线程个数也会对服务器的性能产生较大的影响。  </p>
+<p>关于数据库参数的设置，比如mysql的配置文件my.cnf文件中，修改不同的配置（比如innodb_flush_log_at_trx_commit 设置为0，1还是2 ）可能会对数据库的读写性能影响很大。  </p>
+<h4 id="2-2-3-应用程序本身实现"><a href="#2-2-3-应用程序本身实现" class="headerlink" title="2.2.3.   应用程序本身实现"></a>2.2.3.   应用程序本身实现</h4><p>比如程序中需要频繁申请内存，使用bzero和memset对服务器性能影响差距可能会很大。  </p>
+<p>另外程序中的一些查询操作，采用不同的数据结构，可以实现时间和空间上的相互转化，从而影响服务器的性能。  </p>
+<h2 id="3-Linux下的数据监控工具"><a href="#3-Linux下的数据监控工具" class="headerlink" title="3. Linux下的数据监控工具"></a>3. Linux下的数据监控工具</h2><h3 id="3-1-Vmstat"><a href="#3-1-Vmstat" class="headerlink" title="3.1. Vmstat"></a>3.1. Vmstat</h3><p>Vmstat，virtual memmory statistics（虚拟内存统计），主要是对操作系统的内存信息、进程状态、cpu活动等进行监视，但是它不能对某个进程进行深入的分析。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7aUzjib2mpwyibh8GDrDrp8MoTalMAJRBH2zvO0SQhdabMSGg4feOsxbA/640?wx_fmt=jpeg" alt="image">  </p>
+<p>Procs中r列表示运行和等待CPU时间片的进程数，如果r值长期大于CPU个数，说明CPU资源不够用啦，可以适当增加CPU数量。  </p>
+<p>Procs中b列表示当前等待资源的进程数，包括等待I/O，内存等。  </p>
+<p>Swpd列表示切换到内存交换区的KB数，一般si，so为0的话基本不影响系统的性能。  </p>
+<p>Cache是page cache的内存数量，Linux会把空闲的物理内存的一部分拿来做文件和目录的缓存，以便提高程序执行的性能。如果cache的值较大的话，说明缓存了太多的文件，如果bi值小的话，说明文件系统效率比较高。  </p>
+<p>Si是每秒从磁盘读入虚拟内存的大小，如果这个值一直大于0，表示物理内存不够用或者内存泄露了，需要查找耗内存进程解决掉。  </p>
+<p>Bi，bo是表示从块设备读入数据的总量以及写到块设备的数据总量。如果bi+bo值比较大，而且wa值也比较大的话，说明系统磁盘I/O可能有问题，性能不高。  </p>
+<p>In和cs是每秒钟的设备中断数以及上下文切换数。它们很大的话，表面内核消耗的CPU时间较多。  </p>
+<h3 id="3-2-Top"><a href="#3-2-Top" class="headerlink" title="3.2. Top"></a>3.2. Top</h3><p>Top是一个动态显示过程，即可以通过用户按键来不断刷新当前状态。它可以按照系统中当前进程的CPU利用率以及占用的内存大小进行排序，可以比较快速定位出系统响应迟钝的原因。如果在前台执行该命令，它将独占前台，直到用户终止该程序为止。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7uyVhIzfMjOK5qEMjEMbbicwhDl3KozIE9Yg8VZbSAPg8yibzczD8vKlg/640?wx_fmt=jpeg" alt="image"> </p>
+<p>top是一个显示数据较多的工具，第一行显示的是系统的开机运行时间，机器的CPU负载信息；第二行显示当前系统任务的总数，以及各个状态的进程数；第三行显示的是CPU资源的使用情况总览；第四行显示内存的使用情况总览；第五行显示的是内存交换区的使用情况总览；后面开始是每个进程对资源使用的情况。  </p>
+<h3 id="3-3-Nmon"><a href="#3-3-Nmon" class="headerlink" title="3.3.  Nmon"></a>3.3.  Nmon</h3><p>Nmon提供对CPU、内存、网络、磁盘等系统资源占用情况分析，相比其他Linux命令获取到的数据，nmon的功能更为集中、配置性更强。通过nmon采集到数据之后可以在windows系统中使用nmon_analyser做数据的展示以及分析工作，可视化效果比较好。  </p>
+<p>由于一般Linux系统都不自带nmon，使用之前需要下载安装。  </p>
+<h3 id="3-4-Uptime"><a href="#3-4-Uptime" class="headerlink" title="3.4. Uptime"></a>3.4. Uptime</h3><p>Uptime命令显示系统已经运行了多长时间，它依次显示当前时间、系统已经运行了多长时间、目前有多少登陆用户、系统在过去的1分钟、5分钟和15分钟内的平均负载。  </p>
+<p>关于系统平均负载，它表示在特定时间间隔内运行队列中的平均进程数。如果一个进程满足以下条件则其就会位于运行队列中：没有在等待I/O操作的结果；没有主动进入等待状态；没有被停止。  </p>
+<h3 id="3-5-Netstat"><a href="#3-5-Netstat" class="headerlink" title="3.5.  Netstat"></a>3.5.  Netstat</h3><p>Netstat命令可以显示本机的网络连接情况，监听端口以及路由表等各种网络相关信息。Netstat用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。  </p>
+<p>比较常用的可以用次命令查看当前开启监听的服务器进程信息以及端口信息。  </p>
+<p><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7ZNdk6KukibDGHBqPDPFPLJpHqib3iaAYE9yhcrsAia0s7Te9rVYMOxrS2g/640?wx_fmt=jpeg" alt="image">  </p>
+<h3 id="3-6-Free"><a href="#3-6-Free" class="headerlink" title="3.6.  Free"></a>3.6.  Free</h3><p>Free是监控Linux使用情况最常用的命令。  </p>
+<p><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7QcDjcBdOpd4ReiaVQMeoxYtZ5gtaZe17hKEzBoXKtpmOhRfm4Lc7Olg/640?wx_fmt=jpeg" alt="image">  </p>
+<p>“Free -m”可以查看以M为单位的使用情况，这里主要观察free和cached两列。  </p>
+<p>一般来说，如果应用程序可用内存/系统物理内存&gt;70%时，表明目前系统内存资源比较充足，不影响系统性能；如果应用程序可用内存/系统物理内存&lt;20%时，表明目前系统内存资源比较紧缺，需要释放其他程序内存或者增加内存；如果应用程序可用内存/系统物理内存在20%-70%之间，表明目前系统的内存资源基本满足应用需求，暂时不影响系统的性能  </p>
+<h3 id="3-7-Sar"><a href="#3-7-Sar" class="headerlink" title="3.7. Sar"></a>3.7. Sar</h3><p>Sar也是一个强大的分析系统性能的工具，它可以比较全面的获取系统的CPU，运行队列，磁盘IO，分页，内存，CPU中断，网络等多项数据。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc74HZibcLbxKLdyY0AszSFmlWtrS2roXKABh9GJvGPdGHIZKibOibFzf8TQ/640?wx_fmt=jpeg" alt="image"><br>上图是使用sar获取系统CPU的整体负责情况，每隔1秒统计一次，统计3次，最后会给出3次的平均值。需要查看其他的数据可以查看手册使用。  </p>
+<h3 id="3-8-Iostat"><a href="#3-8-Iostat" class="headerlink" title="3.8.  Iostat"></a>3.8.  Iostat</h3><p>Iostat是I/O statistics的缩写，主要功能是对系统的磁盘I/O操作进行监控。它的输出主要显示磁盘读写操作的统计信息，同时也会给出CPU的使用情况。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7wsOoyicvK4ugliayMCaJGTTAMlXY05ytmUg1rkx6jGbGpl2DwrrdJHpA/640?wx_fmt=jpeg" alt="image">  </p>
+<p>这里显示的是查看CPU和磁盘的信息，统计间隔2秒，共3次。  </p>
+<h3 id="3-9-Valgrind"><a href="#3-9-Valgrind" class="headerlink" title="3.9. Valgrind"></a>3.9. Valgrind</h3><p>Valgrind是一款广泛用于监控程序运行过程进行内存调试、内存泄漏检测以及性能分析的工具。它会给出内存泄漏的统计，包括definitely lost,indirectly lost,possibly lost,still reachable ,suppressed等，我们可以使用valgrind来测试程序中内存不规范使用的部分。同时对于地址越界问题也可以通过valgrind扫出来，它会统计invalid write的情况。  </p>
+<h2 id="4-服务器的性能优化"><a href="#4-服务器的性能优化" class="headerlink" title="4. 服务器的性能优化"></a>4. 服务器的性能优化</h2><h3 id="4-1-存储的优化"><a href="#4-1-存储的优化" class="headerlink" title="4.1. 存储的优化"></a>4.1. 存储的优化</h3><p>IO相对来说比较耗时，我们都知道越靠近CPU的存储，其访问速度越快，但是其价格越贵。下图来展示了不同存储的容量以及访问时间。  </p>
+<p>目前很多同学在优化服务器性能的时候都会从存储这方面入手。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7MHDxSkicjSIYGFibxxmCB9ib1Qz2scSZqJLnPG1o7ibP8SBjibq03KkKZ0w/0?wx_fmt=gif" alt="image">  </p>
+<h4 id="4-1-1-用内存换时间"><a href="#4-1-1-用内存换时间" class="headerlink" title="4.1.1. 用内存换时间"></a>4.1.1. 用内存换时间</h4><h6 id="4-1-1-1-增加缓存"><a href="#4-1-1-1-增加缓存" class="headerlink" title="4.1.1.1. 增加缓存"></a><strong>4.1.1.1. 增加缓存</strong></h6><p>很多web应用是有大量的静态内容，这些静态内容主要都是一些小文件，并且会被频繁的读，采用Apache以及nginx作为web服务器。在web访问量不大的时候，这两个http服务器可以说是非常的迅速和高效，如果负载量很大的时候，我们可以采用在前端搭建cache服务器，将服务器中的静态资源文件缓存到操作系统内存中直接进行读操作，因为直接从内存读取数据的速度要远大于从硬盘读取。这个其实也是增加内存的成本来降低访问磁盘带来的时间消耗。</p>
+<h6 id="4-1-1-2-内存数据库"><a href="#4-1-1-2-内存数据库" class="headerlink" title="4.1.1.2. 内存数据库"></a><strong>4.1.1.2. 内存数据库</strong></h6><p>内存数据库，其实就是将数据放在内存中直接操作的数据库。相对于磁盘，内存的数据读写速度要高出几个数量级，将数据保存在内存中相比从磁盘上访问能够极大地提高应用的性能。内存数据库抛弃了磁盘数据管理的传统方式，基于全部数据都在内存中重新设计了体系结构，并且在数据缓存、快速算法、并行操作方面也进行了相应的改进，所以数据处理速度比传统数据库的数据处理速度要快很多。  </p>
+<p>但是安全性的问题可以说是内存数据库最大的硬伤。因为内存本身有掉电丢失的天然缺陷，因此我们在使用内存数据库的时候，通常需要，提前对内存上的数据采取一些保护机制，比如备份，记录日志，热备或集群，与磁盘数据库同步等方式。  </p>
+<p>对于一些重要性不高但是又想要快速响应用户请求的部分数据可以考虑内存数据库来存储，同时可以定期把数据固化到磁盘。  </p>
+<h6 id="4-1-1-3-RDD"><a href="#4-1-1-3-RDD" class="headerlink" title="4.1.1.3. RDD"></a><strong>4.1.1.3. RDD</strong></h6><p>这里图个新鲜，说说内存换时间在大数据云计算相关领域的一些应用。Spark最近很火，它的核心要数RDD了，RDD最早来源与Berkeley实验室的一篇论文《Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing》。现有的数据流系统对两种应用的处理并不高效：一是迭代式算法，这在图应用和机器学习领域很常见；二是交互式数据挖掘工具。这两种情况下，将数据保存在内存中能够极大地提高性能。这里不详细说RDD了，只是想说程序员一直是觊觎内存的读取速度的。</p>
+<h4 id="4-1-2-使用SSD等"><a href="#4-1-2-使用SSD等" class="headerlink" title="4.1.2.  使用SSD等"></a>4.1.2.  使用SSD等</h4><p>除了对内存方面的优化，还可以对磁盘这边进行优化。跟传统机械硬盘相比，固态硬盘具有快速读写、质量轻、能耗低以及体积小等特点。但是ssd的价格相比传统机械硬盘要贵，有条件的可以使用ssd来代替机械硬盘。</p>
+<h3 id="4-2-数据库优化"><a href="#4-2-数据库优化" class="headerlink" title="4.2.  数据库优化"></a>4.2.  数据库优化</h3><p>大部分的服务器请求最终都是要落到数据库中，随着数据量的增加，数据库的访问速度也会越来越慢。想要提升请求处理速度，必须要对原来的单表进行动刀了。目前主流的Linux服务器使用的数据库要属mysql了，如果我们使用mysql存储的数据单个表的记录达到千万级别的话，查询速度会很慢的。  </p>
+<p>根据业务上合适的规则对数据库进行分区分表，可以有效提高数据库的访问速度，提升服务器的整体性能。  </p>
+<p>另外对于业务上查询请求，在建表的时候可以根据相关需求设置索引等，以提高查询速度。  </p>
+<h3 id="4-3-利用多核优势"><a href="#4-3-利用多核优势" class="headerlink" title="4.3. 利用多核优势"></a>4.3. 利用多核优势</h3><p>现在运行服务器的主流机器配置都是多核CPU的，我们在设计服务器的时候可以利用多核心的特点，采用多进程或者多线程的框架。  </p>
+<p>关于选择多线程还是多进程可以根据实际的需求，结合各自的优缺点进行选择。  </p>
+<p>对于多线程的使用，特别是使用线程池的时候可以通过测试不同线程池服务器的性能来设置合适的线程池。  </p>
+<h3 id="4-4-选择合适的IO模型"><a href="#4-4-选择合适的IO模型" class="headerlink" title="4.4.  选择合适的IO模型"></a>4.4.  选择合适的IO模型</h3><p>《UNIX网络编程卷1:套接字联网API》中有一幅图比较经典。<br><img src="http://img.chuansong.me/mmbiz/MDcf9yruyu3PSFmovTxnSCupSKApMFc7TS8Sab5XbCibHdGgb6HvWNASNPhmkGSib0ibFibibEBfcDgTX7GjlmkesOg/0?wx_fmt=gif" alt="image"></p>
+<p>信号驱动：首先开启套接口信号驱动I/O功能,并通过系统调用sigaction安装一个信号处理函数。当数据报准备好被读时，就为该进程生成一个SIGIO信号。随即可以在信号处理程序中调用recvfrom来读数据报，井通知主循环数据已准备好被处理中。也可以通知主循环，让它来读数据报。  </p>
+<p>异步的IO模型：告知内核启动某个操作，并让内核在整个操作完成后(包括将数据从内核拷贝到用户自己的缓冲区)通知我们。  </p>
+<p>这里并不是说一定要用某个模型，epoll也并不是在所有情况下都比select性能要好的，在选择的时候还是要结合业务需求来。  </p>
+<h3 id="4-5-分布式部署程序"><a href="#4-5-分布式部署程序" class="headerlink" title="4.5.  分布式部署程序"></a>4.5.  分布式部署程序</h3><p>当单机服务器已经找不到合适的优化点时，我们可以通过分布式部署来提高服务器的响应能力。优秀的服务器开发都会为自己的服务器的扩容，容灾提出一些解决方案。个人觉得服务器设计的时候简单点比较好，这样后期扩容的时候会很方便。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>服务器性能测试是一项比较繁琐的事情，作为没有做过性能测试的同学需要事先了解服务器的协议是如何定义的，建立框架管理机器人、统计测试中机器人收到回包的结果以及压测过程中各项性能数据的变化。在完成了测试的过程后，可以从硬件、操作系统以及应用程序等多个方面进行对性能结果进行定位。最后在明确业务需求的前提下，通过存储优化、数据库优化以及分布式部署程序等手段完成服务器的性能优化。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2017/06/24/详解服务器性能测试的全生命周期从测试结果分析到优化策略/" title="详解服务器性能测试的全生命周期？——从测试、结果分析到优化策略">http://wysh.site/2017/06/24/详解服务器性能测试的全生命周期从测试结果分析到优化策略/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/测试文档/" rel="tag"> <i class="fa fa-tag"></i> 测试文档</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/23/Web安全测试基础/" rel="next" title="Web安全测试基础一 （一：跨SQL注入，二：跨站脚本攻击，三，命令执行漏洞，四，跨站请求伪造，五，文件上传漏洞，六，文件包含漏洞）">
+                <i class="fa fa-chevron-left"></i> Web安全测试基础一 （一：跨SQL注入，二：跨站脚本攻击，三，命令执行漏洞，四，跨站请求伪造，五，文件上传漏洞，六，文件包含漏洞）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-服务器性能测试小结"><span class="nav-number">1.</span> <span class="nav-text">1. 服务器性能测试小结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-协议分析"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 协议分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-Protobuf"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1.   Protobuf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-Thrift"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2.   Thrift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3-腾讯自研协议tdr"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3.   腾讯自研协议tdr</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-机器人管理"><span class="nav-number">1.2.</span> <span class="nav-text">1.2.  机器人管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-结果统计"><span class="nav-number">1.3.</span> <span class="nav-text">1.3.  结果统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-硬件的影响"><span class="nav-number">1.4.</span> <span class="nav-text">2.1.  硬件的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-CPU"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">2.1.1.   CPU</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-内存"><span class="nav-number">1.4.1.</span> <span class="nav-text">2.1.2.   内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-网络带宽"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.1.3.   网络带宽</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-4-磁盘IO"><span class="nav-number">1.4.3.</span> <span class="nav-text">2.1.4.   磁盘IO</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-操作系统及软件"><span class="nav-number">1.5.</span> <span class="nav-text">2.2.  操作系统及软件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-版本"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">2.2.1.   版本</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-参数配置"><span class="nav-number">1.5.1.</span> <span class="nav-text">2.2.2.   参数配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-应用程序本身实现"><span class="nav-number">1.5.2.</span> <span class="nav-text">2.2.3.   应用程序本身实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Linux下的数据监控工具"><span class="nav-number">2.</span> <span class="nav-text">3. Linux下的数据监控工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Vmstat"><span class="nav-number">2.1.</span> <span class="nav-text">3.1. Vmstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Top"><span class="nav-number">2.2.</span> <span class="nav-text">3.2. Top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Nmon"><span class="nav-number">2.3.</span> <span class="nav-text">3.3.  Nmon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Uptime"><span class="nav-number">2.4.</span> <span class="nav-text">3.4. Uptime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Netstat"><span class="nav-number">2.5.</span> <span class="nav-text">3.5.  Netstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Free"><span class="nav-number">2.6.</span> <span class="nav-text">3.6.  Free</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Sar"><span class="nav-number">2.7.</span> <span class="nav-text">3.7. Sar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Iostat"><span class="nav-number">2.8.</span> <span class="nav-text">3.8.  Iostat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-Valgrind"><span class="nav-number">2.9.</span> <span class="nav-text">3.9. Valgrind</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-服务器的性能优化"><span class="nav-number">3.</span> <span class="nav-text">4. 服务器的性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-存储的优化"><span class="nav-number">3.1.</span> <span class="nav-text">4.1. 存储的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-用内存换时间"><span class="nav-number">3.1.1.</span> <span class="nav-text">4.1.1. 用内存换时间</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-1-1-增加缓存"><span class="nav-number">3.1.1.0.1.</span> <span class="nav-text">4.1.1.1. 增加缓存</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-1-2-内存数据库"><span class="nav-number">3.1.1.0.2.</span> <span class="nav-text">4.1.1.2. 内存数据库</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-1-3-RDD"><span class="nav-number">3.1.1.0.3.</span> <span class="nav-text">4.1.1.3. RDD</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-使用SSD等"><span class="nav-number">3.1.2.</span> <span class="nav-text">4.1.2.  使用SSD等</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-数据库优化"><span class="nav-number">3.2.</span> <span class="nav-text">4.2.  数据库优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-利用多核优势"><span class="nav-number">3.3.</span> <span class="nav-text">4.3. 利用多核优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-选择合适的IO模型"><span class="nav-number">3.4.</span> <span class="nav-text">4.4.  选择合适的IO模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-分布式部署程序"><span class="nav-number">3.5.</span> <span class="nav-text">4.5.  分布式部署程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

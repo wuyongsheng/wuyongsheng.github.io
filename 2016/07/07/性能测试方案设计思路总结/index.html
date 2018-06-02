@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="性能测试" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="[TOC]   一、需求分析 测试目的  为什么测？目的在于测试系统相关性能能否满足业务需求。通常分以下两种情况：   1）新项目上线   2）老项目优化   如果是老项目优化，可考虑是否存有历史测试方案，如果有可以参考，或许可以省事很多。  测试对象  要测啥？   测试对象可以归结为“业务功能”。测试前，需要了解我们需要测试的业务功能（不深入细节）有哪些，比如“购买商品”、“寄送快递”。">
+<meta name="keywords" content="性能测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能测试方案设计思路总结">
+<meta property="og:url" content="http://wysh.site/2016/07/07/性能测试方案设计思路总结/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="[TOC]   一、需求分析 测试目的  为什么测？目的在于测试系统相关性能能否满足业务需求。通常分以下两种情况：   1）新项目上线   2）老项目优化   如果是老项目优化，可考虑是否存有历史测试方案，如果有可以参考，或许可以省事很多。  测试对象  要测啥？   测试对象可以归结为“业务功能”。测试前，需要了解我们需要测试的业务功能（不深入细节）有哪些，比如“购买商品”、“寄送快递”。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-01T08:43:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能测试方案设计思路总结">
+<meta name="twitter:description" content="[TOC]   一、需求分析 测试目的  为什么测？目的在于测试系统相关性能能否满足业务需求。通常分以下两种情况：   1）新项目上线   2）老项目优化   如果是老项目优化，可考虑是否存有历史测试方案，如果有可以参考，或许可以省事很多。  测试对象  要测啥？   测试对象可以归结为“业务功能”。测试前，需要了解我们需要测试的业务功能（不深入细节）有哪些，比如“购买商品”、“寄送快递”。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2016/07/07/性能测试方案设计思路总结/"/>
+
+
+
+
+
+  <title>性能测试方案设计思路总结 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/07/07/性能测试方案设计思路总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">性能测试方案设计思路总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-07T09:48:28+08:00">
+                2016-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能测试/" itemprop="url" rel="index">
+                    <span itemprop="name">性能测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,750
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]  </p>
+<h2 id="一、需求分析"><a href="#一、需求分析" class="headerlink" title="一、需求分析"></a>一、需求分析</h2><ol>
+<li>测试目的</li>
+</ol>
+<p>为什么测？目的在于测试系统相关性能能否满足业务需求。通常分以下两种情况：  </p>
+<p>1）新项目上线  </p>
+<p>2）老项目优化  </p>
+<p>如果是老项目优化，可考虑是否存有历史测试方案，如果有可以参考，或许可以省事很多。</p>
+<ol start="2">
+<li>测试对象</li>
+</ol>
+<p>要测啥？  </p>
+<p>测试对象可以归结为“业务功能”。测试前，需要了解我们需要测试的业务功能（不深入细节）有哪些，比如“购买商品”、“寄送快递”。  </p>
+<p>有没有必要测？  </p>
+<p>需求来源哪里？，有没有数据支撑测试这个需求的必要性？  </p>
+<p>通常，可以从以下几个方面考虑：  </p>
+<p>1）是否核心功能，是否要求严格的质量  </p>
+<p>2）是否常用、高频使用的功能  </p>
+<p>3）可能占用系统较多资源的功能  </p>
+<p>4）使用人数多还是少  </p>
+<p>5）在线人数多还是少  </p>
+<ol start="3">
+<li>拆分对象</li>
+</ol>
+<p>先从业务上来分，实现这个完整的功能包含哪些流程、环节  </p>
+<p>举例：购买商品  </p>
+<p>登录-&gt;搜索商品-&gt;提交订单-&gt;支付订单-&gt;退出  </p>
+<p>然后从功能实现上来看，怎么实现这个完整功能的。通常这些业务功能操作都对应着一个或多个请求(可能能是不同类型的请求，比如http, mysql等)，我们要做的是找出这些操作对应的请求，请求之间的顺序是怎么样的。  </p>
+<ol start="4">
+<li>指标分析</li>
+</ol>
+<p>分析性能需求指标（如“支持300人并发登录”）是否合理  </p>
+<p>有必要测试这个需求，考虑需求指标是否合理？有没有数据支撑？  </p>
+<p>通常，支撑数据可以从以下方面考虑：  </p>
+<p>1）采样时间段内系统使用人数  </p>
+<p>2）采样时间段内系统在线人数  </p>
+<p>3）采样时间段内系统(页面)访问量  </p>
+<p>4）采样时间段内请求数<br>….</p>
+<p>常用分析思路：  </p>
+<p>1）2/8法则 </p>
+<p>2/8法则：80%的业务量在20%的时间里完成。这里，业务量泛指访问量，请求数，数据量等  </p>
+<p>2）正态分布  </p>
+<p>3）按比例倍增  </p>
+<p>4）响应时间2-5-8原则  </p>
+<p>就是说，一般情况下，当用户能够在2秒以内得到响应时，会感觉系统的响应很快；当用户在2-5秒之间得到响应时，会赶紧系统的响应速度还可以；当用户在5-8秒以内得到响应时，会赶紧系统的速度很慢，但是还可以接受；而当用户在超过8秒后仍然无法得到响应时，会感觉系统糟糕透了，或者认为系统已经失去响应。  </p>
+<p>注意：这个要根据实际情况，有些情况下时间长点也是可以接受的，好比12306  </p>
+<p>举例：  </p>
+<p>某公司后台监控，根据一段时间的采样数据，分析得出日高峰时段(11:00-14:00)用户下单请求数平均为1000，峰值为1500，根据这个计算并发请求数  </p>
+<p>时段：3个小时 -&gt; 3 x 60 x 60 = 1080s  </p>
+<p>业务量：1500  </p>
+<p>吞吐量：1500 <em> 80% / (1080 </em> 20%) = 5.56请求数/s  </p>
+<p>假设用户下单遵循正态分布，那么并发请求数峰值会肯定大于上述估算的吞吐量  </p>
+<p>注意:  </p>
+<p>1、2/8原则计算的结果并非在线并发用户数，是系统要达到的处理能力（吞吐量）  </p>
+<p>2、如果要求更高系统性能，根据实际情况，也可以考虑1/9原则或其它更严格的算法  </p>
+<p>3、以上估值只是大致的估算，不是精确值  </p>
+<p>举例：  </p>
+<p>想了下，暂时没想到啥好的例子，大致就说一些涉及到数据量的性能测试，比如报表统计，或者是大数据挖掘，查询等，怎么去估算数据量？  </p>
+<p>数据生命周期：  </p>
+<p>一般来说，数据都是有一定的生命周期的，时间的选取需要结合数据周期考虑。这里假设3年后系统性能仍然需要满足业务需求。  </p>
+<p>数据增长率：  </p>
+<p>如果是老项目，可以考虑对应功能主表历史数据存放情况  </p>
+<p>这里假设按年统计，比如第一年 10000，第二年 15000，第三年 20000，第四年25000，那么我们得出，以第一年为基准，数据增长率分别为 0.5，1，1.5，每年在上一年的基础上，以5000的速度增长</p>
+<p>预估3年后，数据增长率为 3，需要测试数据量为 （1+3）x 10000 = 40000  </p>
+<p>注意：  </p>
+<p>1、实际数据一般是没上面举例那么规律的，只能大致估算数据增长率。<br>2、一些大数据量的性能测试除了和数据量相关，还涉及到数据分布等，比如查询，构造数据时需要结合实际，尽量贴近实际。  </p>
+<p>3、不同业务模块，涉及表不一样，数据量要求也是不一样的，需要有区别的对待。  </p>
+<p>如果是新项目，那就比较不确定了，除非能收集相关数据。  </p>
+<h2 id="二、系统分析"><a href="#二、系统分析" class="headerlink" title="二、系统分析"></a>二、系统分析</h2><p>结合需求分析中第3点，分析系统架构。 </p>
+<p>1）请求顺序、请求之间相互调用关系  </p>
+<p>2）数据流向，数据是怎么走的，经过哪些组件、服务器等  </p>
+<p>3）预测可能存在性能瓶颈的环节（组件、服务器等）  </p>
+<p>4）明确应用类型 IO型，还是CPU消耗性、内存消耗型-&gt;<br>弄清楚重点监控对象  </p>
+<p>5）关注应用是否采用多进程、多线程架构-&gt;  多线程容易造成线程死锁、数据库死锁，数据不一致等  </p>
+<p>6）是否使用集群/是否使用负载均衡</p>
+<p>了解测试环境部署和生产环境部署差异，是否按1:1的比例部署  </p>
+<p>通常建议测试时先不考虑集群，采用单机测试，测试通过后再考虑使用集群，这样有个比较，比较能说明问题  </p>
+<p>参考阅读“浅谈web网站架构演变过程 ”：<a href="http://blog.csdn.net/qiaqia609/article/details/50809383" target="_blank" rel="noopener">http://blog.csdn.net/qiaqia609/article/details/50809383</a>  </p>
+<h2 id="三、业务分析"><a href="#三、业务分析" class="headerlink" title="三、业务分析"></a>三、业务分析</h2><p>1）明确要测试的功能业务中，功能业务占比，重要程度。  </p>
+<p>目的在于  </p>
+<p><1>明确重点测试对象，安排测试优先级  </1></p>
+<p><2>建模，混合场景中，虚拟用户资源分配，针对不同业务功能施加不同的负载。  </2></p>
+<p>2）明确下“需求分析-指标分析”中相关业务功能所需基础数据及数据量问题，因为那块需求分析时可能只是大致估算下，评估指标是否合理，需要认真再分析下  </p>
+<h2 id="四、用例设计"><a href="#四、用例设计" class="headerlink" title="四、用例设计"></a>四、用例设计</h2><p>1）用例设计  </p>
+<p>通常是基于场景的测试用例设计  </p>
+<p><1> 单业务功能场景  </1></p>
+<p>运行测试期间，所有虚拟用户只执行同一种业务功能某个环节、操作 </p>
+<p><2> 混合业务功能场景  </2></p>
+<p>运行测试期间，部分虚拟用户执行某种业务的某个环节操作，部分虚拟用户执行该业务功能的其它环节或者运行测试期间，部分虚拟用户执行某种业务功能，部分虚拟用户执行其它业务功能  </p>
+<blockquote>
+<p>注：这里用例没说到多少用户去跑，跑多久等，这里只是把他当作相同场景用例下的的一组组测试数据了。  </p>
+</blockquote>
+<p>2）事务定义  </p>
+<p>根据用例合理的定义事务，方便分析耗时（特别是混合业务功能场景测试），进而方便分析瓶颈。  </p>
+<p>比如，购买商品，我们可以把下订单定义为一个事务，把支付也定义为一个事务。  </p>
+<p>3）场景监控对象  </p>
+<p>针对每条用例，结合“系统分析”第4）点，明确可能的压力点（比如数据库、WEB服务器），需要监控的对象，比如tps，耗时，CPU，内存，I/O等  </p>
+<h2 id="五、测试策略"><a href="#五、测试策略" class="headerlink" title="五、测试策略"></a>五、测试策略</h2><p>1）先进行混合业务功能场景的测试，在考虑进行测试单业务功能场景的测试  </p>
+<p>2）负载测试 -&gt; 压力测试-&gt; 稳定性测试-&gt; 强度测试  </p>
+<p>注：如果测试稳定性，时间建议至少8小时；  </p>
+<p>3）逐步加压  </p>
+<p>比如开始前5分钟，20个用户，然后每隔5分钟，增加20个用户。  </p>
+<p>好处：不仅比较真实的模拟现实环境，而且在性能指标比较模糊，且不知道服务器处理能力的情况下，可以帮我们确定一个大致基准，因为通常情况下，随着用户数的不断增加，服务器压力也会随着增加，如果服务器不够强大，那么就会出现不能及时处理请求、处理请求失败的情况下，对应的运行结果图形中，运行曲线也会出现对应的形态，比如从原本程一条稳定直线的情况，到突然极限下降、开始上下波动等，通过分析我们就能得出服务器大致处理能力，供后续测试参考。<br>4）单点并发  </p>
+<p>比如使用集合点，单独针对某个环节的并发测试，通常是针对某个环节的性能调优时使用。  </p>
+<p>常识：  </p>
+<p>a) 负载测试  </p>
+<p>保证系统能正常运行(通常是满足某些系统性能指标)的前提下，让被测对象承担不同的工作量，以评估被测对象的最大处理能力及存在缺陷而进行的测试  </p>
+<p>b) 压力测试  </p>
+<p>不保证系统能否正常运行的前提下，让被测对象承担不同工作量，以评估被测对象能提供的最大处理能力及存在缺陷而进行的测试  </p>
+<p>c) 稳定性测试  </p>
+<p>测试系统的长期稳定运行的能力。同疲劳强度测试的区别是，稳定性测试的压力强度较小，一般趋向于客户现场日常状态下的压力强度，当然在通过时间不能保证稳定性的状态下，需要加大压力强度来测试，此时的压力强度则会高于正常值。  </p>
+<p>d) 强度测试  </p>
+<p>通常模拟系统在较差、异常资源配置下运行，如人为降低系统工作环境所需要的资源,如网络带宽,系统内存,数据锁等等,以评估被测对象在资源不足的情况下的工作状态  </p>
+<p>注：疲劳强度测试是一类特殊的强度测试，主要测试系统长时间运行后的性能表现，例如7x24小时的压力测试。  </p>
+<h2 id="六、工具选取"><a href="#六、工具选取" class="headerlink" title="六、工具选取"></a>六、工具选取</h2><p>1）协议分析  </p>
+<p>一般性能测试工具都是基于协议开发的，所以先要明确应用使用的协议  </p>
+<p>2）工具选取  </p>
+<p>1）类型  </p>
+<p>开源工具、收费工具、自研工具  </p>
+<p>2）分析工具  </p>
+<p><1> 理解工具实现原理  </1></p>
+<p><2> 采用用异步还是同步  </2></p>
+<p>常识： </p>
+<ol>
+<li>同步请求：发出一个调用请求，在没有得到结果之前，该调用就不返回。</li>
+<li>异步请求：发出一个调用请求，在没有得到请求结果之前，该调用可立即返回。该调用请求的处理者在处理完成后通过状态、通知和回调等来通知调用者。  </li>
+</ol>
+<p><3> 使用长连接还是短连接  </3></p>
+<h2 id="七、-软件配置"><a href="#七、-软件配置" class="headerlink" title="七、 软件配置"></a>七、 软件配置</h2><p>1）操作系统  </p>
+<p>内核版本、32 or 64位?  </p>
+<p>2）应用版本  </p>
+<p>应用版本要和线上保持一致，特别是中间件、组件等的版本，因为不同版本，其性能可能不一样  </p>
+<p>3）参数配置  </p>
+<p><1> 负载均衡、反向代理参数配置  </1></p>
+<p><2> Web服务器参数配置  </2></p>
+<p><3> 数据库服务器参数配置</3></p>
+<h2 id="八、网络分析"><a href="#八、网络分析" class="headerlink" title="八、网络分析"></a>八、网络分析</h2><p>1）网络路由  </p>
+<p>通常为了排除网络型瓶颈，通常建议在局域网下进行测试。  </p>
+<p>通常，这里我的分析思路是这样的：  </p>
+<p><1> 检查hosts文件的配置  </1></p>
+<p>从终端压测机(负载生成机)开始，到请求目的服务器器，机器的hosts文件配置  </p>
+<p>通常，hosts文件位于如下：  </p>
+<p>Windows：C:\Windows\System32\drivers\etc\hosts<br>Unix/Linux：/etc/hosts  </p>
+<p>小常识：  </p>
+<p>1、通常域名访问站点，首先要通过DNS域名服务器把网络域名（形如<a href="http://www.xxx.com）解析成XXX.XXX.XXX.XXX的IP地址，然后继续后续访问。" target="_blank" rel="noopener">www.xxx.com）解析成XXX.XXX.XXX.XXX的IP地址，然后继续后续访问。</a><br>2、hosts存放了域名和ip地址的映射关系，如下  </p>
+<p>性能测试方案设计思路总结  </p>
+<p>使用hosts可以加快域名解析，在进行DNS请求以前，系统会先检查自己的hosts文件中是否有这个地址映射关系，如果有则把域名解析为映射的IP地址，不请求网络上的DNS服务器，如果没有再向已知的DNS 服务器提出域名解析。也就是说hosts的请求级别比DNS高，可加快域名解析。  </p>
+<p><2> 检查DNS配置  </2></p>
+<p>不同DNS，其速度和准确率是不一样的，比如114.114.114.114速度远比8.8.8.8快，如果有用到DNS（特别是压测机），需要考虑下是否适当  </p>
+<p><3> 确保路由正确设置  </3></p>
+<p>2）网络带宽  </p>
+<p>如果没条件在局域网下测试，可能需要估算所需大致带宽。  </p>
+<p>如果测试时是基于UI层操作的操作，那么得估算页面平均大小，这个可以通过浏览器自带工具查看打开单个页面服务器返回的请求数据大小。如果是测试时是基于接口层的请求测试，可以通过工具查看服务器响应数据大小。  </p>
+<p>然后根据采集的页面PV峰值、请求数峰值进行计算。  </p>
+<p>假设在 PV峰值、请求数峰值 = 1000，峰值时段：8:00 - 12:00，平均页面、请求大小 200k  </p>
+<p>带宽 = 1000 x 80% / (20% x 4 x 3600s) x 200KB x /1024 x 8bit ,单位MBps  </p>
+<p>注意： 这里涉及到浏览器缓存等因素，估值可能不准，大致估算。  </p>
+<h2 id="九、硬件配置"><a href="#九、硬件配置" class="headerlink" title="九、硬件配置"></a>九、硬件配置</h2><p>1) CPU  </p>
+<p>型号，频率，核数  </p>
+<p>2) 内存  </p>
+<p>3) 磁盘  </p>
+<p>不同磁盘类型，读写速率不一样  </p>
+<p>4) 网卡  </p>
+<p>不同网卡，其传输速率也不一样  </p>
+<p>注意：硬件配置最好和生产环境的配置保持一致  </p>
+<h2 id="十、性能监控"><a href="#十、性能监控" class="headerlink" title="十、性能监控"></a>十、性能监控</h2><p>略  </p>
+<p>注意：  </p>
+<p>1） 这里监控不仅仅是服务器自身性能指标监控，如cpu，还包括事务耗时监控等  </p>
+<p>2） 需要记录测试前各个性能指标数据，方便后续测试对比  </p>
+<h2 id="十一、-实施测试"><a href="#十一、-实施测试" class="headerlink" title="十一、    实施测试"></a>十一、    实施测试</h2><p>略  </p>
+<h2 id="十二、-结果分析"><a href="#十二、-结果分析" class="headerlink" title="十二、    结果分析"></a>十二、    结果分析</h2><p>如果是性能调优，还需同上一个版本的性能测试结果对比</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2016/07/07/性能测试方案设计思路总结/" title="性能测试方案设计思路总结">http://wysh.site/2016/07/07/性能测试方案设计思路总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能测试/" rel="tag"> <i class="fa fa-tag"></i> 性能测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/06/性能测试体系的知识分享/" rel="next" title="性能测试体系的知识分享">
+                <i class="fa fa-chevron-left"></i> 性能测试体系的知识分享
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/09/产品测试规范二需求梳理/" rel="prev" title="产品测试规范（二：需求梳理）">
+                产品测试规范（二：需求梳理） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、需求分析"><span class="nav-number">1.</span> <span class="nav-text">一、需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、系统分析"><span class="nav-number">2.</span> <span class="nav-text">二、系统分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、业务分析"><span class="nav-number">3.</span> <span class="nav-text">三、业务分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、用例设计"><span class="nav-number">4.</span> <span class="nav-text">四、用例设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、测试策略"><span class="nav-number">5.</span> <span class="nav-text">五、测试策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、工具选取"><span class="nav-number">6.</span> <span class="nav-text">六、工具选取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、-软件配置"><span class="nav-number">7.</span> <span class="nav-text">七、 软件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、网络分析"><span class="nav-number">8.</span> <span class="nav-text">八、网络分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、硬件配置"><span class="nav-number">9.</span> <span class="nav-text">九、硬件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十、性能监控"><span class="nav-number">10.</span> <span class="nav-text">十、性能监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一、-实施测试"><span class="nav-number">11.</span> <span class="nav-text">十一、    实施测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十二、-结果分析"><span class="nav-number">12.</span> <span class="nav-text">十二、    结果分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="产品测试" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1.11 Bug管理规范1.11.1 bug提交规范Bug的报告要求描述内容清晰、简介、易懂，让用根据简要描述就可以大致了解问题所在：   缺陷ID   BUG的唯一标识，由BUG管理工具自动生成。   项目名称   每个要测试的软件项目都有唯一的名称。   问题类型（严重程度）   BUG所属的类型（即严重程度），包括致命问题、严重问题、一般  问题、优化建议等。缺陷标题简明的对BUG进行概要描">
+<meta name="keywords" content="产品测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="产品测试规范（十二:Bug管理规范）">
+<meta property="og:url" content="http://wysh.site/2016/11/23/产品测试规范十二Bug管理规范/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="1.11 Bug管理规范1.11.1 bug提交规范Bug的报告要求描述内容清晰、简介、易懂，让用根据简要描述就可以大致了解问题所在：   缺陷ID   BUG的唯一标识，由BUG管理工具自动生成。   项目名称   每个要测试的软件项目都有唯一的名称。   问题类型（严重程度）   BUG所属的类型（即严重程度），包括致命问题、严重问题、一般  问题、优化建议等。缺陷标题简明的对BUG进行概要描">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-01T17:48:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="产品测试规范（十二:Bug管理规范）">
+<meta name="twitter:description" content="1.11 Bug管理规范1.11.1 bug提交规范Bug的报告要求描述内容清晰、简介、易懂，让用根据简要描述就可以大致了解问题所在：   缺陷ID   BUG的唯一标识，由BUG管理工具自动生成。   项目名称   每个要测试的软件项目都有唯一的名称。   问题类型（严重程度）   BUG所属的类型（即严重程度），包括致命问题、严重问题、一般  问题、优化建议等。缺陷标题简明的对BUG进行概要描">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2016/11/23/产品测试规范十二Bug管理规范/"/>
+
+
+
+
+
+  <title>产品测试规范（十二:Bug管理规范） | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/11/23/产品测试规范十二Bug管理规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">产品测试规范（十二:Bug管理规范）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-23T08:34:34+08:00">
+                2016-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/产品测试/" itemprop="url" rel="index">
+                    <span itemprop="name">产品测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,262
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-11-Bug管理规范"><a href="#1-11-Bug管理规范" class="headerlink" title="1.11 Bug管理规范"></a>1.11 Bug管理规范</h2><h3 id="1-11-1-bug提交规范"><a href="#1-11-1-bug提交规范" class="headerlink" title="1.11.1 bug提交规范"></a>1.11.1 bug提交规范</h3><p>Bug的报告要求描述内容清晰、简介、易懂，让用根据简要描述就可以大致了解问题所在：  </p>
+<p><strong>缺陷ID</strong>  </p>
+<p>BUG的唯一标识，由BUG管理工具自动生成。  </p>
+<p><strong>项目名称</strong>  </p>
+<p>每个要测试的软件项目都有唯一的名称。  </p>
+<p><strong>问题类型（严重程度）</strong>  </p>
+<p>BUG所属的类型（即严重程度），包括致命问题、严重问题、一般  问题、优化建议等。缺陷标题简明的对BUG进行概要描述。  </p>
+<p><strong>缺陷标题</strong>  </p>
+<p>简明的对BUG进行概要描述。  </p>
+<p><strong>优先级</strong>  </p>
+<p>BUG解决的优先级。  </p>
+<p><strong>所属模块</strong>  </p>
+<p>项目的各个组成模块。  </p>
+<p><strong>测试版本</strong>  </p>
+<p>提交BUG时，一定要正确填写产生BUG的软件版本号。  </p>
+<p><strong>分派人</strong>  </p>
+<p>BUG需要指派处理的人员，如果不清楚统一给项目负责人。  </p>
+<p><strong>报告人</strong>  </p>
+<p>报告BUG的人员。  </p>
+<p><strong>测试环境</strong>  </p>
+<p>可根据实际描述当前测试的软硬件环境，以作为参考。</p>
+<p><strong>详细描述</strong>  </p>
+<p>在详细描述中，可对BUG产生的前提条件、操作的步骤、实际结 果、预期结果等进行描述。</p>
+<p><strong>文字注释与附图</strong>  </p>
+<p>在提交BUG时，可上传必要的附图，便于确认错误的表现形式和 错误位置等。  </p>
+<p>在提交BUG时，提交人可根据提交BUG的紧急程度，选择对应的“优先级”，同时建议开发人员在处理BUG的时候能够根据优先级进行处理，优先级别较高的可以最先进行处理。  </p>
+<p>在BUG详细描述中，可在从BUG产生的前提条件、操作的步骤、实际结果、预期结果等方面进行描述：  </p>
+<ol>
+<li><p>前提条件：有些BUG的产生是需要在一定条件下才会出现，例如浏览器、分辨率、Office版本等，所以就要求在描述时描述清楚前提条件；  </p>
+</li>
+<li><p>BUG的操作步骤：详细的、有次序的、每一步的操作步骤，包括输入的数据，尽可能的重新操作的步骤；</p>
+</li>
+<li><p>实际结果：指的我按照以上的操作步骤，最后得出的结果是什么， 例如我点击“增加”按钮后出现白页，这就是实际结果；</p>
+</li>
+<li><p>预期结果：指的我按照以上的操作步骤，我想要得到的结果是什么，例如我点击“增加”按钮想要得到的预期结果是提示我“增加成功”提示；</p>
+</li>
+<li><p>图文描述：在必要的情况下可上传截图并注释文字，这样更便于确认错误的表现形式和错误位置等。</p>
+</li>
+</ol>
+<p>一般情况下，开发人员在提交BUG时，“分派人”可指定对应的处理人员，如果无法确定“分派人”，可分派给项目的负责人，然后由项目负责人进行二次分派给对应的开发人员进行处理。在分派时可以添加一些对应的批注信息。</p>
+<h3 id="1-1-2-bug级别定义"><a href="#1-1-2-bug级别定义" class="headerlink" title="1.1.2 bug级别定义"></a>1.1.2 bug级别定义</h3><p>具体的优先级别有以下几种   </p>
+<p><strong>1</strong>  </p>
+<p><strong>致命问题(一级bug)</strong>  </p>
+<p>致命问题：不能完全满足系统正常的功能操作要求，系统停止运行，系统的重要部件无法运行，系统崩溃或挂起等导致系统不能继续运行。  </p>
+<ol>
+<li><p>常规操作下因程序问题导致系统崩溃，迫使整个系统无法使用（其中非程序问题有：系统配置、数据结构变动、session超时、网络中断、人为变更数据库中的数据、系统缺少相应文件或目录等）。  </p>
+</li>
+<li><p>常规操作下因程序问题导致程序重启、死机或非法退出。</p>
+</li>
+<li><p>常规操作下系统出现死循环。</p>
+</li>
+<li><p>数据丢失或异常。</p>
+</li>
+<li><p>模块间数据传递及取值错误（如：输入A，预期结果应该是B，但实际结果不是B等）。</p>
+</li>
+<li><p>流程输出错误（包括业务流程和事件流程。如：输入流程A，但实际流程处理中未能按A流程处理数据；点击某按钮，应跳转增加页面，结果跳转成修改页面等）。</p>
+</li>
+<li><p>按照需求文档，功能未在程序中体现出来，即系统无此功能（据项目经理及相关负责人确认此功能必须具备的）；功能不符合用户需求，功能实现不正确（由项目经理及相关负责人确认此功能必须具备的）。</p>
+</li>
+</ol>
+<p><strong>2</strong>  </p>
+<p><strong>严重问题(二级bug)</strong>  </p>
+<p> 严重问题：严重地影响系统要求或基本功能的实现，且没有更正办法（重新安装或重新启动该软件不属于更正办法）。使系统不稳定、或破坏数据、或产生错误结果，或部分功能无法执行，而且是常规操作中经常发生或非常规操作中不可避免（不能用其他操作修复问题）的主要问题，系统无法满足主要的业务要求，性能、功能或可用性严重降低。  </p>
+<ol>
+<li><p>数据计算错误。</p>
+</li>
+<li><p>因程序问题迫使正在操作的流程无法继续且无其他操作可以修复问题的（其中非程序问题有：系统配置、数据结构变动、Session超时、网络中断、人为变更数据库中的数据、系统缺少相应文件或目录等）。</p>
+</li>
+<li><p>常规操作下功能异常，如：结果与实际查询条件不一致、页面按钮点击没反应等。</p>
+</li>
+<li><p>功能项的某些项目（可为所有控件）使用无效（对系统非致命的）。</p>
+</li>
+<li><p>因程序问题迫使正在操作的流程无法继续且有其他操作可以修复问题的（其中非程序问题有：系统配置、数据结构变动、Session超时、网络中断、人为变更数据库中的数据、系统缺少相应文件或目录等）。</p>
+</li>
+<li><p>多余功能，且该功能影响了程序的正常使用（需项目经理及相关负责人确认），如客户名称录入项需要录入汉字和英文，但程序限制了只能输入汉字等。</p>
+</li>
+<li><p>常规操作下，程序打印、导出的内容错误。</p>
+</li>
+<li><p>在程序安装配置无误的情况下相关功能js报错，且该功能影响业务流的正常进行。</p>
+</li>
+<li><p>在1024*768分辨率下，页面严重变形，使数据无法浏览。</p>
+</li>
+<li><p>在Session超时，无友情页面提示</p>
+</li>
+</ol>
+<p><strong>3</strong>  </p>
+<p><strong>中级问题（三级bug）</strong>  </p>
+<p>系统可以满足业务要求，系统性能或响应时间变慢、产生错误的中间结果但不影响最终结果等影响有限的问题，另外，还包括系统健壮性方面的测试。</p>
+<ol>
+<li><p>对于一些重要数据的操作、重要环节的变动且相关的操作和变动不可挽回时，系统应给出相应的操作确认提示，防止误操作，如数据删除、审批等。</p>
+</li>
+<li><p>常规操作下页面跳转至错误友情提示页面，且操作其他模块，程序可正常运行（其中非程序问题有：系统配置、数据结构变动、Session超时、网络中断、人为变更数据库中的数据、系统缺少相应文件或目录）。</p>
+</li>
+<li><p>功能实现不完整，如删除时没有考虑数据关联。</p>
+</li>
+<li><p>因错误操作且因程序问题导致系统崩溃，迫使整个系统无法使用（其中非程序问题有：系统配置、数据结构变动、Session超时、网络中断、人为变更数据库中的数据、系统缺少相应文件或目录等）。</p>
+</li>
+<li><p>数据添加、修改、查看界面中控件没有一一对应或对应控件长度、格式、验证性提示信息内容等不一致，但又不影响程序功能的进一步的操作（最终以需求规格说明书中内容规定为准）。</p>
+</li>
+<li><p>响应时间较慢。（不可超过1分钟）</p>
+</li>
+<li><p>功能性建议。</p>
+</li>
+<li><p>操作界面错误（包括数据窗口内列名定义、含义是否一致）。</p>
+</li>
+<li><p>简单的输入限制未放在前台进行控制。</p>
+</li>
+<li><p>虽然正确性不受影响，但系统性能和响应时间受到影响。</p>
+</li>
+<li><p>常规操作下，程序显示、打印、导出的内容格式错误，如页面变形、金额类数据未加货币符号等。</p>
+</li>
+<li><p>在程序安装配置无误的情况下相关功能js报错，且该功能不影响业务流的正常进行。</p>
+</li>
+<li><p>页面验证提示信息位置或内容错误，如空值验证对应位置或内容错误、提示对话框内容错误等（最终以需求规格说明书中内容规定为准）。</p>
+</li>
+<li><p>在1024*768分辨率下，页面变形，但不影响数据的浏览。</p>
+</li>
+<li><p>输入超长数据或特殊字符导致程序报黄页或跳转到友情提示页面等影响程序进一步的操作（需跳转友情页面）。</p>
+</li>
+<li><p>在Session超时（需友情页面）、网络中断时，出现浏览器卡死、报黄页等异常情况，且没有对应的错误捕获机制并给出友情提示。</p>
+</li>
+<li><p>滚动条无效，但不影响数据的显示与浏览。</p>
+</li>
+<li><p>界面不规范，页面表现形式、样式与其他类似功能模块不一致，且差异明显的。</p>
+</li>
+<li><p>必填项与非必填项应加以区别。</p>
+</li>
+</ol>
+<p><strong>4</strong>  </p>
+<p><strong>轻微问题</strong>  </p>
+<p>轻微问题：使操作者不方便或遇到麻烦，但它不影响执行工作功能或重要功能。界面拼写错误或用户使用不方便等小问题或需要完善的问题。  </p>
+<ol>
+<li><p>页面表现建议。</p>
+</li>
+<li><p>功能操作建议。</p>
+</li>
+<li><p>非程序代码导致黄页（如：手动删除、修改、增加数据库中的数据；缺少相应的系统配置；项目缺少目录或文件、因不明操作导致数据库中数据不符合正常逻辑关系）。</p>
+</li>
+<li><p>辅助说明字体大小、颜色明显与页面整体表现形式不协调或者文字描述不清楚。</p>
+</li>
+<li><p>长时间操作未给用户提示（不可超过1分钟），但程序一直在正常运行的，没有出现卡死等情况，如给出旋转的loading图标或程序后台操作进度条或显示进度百分比等。</p>
+</li>
+<li><p>提示窗口文字未采用行业术语。</p>
+</li>
+<li><p>可输入区域和只读区域没有明显的区分标志，如只读区域置灰显示等。</p>
+</li>
+<li><p>键盘支持不好，如在可输入多行的字段中不支持回车换行，输入查询条件后不支持回车触发查询。</p>
+</li>
+<li><p>界面不能及时刷新，如需要重新执行查询或加载页面等（最终以需求规格说明书中内容为准）。</p>
+</li>
+</ol>
+<p>以上就是产品的测试规范，囊括了从需求到测试计划、测试准备、测试执行、结果分析、上线准备、跟踪测试到项目总结的整个流程，规范了产品测试流程。</p>
+<p>产品测试规范纲要</p>
+<p><strong><em>目录</em></strong> </p>
+<p>第1章 产品测试规范  </p>
+<p>1.1 产品测试流程  </p>
+<p>1.1.1 测试流程图  </p>
+<p>1.1.2 测试流程说明  </p>
+<p>1.2 需求梳理 </p>
+<p>1.2.1 需求梳理 </p>
+<p>1.3 测试计划 </p>
+<p>1.3.1 测试工具选取 </p>
+<p>1.3.2 测试人员分配 </p>
+<p>1.3.3 测试业务场景选取</p>
+<p>1.3.4 测试环境梳理 </p>
+<p>1.3.5 测试数据梳理 </p>
+<p>1.4 测试准备  </p>
+<p>1.4.1 代码管理  </p>
+<p>1.4.2 测试环境搭建  </p>
+<p>1.4.3 测试数据脚本编写  </p>
+<p>1.5 测试用例编写(功能测试框架)   </p>
+<p>1.5.1 界面友好性测试  </p>
+<p>1.5.2 功能测试  </p>
+<p>1.5.3 业务流程测试(主要功能测试)  </p>
+<p>1.5.4 链接测试  </p>
+<p>1.5.5 容错测试  </p>
+<p>1.5.6 稳定性测试  </p>
+<p>1.5.7 常规性能测试  </p>
+<p>1.5.8 易用性测试  </p>
+<p>1.5.9 兼容性测试 </p>
+<p>1.6 测试执行  </p>
+<p>1.6.1 接口自动化测试  </p>
+<p>1.6.2 探索式测试  </p>
+<p>1.6.3 传统测试用例测试  </p>
+<p>1.6.4 Bug跟踪  </p>
+<p>1.7 测试结果分析  </p>
+<p>1.7.1 结果收集  </p>
+<p>1.7.2 结果分析  </p>
+<p>1.7.3 测试分析报告  </p>
+<p>1.8 上线准备  </p>
+<p>1.8.1 版本发布  </p>
+<p>1.8.2 数据准备  </p>
+<p>1.9 上线测试跟踪  </p>
+<p>1.9.1 跟踪测试  </p>
+<p>1.10 BUG预防体系  </p>
+<p>1.10.1 web常见产品问题及预防    </p>
+<p>1.10.2 app常见产品问题及预防</p>
+<p>[TOC]  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2016/11/23/产品测试规范十二Bug管理规范/" title="产品测试规范（十二:Bug管理规范）">http://wysh.site/2016/11/23/产品测试规范十二Bug管理规范/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/产品测试/" rel="tag"> <i class="fa fa-tag"></i> 产品测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/07/产品测试规范十一Bug预防体系/" rel="next" title="产品测试规范（十一:Bug预防体系）">
+                <i class="fa fa-chevron-left"></i> 产品测试规范（十一:Bug预防体系）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/23/Web安全测试基础/" rel="prev" title="Web安全测试基础一 （一：跨SQL注入，二：跨站脚本攻击，三，命令执行漏洞，四，跨站请求伪造，五，文件上传漏洞，六，文件包含漏洞）">
+                Web安全测试基础一 （一：跨SQL注入，二：跨站脚本攻击，三，命令执行漏洞，四，跨站请求伪造，五，文件上传漏洞，六，文件包含漏洞） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-11-Bug管理规范"><span class="nav-number">1.</span> <span class="nav-text">1.11 Bug管理规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-1-bug提交规范"><span class="nav-number">1.1.</span> <span class="nav-text">1.11.1 bug提交规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-bug级别定义"><span class="nav-number">1.2.</span> <span class="nav-text">1.1.2 bug级别定义</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

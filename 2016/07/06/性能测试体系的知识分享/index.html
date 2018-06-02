@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="性能测试" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="开始性能测试前需要了解的内容： 项目具体需求。  指标：响应时间在多少以内，并发数多少，tps多少，总tps多少，稳定性交易总量多少，事务成功率，交易波动范围，稳定运行时长，资源利用率，测哪些交易，哪些接口,测试哪些场景。  环境：生产环境服务器数量，测试环境服务器数量，按照资源配比得出测试指标。  协议：系统用什么协议进行通讯。  压力机数量：如果并发用户数太多，需要把压力发到不同的压力机，不然">
+<meta name="keywords" content="性能测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能测试体系的知识分享">
+<meta property="og:url" content="http://wysh.site/2016/07/06/性能测试体系的知识分享/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="开始性能测试前需要了解的内容： 项目具体需求。  指标：响应时间在多少以内，并发数多少，tps多少，总tps多少，稳定性交易总量多少，事务成功率，交易波动范围，稳定运行时长，资源利用率，测哪些交易，哪些接口,测试哪些场景。  环境：生产环境服务器数量，测试环境服务器数量，按照资源配比得出测试指标。  协议：系统用什么协议进行通讯。  压力机数量：如果并发用户数太多，需要把压力发到不同的压力机，不然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-01T08:02:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能测试体系的知识分享">
+<meta name="twitter:description" content="开始性能测试前需要了解的内容： 项目具体需求。  指标：响应时间在多少以内，并发数多少，tps多少，总tps多少，稳定性交易总量多少，事务成功率，交易波动范围，稳定运行时长，资源利用率，测哪些交易，哪些接口,测试哪些场景。  环境：生产环境服务器数量，测试环境服务器数量，按照资源配比得出测试指标。  协议：系统用什么协议进行通讯。  压力机数量：如果并发用户数太多，需要把压力发到不同的压力机，不然">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2016/07/06/性能测试体系的知识分享/"/>
+
+
+
+
+
+  <title>性能测试体系的知识分享 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/07/06/性能测试体系的知识分享/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">性能测试体系的知识分享</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-06T22:28:47+08:00">
+                2016-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能测试/" itemprop="url" rel="index">
+                    <span itemprop="name">性能测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,171
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="开始性能测试前需要了解的内容："><a href="#开始性能测试前需要了解的内容：" class="headerlink" title="开始性能测试前需要了解的内容："></a>开始性能测试前需要了解的内容：</h2><ol>
+<li><p>项目具体需求。</p>
+</li>
+<li><p>指标：响应时间在多少以内，并发数多少，tps多少，总tps多少，稳定性交易总量多少，事务成功率，交易波动范围，稳定运行时长，资源利用率，测哪些交易，哪些接口,测试哪些场景。</p>
+</li>
+<li><p>环境：生产环境服务器数量，测试环境服务器数量，按照资源配比得出测试指标。</p>
+</li>
+<li><p>协议：系统用什么协议进行通讯。</p>
+</li>
+<li><p>压力机数量：如果并发用户数太多，需要把压力发到不同的压力机，不然可能会存在压力机瓶颈问题，导致tps和响应时间抖动。</p>
+</li>
+<li><p>交易占比：分析线上日志得出tps占比。</p>
+</li>
+<li><p>系统架构：请求流经过哪些环节，压测时监控这些环节。</p>
+</li>
+</ol>
+<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><ol>
+<li><p>基准：一个用户迭代100次，关注响应时间，事务成功率100%。</p>
+</li>
+<li><p>负载：10个用户跑10分钟，关注响应时间，事务成功率100%。</p>
+</li>
+<li><p>容量：估算一个总tps，根据公式计算出每个交易的pacing和vu，获取系统最大处理能力（最优容量），再令外测出三个梯度作为对比（两组小于最优容量，一组大于最优容量），四组容量VU等差，tps等差，对比每组容量实际占比和测试占比（越接近越能模拟真实场景），关注响应时间，总tps，tps，事务成功率，AP cpu利用率，DB cpu利用率，线程死锁，数据库死锁。  </p>
+</li>
+</ol>
+<p>其中响应时间应小于负载测试时间，总tps应约等于预估总tps（相差不超过10是正常的），每个交易的tps应接近预估总tps*占比，事务成功率100%，AP cpu小于60%，DB cpu小于80%。dump线程栈检测是否有线程死锁，查看数据库日志看是否有数据库死锁。</p>
+<ol start="4">
+<li>稳定性：采取最优容量的80%作为压力持续运行24小时，观察系统长时间运行的性能表现，关注响应时间，tps，总tps，事务成功率，交易总数，观察是否有内存溢出（堆溢出，栈溢出，持久代溢出），cpu利用率是否达标，mem是否不持续增长，是否能正常触发fullgc，gc时间，gc频率， fullgc时间，fullgc频率（重点关注，JVM调优就是为了减少fullgc频率）。</li>
+</ol>
+<h2 id="监控："><a href="#监控：" class="headerlink" title="监控："></a>监控：</h2><p>容量测试和稳定性测试时启动nmon监控。</p>
+<h2 id="压测中遇到的性能问题及解决办法："><a href="#压测中遇到的性能问题及解决办法：" class="headerlink" title="压测中遇到的性能问题及解决办法："></a>压测中遇到的性能问题及解决办法：</h2><h3 id="一、容量测试过程中cpu过高"><a href="#一、容量测试过程中cpu过高" class="headerlink" title="一、容量测试过程中cpu过高"></a>一、容量测试过程中cpu过高</h3><ol>
+<li><p>用vmstat实时监控cpu使用情况。很小的压力AP cpu却到了80%多，指标是不能超过60%。</p>
+</li>
+<li><p>分析是use cpu过高还是sys cpu过高，常见的是use cpu使用过高。</p>
+</li>
+<li><p>如果是sys cpu使用过高，先把消耗cpu最多的进程找出来（top命令），再找到该线程下消耗cpu过高的是哪几个线程，再把该线程转换成16进制，再用jstack命令来dump线程栈，看这个线程栈在调用什么东西导致use cpu过高。</p>
+</li>
+</ol>
+<h3 id="二、内存溢出（堆溢出、栈溢出、持久代溢出）"><a href="#二、内存溢出（堆溢出、栈溢出、持久代溢出）" class="headerlink" title="二、内存溢出（堆溢出、栈溢出、持久代溢出）"></a>二、内存溢出（堆溢出、栈溢出、持久代溢出）</h3><ol>
+<li>堆内存溢出</li>
+</ol>
+<p>1)稳定性压测一段时间后，LR报错，日志报java.lang.OutOfMemoryError.Java heap space。  </p>
+<p>2)用jmap -histo pid命令dump堆内存使用情况，查看堆内存排名前20个对象，看是否有自己应用程序的方法，从最高的查起，如果有则检查该方法是什么原因造成堆内存溢出。 </p>
+<p>3)如果前20里没有自己的方法，则用jmap -dump来dump堆内存，在用MAT分析dump下来的堆内存，分析导出内存溢出的方法。  </p>
+<p>4)如果应用程序的方法没有问题，则需要修改JVM参数，修改xms，xmx，调整堆内存参数，一般是增加堆内存。  </p>
+<ol start="2">
+<li>栈内存溢出</li>
+</ol>
+<p>1)稳定性压测一段时间后，LR报错，日志报Java.Lang.StackOverflowError。  </p>
+<p>2)修改jvm参数，将xss参数改大，增加栈内存。  </p>
+<p>3)栈溢出一定是做批量操作引起的，减少批处理数据量。  </p>
+<ol start="3">
+<li>持久代溢出</li>
+</ol>
+<p>1)稳定性压测一定时间后，日志报Java.Lang.OutOfMenoryError.PermGen Space。  </p>
+<p>2)这种原因是由于类、方法描述、字段描述、常量池、访问修饰符等一些静态变量太多，将持久代占满导致持久代溢出。  </p>
+<p>3)修改jvm配置，将XX:MaxPermSize=256参数调大。尽量减少静态变量。  </p>
+<h3 id="三、线程死锁"><a href="#三、线程死锁" class="headerlink" title="三、线程死锁"></a>三、线程死锁</h3><ol>
+<li><p>容量测试压测一段时间后，LR报连接超时。</p>
+</li>
+<li><p>造成这种现象的原因很多，比如带宽不够，中间件线程池不够用，数据库连接池不够，连接数占满等都会造成连接不上而报超时错误。</p>
+</li>
+<li><p>jstack命令dump线程栈，搜索线程栈里有没有block，如果有的话就是线程死锁，找到死锁的线程，分析对应的代码。</p>
+</li>
+</ol>
+<h3 id="四、数据库死锁"><a href="#四、数据库死锁" class="headerlink" title="四、数据库死锁"></a>四、数据库死锁</h3><ol>
+<li><p>容量测试压测一段时间后，LR报连接超时。</p>
+</li>
+<li><p>造成这种现象的原因很多，比如带宽不够，中间件线程池不够用，数据库连接池不够，连接数占满等都会造成连接不上而报超时错误。</p>
+</li>
+<li><p>数据库日志中搜索block，能搜到block的话就是存在数据库死锁，找到日志，查看对应的sql，优化造成死锁的sql。</p>
+</li>
+</ol>
+<h3 id="五、数据库连接池不释放"><a href="#五、数据库连接池不释放" class="headerlink" title="五、数据库连接池不释放"></a>五、数据库连接池不释放</h3><ol>
+<li><p>容量测试压测一段时间后，LR报连接超时。</p>
+</li>
+<li><p>造成这种现象的原因很多，比如带宽不够，中间件线程池不够用，数据库连接池不够，连接数占满等都会造成连接不上而报超时错误。</p>
+</li>
+<li><p>去数据库查看应用程序到数据库的连接有多少个（ show full processlist），假如应用程序里面配置的数据库连接为30，在数据库查看应用程序到数据库的连接也是30，则表示连接池占满了。将配置改成90试试，去数据库看如果连接到了90，则可以确定是数据库连接池不释放导致的。查看代码，数据库连接部分是不是有创建连接但是没有关闭连接的情况。基本就是这种情况导致的，修改代码即可。</p>
+</li>
+</ol>
+<h3 id="六、TPS上不去"><a href="#六、TPS上不去" class="headerlink" title="六、TPS上不去"></a>六、TPS上不去</h3><ol>
+<li><p>压力大的时候tps频繁抖动，导致总tps上不去。查看是否有fullgc（tail -f gc_mSrv1.log | grep full）。</p>
+</li>
+<li><p>pacing设置太小也会导致tps上不去，对抖动大的交易多增加点用户即可。</p>
+</li>
+<li><p>tps抖动，单压抖动大的交易，发现很平稳，这时怀疑是不是压力太大导致，所以发容量的时候把压力最大的那只交易分到其他压力机，然后发现tps不抖动了。注意：多台压力机只影响tps抖动，不会影响服务器的cpu。</p>
+</li>
+<li><p>看响应时间有没有超时，看用户数够不够。</p>
+</li>
+</ol>
+<h3 id="七、服务器压力不均衡（相差1-2-是正常的）"><a href="#七、服务器压力不均衡（相差1-2-是正常的）" class="headerlink" title="七、服务器压力不均衡（相差1%-2%是正常的）"></a>七、服务器压力不均衡（相差1%-2%是正常的）</h3><ol>
+<li><p>跑最优容量的时候，四台AP只有一台cpu超过60%，其他三台都在60%以下。</p>
+</li>
+<li><p>查看服务器是否有定时任务。</p>
+</li>
+<li><p>查看是否存在压力机瓶颈。</p>
+</li>
+<li><p>是否存在带宽瓶颈（局域网不存在此问题）。</p>
+</li>
+<li><p>查看部署的版本，配置是否一样。</p>
+</li>
+<li><p>可能别人也在用这些AP，因为同一台物理机上有很多虚拟机，因为别人先用，资源被别人先占了。</p>
+</li>
+</ol>
+<h3 id="八、fullgc时间太长"><a href="#八、fullgc时间太长" class="headerlink" title="八、fullgc时间太长"></a>八、fullgc时间太长</h3><ol>
+<li><p>跑容量和稳定性的时候，出现LR报请求超时错误，查看后台日志是fullgc了，看LR几点报的错和日志里fullgc的时间是否对应，fullgc会暂停整个应用程序，导致LR前端没响应，所以报错，这时可以减少old代内存，从而减少fullgc时间，减少fullgc时间LR就不会报错，让用户几乎感觉不到应用程序暂停。</p>
+</li>
+<li><p>四台AP轮流着full gc（部分server fullgc，其他server也会fullgc），这时可以制定策略让不同的server不同时fullgc，或者等夜间交易量少时写定时任务重启服务。</p>
+</li>
+</ol>
+<p><strong>注意：</strong></p>
+<p>服务器日志为error下测试。  </p>
+<p>服务启动后几分钟内发压压力会很大，最好是服务启动两三分钟后再开始跑压力。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2016/07/06/性能测试体系的知识分享/" title="性能测试体系的知识分享">http://wysh.site/2016/07/06/性能测试体系的知识分享/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能测试/" rel="tag"> <i class="fa fa-tag"></i> 性能测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/15/如何写一个好的缺陷（Defect）报告/" rel="next" title="如何写一个好的缺陷（Defect）报告">
+                <i class="fa fa-chevron-left"></i> 如何写一个好的缺陷（Defect）报告
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/07/性能测试方案设计思路总结/" rel="prev" title="性能测试方案设计思路总结">
+                性能测试方案设计思路总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始性能测试前需要了解的内容："><span class="nav-number">1.</span> <span class="nav-text">开始性能测试前需要了解的内容：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试："><span class="nav-number">2.</span> <span class="nav-text">测试：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控："><span class="nav-number">3.</span> <span class="nav-text">监控：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压测中遇到的性能问题及解决办法："><span class="nav-number">4.</span> <span class="nav-text">压测中遇到的性能问题及解决办法：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、容量测试过程中cpu过高"><span class="nav-number">4.1.</span> <span class="nav-text">一、容量测试过程中cpu过高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、内存溢出（堆溢出、栈溢出、持久代溢出）"><span class="nav-number">4.2.</span> <span class="nav-text">二、内存溢出（堆溢出、栈溢出、持久代溢出）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、线程死锁"><span class="nav-number">4.3.</span> <span class="nav-text">三、线程死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、数据库死锁"><span class="nav-number">4.4.</span> <span class="nav-text">四、数据库死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、数据库连接池不释放"><span class="nav-number">4.5.</span> <span class="nav-text">五、数据库连接池不释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、TPS上不去"><span class="nav-number">4.6.</span> <span class="nav-text">六、TPS上不去</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、服务器压力不均衡（相差1-2-是正常的）"><span class="nav-number">4.7.</span> <span class="nav-text">七、服务器压力不均衡（相差1%-2%是正常的）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、fullgc时间太长"><span class="nav-number">4.8.</span> <span class="nav-text">八、fullgc时间太长</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

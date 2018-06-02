@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="APP测试, 用例设计" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。1  应用的启动和停止1.1 首次启动 是否出现欢迎界面，欢迎界面的停留时间合理，欢迎界面后是否正常进入应用;   首次启动时间是否合理;   该拉取的信息是否正确;   桌面图标是否创建成功，功能启动快捷键创建是否成功（某些安卓手机">
+<meta name="keywords" content="APP测试, 用例设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动APP测试用例设计的关注点">
+<meta property="og:url" content="http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。1  应用的启动和停止1.1 首次启动 是否出现欢迎界面，欢迎界面的停留时间合理，欢迎界面后是否正常进入应用;   首次启动时间是否合理;   该拉取的信息是否正确;   桌面图标是否创建成功，功能启动快捷键创建是否成功（某些安卓手机">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-30T12:38:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动APP测试用例设计的关注点">
+<meta name="twitter:description" content="在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。1  应用的启动和停止1.1 首次启动 是否出现欢迎界面，欢迎界面的停留时间合理，欢迎界面后是否正常进入应用;   首次启动时间是否合理;   该拉取的信息是否正确;   桌面图标是否创建成功，功能启动快捷键创建是否成功（某些安卓手机">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/"/>
+
+
+
+
+
+  <title>移动APP测试用例设计的关注点 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">移动APP测试用例设计的关注点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-28T13:49:37+08:00">
+                2016-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP测试/" itemprop="url" rel="index">
+                    <span itemprop="name">APP测试</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP测试/用例设计/" itemprop="url" rel="index">
+                    <span itemprop="name">用例设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,726
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。"><a href="#在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。" class="headerlink" title="在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。"></a>在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。</h5><h2 id="1-应用的启动和停止"><a href="#1-应用的启动和停止" class="headerlink" title="1  应用的启动和停止"></a>1  应用的启动和停止</h2><h4 id="1-1-首次启动"><a href="#1-1-首次启动" class="headerlink" title="1.1 首次启动"></a>1.1 首次启动</h4><ul>
+<li>是否出现欢迎界面，欢迎界面的停留时间合理，欢迎界面后是否正常进入应用;  </li>
+<li>首次启动时间是否合理;  </li>
+<li>该拉取的信息是否正确;  </li>
+<li>桌面图标是否创建成功，功能启动快捷键创建是否成功（某些安卓手机会有在桌面创建应用内某个功能的快捷键的需求）  </li>
+</ul>
+<h4 id="1-2-二次启动"><a href="#1-2-二次启动" class="headerlink" title="1.2  二次启动"></a>1.2  二次启动</h4><ul>
+<li>启动时间是否符合预期；</li>
+<li>从各个启动入口进入应用是否可以正常进入：程序启动主图标，某个功能的快捷键，widget；</li>
+<li>启动后状态检查：如初始化信息、初始状态、启动对网络</li>
+<li>启动进程服务检查：进程名、进程数、服务名、服务数、第三方调用的SDK如GPS</li>
+<li>带登陆的应用是否二次启动的时候正常登录</li>
+</ul>
+<h4 id="1-3-程序异常退出后的启动"><a href="#1-3-程序异常退出后的启动" class="headerlink" title="1.3 程序异常退出后的启动"></a>1.3 程序异常退出后的启动</h4><ul>
+<li>操作出现crash后再启动：如空指针、内存溢出等</li>
+<li>手动停止进程：多进程的情况停止所有或者停止其中一个后重启</li>
+<li>手动停止服务：多服务的情况，停止所有或者停止部分服务后，未重启直接使用</li>
+<li>管家软件一键清理进程后重启</li>
+<li>其他系统软件工具停止进程、清理软件数据</li>
+</ul>
+<h2 id="2-程序功能模块"><a href="#2-程序功能模块" class="headerlink" title="2 程序功能模块"></a>2 程序功能模块</h2><p> 这个一般是根据需求来对应用的所有模块所以功能的触发事件逐一验证。这个最基本的要从两个方面考察，一方面是顺从需求来对模块进行操作，是否达到需求规定的预期；另一方面就是与需求背道而驰是否程序会有相应异常控制等等。廖叔提出了Google正在使用的测试建模的概念，这个方法可以可以帮助我们更好的结合需求分析应用的架构，设计更完善的功能模块用例。  </p>
+<h4 id="2-1-文本框输入功能"><a href="#2-1-文本框输入功能" class="headerlink" title="2.1 文本框输入功能"></a>2.1 文本框输入功能</h4><p>正常输入，输入越界，特殊字符集(\n,\r等等),利用复制粘贴向文本输入内容，输入程序规定不让输入的字符</p>
+<h4 id="2-2-事件触发"><a href="#2-2-事件触发" class="headerlink" title="2.2 事件触发"></a>2.2 事件触发</h4><ul>
+<li>每一个按钮、每一个可点击项是否能够完成需求规定的功能 </li>
+<li>尝试点击页面上不可点击的区域，来验证在测试过程当中的预留测试后门是否关闭</li>
+</ul>
+<h2 id="3-权限安全"><a href="#3-权限安全" class="headerlink" title="3 权限安全"></a>3 权限安全</h2><ul>
+<li>需要用户确认的权限没有授权，权限默认关闭</li>
+<li>联网权限被管家、系统安全类软件限制情况下的联网操作</li>
+<li>权限敏感度，如通讯录等为系统的绝密权限谨慎获取</li>
+<li>使用安全软件进行安全漏洞、病毒扫描，看被测APP是否会被这些安全软件提示有问题而影响用户的对被测APP的使用或者印象</li>
+</ul>
+<h2 id="4-文件存储"><a href="#4-文件存储" class="headerlink" title="4 文件存储"></a>4 文件存储</h2><ul>
+<li>APP使用过程中产生的临时文件存储路径、命名方式等</li>
+<li>APP中涉及的下载操作产生的文件存储方式</li>
+<li>存储的文件被锁、占用</li>
+<li>有外置SD、内置SD卡都要考察APP产生的文件是否正确</li>
+<li>APP被安装在SD卡或者手机存储空间</li>
+<li>磁盘空间不足、磁盘无权限（如读、写）</li>
+</ul>
+<h2 id="5-网络与流量"><a href="#5-网络与流量" class="headerlink" title="5 网络与流量"></a>5 网络与流量</h2><ul>
+<li>网络信号，尤其是弱网络环境下应用的表现</li>
+<li>不同运营商网络：电信、联通、移动，2G/3G/4G</li>
+<li>网络中断、网络恢复场景的逻辑处理（如重试），以及网络提示</li>
+<li>首次启动应用的流量是否符合预期</li>
+<li>统计、异常上报对流量的影响</li>
+<li>APP中图片大小、尺寸是否有考虑对网络流量的影响</li>
+<li>基于流量安全的特殊业务，如仅wifi联网  </li>
+</ul>
+<h2 id="6-接口容错"><a href="#6-接口容错" class="headerlink" title="6 接口容错"></a>6 接口容错</h2><ul>
+<li>请求网络层错误：http response返回非200的状态</li>
+<li>请求业务层错误：接口返回内容为空、超长、字段类型不匹配  </li>
+</ul>
+<h2 id="7-中断测试"><a href="#7-中断测试" class="headerlink" title="7 中断测试"></a>7 中断测试</h2><ul>
+<li>锁屏中断：停留在程序操作界面进行锁屏，恢复后检查操作是否正常</li>
+<li>前后台切换：停留在程序操作界面，通过Home键，进行程序的前后台切换</li>
+<li>加载中断：页面接口请求、界面框架加载时，通过Home键、返回键、快速切换操作进行中断</li>
+<li>系统异常中断：如关机、断电、来电</li>
+</ul>
+<h2 id="8-机型适配"><a href="#8-机型适配" class="headerlink" title="8  机型适配"></a>8  机型适配</h2><h4 id="8-1-分辨率适配"><a href="#8-1-分辨率适配" class="headerlink" title="8.1 分辨率适配"></a>8.1 分辨率适配</h4><p>UI结构、对话框基于分辨率、屏幕大小进行适配  </p>
+<h4 id="8-2-OS版本适配"><a href="#8-2-OS版本适配" class="headerlink" title="8.2 OS版本适配"></a>8.2 OS版本适配</h4><p>涉及API调用如获取SIM卡信息、外置SD卡设置（4.4外置SD卡不具备写的权限）  </p>
+<h4 id="8-3-CPU硬件配置"><a href="#8-3-CPU硬件配置" class="headerlink" title="8.3 CPU硬件配置"></a>8.3 CPU硬件配置</h4><p>X86机型、V5、V6、V7、V8  </p>
+<h2 id="9-系统配置"><a href="#9-系统配置" class="headerlink" title="9 系统配置"></a>9 系统配置</h2><ul>
+<li>进程管理：省电管理、后台进程驻留管理</li>
+<li>显示管理：字体大小、字体类型</li>
+<li>语言环境：语言环境</li>
+<li>横竖屏配置：是否支持横竖屏自适应处理</li>
+</ul>
+<h2 id="10-升级-覆盖安装"><a href="#10-升级-覆盖安装" class="headerlink" title="10 升级 覆盖安装"></a>10 升级 覆盖安装</h2><ul>
+<li>逐步升级：用户数据、设置、状态的保留，特步注意新版本已去掉的状态或设置</li>
+<li>跳级：即隔开版本覆盖安装</li>
+<li>降级：覆盖安装更低版本</li>
+<li>卸载安装，安装目录清理，SD卡存储数据不被清理</li>
+<li>省流量升级：有些助手提供省流量升级的方式</li>
+<li>在没有更新或者网络时，需要给予用户正确的信息表达</li>
+<li>如果升级有忽略本次版本升级，那么当有新的升级版本时，是否还有提示升级</li>
+<li>强制升级 不升级无法使用  </li>
+</ul>
+<h2 id="11-性能测试"><a href="#11-性能测试" class="headerlink" title="11 性能测试"></a>11 性能测试</h2><h4 id="11-1-性能"><a href="#11-1-性能" class="headerlink" title="11.1 性能"></a>11.1 性能</h4><p>核心操作的性能指标：如CPU/内存、响应时长、电量、流量  </p>
+<h4 id="11-2-稳定性"><a href="#11-2-稳定性" class="headerlink" title="11.2 稳定性"></a>11.2 稳定性</h4><ul>
+<li>选择某些场景做持续反复操作</li>
+<li>Monkey稳定性操作，持续多个小时</li>
+</ul>
+<h4 id="11-3-流畅度"><a href="#11-3-流畅度" class="headerlink" title="11.3 流畅度"></a>11.3 流畅度</h4><p>列表滑动、返回进入、快速点击（这个肉眼不好评判，可以借助GT，一般打分在90分以上是比较好的）</p>
+<h4 id="11-4-软件兼容"><a href="#11-4-软件兼容" class="headerlink" title="11.4 软件兼容"></a>11.4 软件兼容</h4><ul>
+<li>通用软件 输入法</li>
+<li>安全软件</li>
+<li>通信类</li>
+<li>竞品软件 同类软件，是否出现冲突</li>
+</ul>
+<h2 id="12-竞品对比测试"><a href="#12-竞品对比测试" class="headerlink" title="12 竞品对比测试"></a>12 竞品对比测试</h2><ul>
+<li>功能方面：与同类竞品软件在UI设计，交互体验等方面进行对比</li>
+<li>性能方面：同类竞品软件在性能、耗电、流量等方面至少与对方持平，最好不要低于对方太多</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/" title="移动APP测试用例设计的关注点">http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/用例设计/" rel="tag"> <i class="fa fa-tag"></i> 用例设计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/23/完美组合用例精简精准测试/" rel="next" title="完美组合:用例精简+精准测试">
+                <i class="fa fa-chevron-left"></i> 完美组合:用例精简+精准测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/21/记一次性能测试实践/" rel="prev" title="记一次性能测试实践">
+                记一次性能测试实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。"><span class="nav-number">1.</span> <span class="nav-text">在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-应用的启动和停止"><span class="nav-number"></span> <span class="nav-text">1  应用的启动和停止</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-首次启动"><span class="nav-number"></span> <span class="nav-text">1.1 首次启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-二次启动"><span class="nav-number"></span> <span class="nav-text">1.2  二次启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-程序异常退出后的启动"><span class="nav-number"></span> <span class="nav-text">1.3 程序异常退出后的启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-程序功能模块"><span class="nav-number"></span> <span class="nav-text">2 程序功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-文本框输入功能"><span class="nav-number"></span> <span class="nav-text">2.1 文本框输入功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-事件触发"><span class="nav-number"></span> <span class="nav-text">2.2 事件触发</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-权限安全"><span class="nav-number"></span> <span class="nav-text">3 权限安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文件存储"><span class="nav-number"></span> <span class="nav-text">4 文件存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-网络与流量"><span class="nav-number"></span> <span class="nav-text">5 网络与流量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-接口容错"><span class="nav-number"></span> <span class="nav-text">6 接口容错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-中断测试"><span class="nav-number"></span> <span class="nav-text">7 中断测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-机型适配"><span class="nav-number"></span> <span class="nav-text">8  机型适配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-分辨率适配"><span class="nav-number"></span> <span class="nav-text">8.1 分辨率适配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-OS版本适配"><span class="nav-number"></span> <span class="nav-text">8.2 OS版本适配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-CPU硬件配置"><span class="nav-number"></span> <span class="nav-text">8.3 CPU硬件配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-系统配置"><span class="nav-number"></span> <span class="nav-text">9 系统配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-升级-覆盖安装"><span class="nav-number"></span> <span class="nav-text">10 升级 覆盖安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-性能测试"><span class="nav-number"></span> <span class="nav-text">11 性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#11-1-性能"><span class="nav-number"></span> <span class="nav-text">11.1 性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-稳定性"><span class="nav-number"></span> <span class="nav-text">11.2 稳定性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-3-流畅度"><span class="nav-number"></span> <span class="nav-text">11.3 流畅度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-4-软件兼容"><span class="nav-number"></span> <span class="nav-text">11.4 软件兼容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-竞品对比测试"><span class="nav-number"></span> <span class="nav-text">12 竞品对比测试</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

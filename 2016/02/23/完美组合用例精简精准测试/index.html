@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="测试理论, 用例设计" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、 为什么要做用例精简和精准测试1、 测试用例越来越多，测试效率低下这是因为在目前的快速迭代开发模式下，测试人员需要不停覆盖不断调整的产品逻辑需求，因此测试用例也越来越庞大了，以病毒查杀为例，目前用例已达500多条用例，导致全量测试时间很长，同时发现的问题并不和用例数成正比 2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖目前产品经理给出的需求都是增量文档，也就是">
+<meta name="keywords" content="测试理论, 用例设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="完美组合:用例精简+精准测试">
+<meta property="og:url" content="http://wysh.site/2016/02/23/完美组合用例精简精准测试/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="一、 为什么要做用例精简和精准测试1、 测试用例越来越多，测试效率低下这是因为在目前的快速迭代开发模式下，测试人员需要不停覆盖不断调整的产品逻辑需求，因此测试用例也越来越庞大了，以病毒查杀为例，目前用例已达500多条用例，导致全量测试时间很长，同时发现的问题并不和用例数成正比 2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖目前产品经理给出的需求都是增量文档，也就是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-01T16:06:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="完美组合:用例精简+精准测试">
+<meta name="twitter:description" content="一、 为什么要做用例精简和精准测试1、 测试用例越来越多，测试效率低下这是因为在目前的快速迭代开发模式下，测试人员需要不停覆盖不断调整的产品逻辑需求，因此测试用例也越来越庞大了，以病毒查杀为例，目前用例已达500多条用例，导致全量测试时间很长，同时发现的问题并不和用例数成正比 2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖目前产品经理给出的需求都是增量文档，也就是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2016/02/23/完美组合用例精简精准测试/"/>
+
+
+
+
+
+  <title>完美组合:用例精简+精准测试 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/音乐" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/02/23/完美组合用例精简精准测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">完美组合:用例精简+精准测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-23T17:36:29+08:00">
+                2016-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试理论/" itemprop="url" rel="index">
+                    <span itemprop="name">测试理论</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试理论/用例设计/" itemprop="url" rel="index">
+                    <span itemprop="name">用例设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,519
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、-为什么要做用例精简和精准测试"><a href="#一、-为什么要做用例精简和精准测试" class="headerlink" title="一、 为什么要做用例精简和精准测试"></a>一、 为什么要做用例精简和精准测试</h2><h4 id="1、-测试用例越来越多，测试效率低下"><a href="#1、-测试用例越来越多，测试效率低下" class="headerlink" title="1、 测试用例越来越多，测试效率低下"></a>1、 测试用例越来越多，测试效率低下</h4><p>这是因为在目前的快速迭代开发模式下，测试人员需要不停覆盖不断调整的产品逻辑需求，因此测试用例也越来越庞大了，以病毒查杀为例，目前用例已达500多条用例，导致全量测试时间很长，同时发现的问题并不和用例数成正比</p>
+<h4 id="2、-以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖"><a href="#2、-以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖" class="headerlink" title="2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖"></a>2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖</h4><p>目前产品经理给出的需求都是增量文档，也就是很难有某个产品的完整需求文档，因此，每次用例更多是功能点的覆盖，比如需求文档里面提到点击某个按钮会有什么变化，那某次用例编写时可能只是简单的覆盖，但这种用例并不完全符合用户实际场景，因此还是可能出现覆盖不完全问题。</p>
+<h4 id="3、-用例精简是精准测试的基础之一"><a href="#3、-用例精简是精准测试的基础之一" class="headerlink" title="3、 用例精简是精准测试的基础之一"></a>3、 用例精简是精准测试的基础之一</h4><p>精准测试的本质是在有代码变更时可以快速并精确地挑选出所影响的用例，在不影响质量的同时降低工作成本，理论上精准测试已经可以提高工作效率，但如果同时再加上精简后的用例，那就可以在精准测试的基础上再次降低工作成本。  </p>
+<p>因此用例精简可以是精准测试的基础之一。  </p>
+<h4 id="4、-用例精简降低用例执行的多次投入成本"><a href="#4、-用例精简降低用例执行的多次投入成本" class="headerlink" title="4、 用例精简降低用例执行的多次投入成本"></a>4、 用例精简降低用例执行的多次投入成本</h4><p>测试中的成本按其时间跨度可以分为：单次投入成本和多次投入成本。例如：编写测试用例可以看作是单次投入成本，因为编写测试用例一般是在测试的计划阶段进行（Scrum每个Sprint的开始阶段）的，虽然后期会有小的改动，但绝大多数是在一开始的设计阶段就基本上成型了；测试用例（包括：手工和自动化测试用例）的执行则是多次投入成本，因为每出一个新版本Build时都要执行所有的测试用例。  </p>
+<p>因此，我们虽然增加了用例精简的单次投入成本，但总体降低了后续用例执行时的多次投入成本降低。  </p>
+<h2 id="二、-用例精简原则概要"><a href="#二、-用例精简原则概要" class="headerlink" title="二、 用例精简原则概要"></a>二、 用例精简原则概要</h2><p>用例精简本质是，用更少的用例发现相同或更多的问题。因此，精简原则重点是：  </p>
+<p>从用户场景出发，合并、删除功能点用例，从“线”、“面”整体考虑用户场景，对已有用例进行精简和重构。  </p>
+<p>首先，先筛选出正常跟异常用例。异常用例是对测试的补充，也是探索性测试在用例方面的表现，所以对异常类的用例精简应跟正常用例进行结合，这部分下面会提到精简方案：  </p>
+<p>场景原则精简用例：  </p>
+<p>假如有一个功能A，有三个子功能A1，A2。A2的测试路径基于A1的功能操作，那么就用TestA1_A2来贯穿这个测试用例。每一个测试动作都是一个点，但是把这些测试要点结合起来连成一条线，甚至是面的覆盖，这就是一个测试场景。测试场景可以覆盖的面是比较广的，也可以较好的模范用户操作行为。  </p>
+<p>对需求的理解精简用例：  </p>
+<p>在最开始的时候，我们写用例都是根据需求文档的内容进行场景划分，用例编写。当需求越来越完善的时候，我们需要及时地精简我们的用例，明确需求是什么，场景是什么。将需求转化为对用户场景的模拟，实际的去重构用例。例如：第一阶段：当产品出了需求，有AB两个模块，A能调用起B模块。这个时候用例可能就关注功能需求，A调用B。第二阶段，需求二：加入C模块，A模块能调用起C模块；第三阶段，加入D模块，A能调用起D模块…。这个时候我们要关注的不再是需求功能，而是转化为对需求的理解：A模块能够成功调用其他模块的所有内容。  </p>
+<p>对比手段精简用例：  </p>
+<p>一开始我们把用例分为异常类型跟正常类型的用例之后，就是为了在对比测试这里用到。假如正常类型用例A，异常类型用例A+，当我们把执行顺序是TestA+, A的时候，就是一种对比类型的精简用例方法。  </p>
+<p>合并、降低缺陷出现率低的用例优先级原则：  </p>
+<p>按照无线的测试指南，正常逻辑的用例应该标为一级用例，同时占比不超过30%，但是在实际测试工作中我们可能需要再进行细化优先级，比如病毒查杀有500多条用例，那么理论上一级用例就多于150条。如果把这150条作为上线前测试的话，一个下午光做病毒模块的上线前都没法做完。  </p>
+<p>同时，虽然一级用例都是正常逻辑，但是从测试数据、用户反馈数据来看，功能模块的缺陷可能只集中在几个场景中，因此我们需要重视这几个场景，把相关的用例精简重构作为上线前用例，合并或降低缺陷出现率低的一级用例。  </p>
+<p>补充用户反馈跟缺陷的bug补充用例：  </p>
+<p>软件开发中有个80：20的原则，80%的效果是由20%的原因导致的，或者是80%的结果来自于20%的努力。同理，80%的缺陷主要集中在20%的代码中，90%的停机是由10%（甚至更少）的缺陷造成的。  </p>
+<p>所以，注重用户反馈，注重缺陷的场景，显得特别的重要。这部分看起来虽然不在精简范围内，但是这部分却应该是在用例设计补充里面。精简的用例要能做到很好的覆盖，有更好的效果，就需要重视缺陷的集中地带。同时用户真实的场景跟需求的场景也是可以在这里得到反映。  </p>
+<h2 id="三、-用例精简实践"><a href="#三、-用例精简实践" class="headerlink" title="三、 用例精简实践"></a>三、 用例精简实践</h2><p>根据上面的几个原则，我们抽取了广告拦截模块用例进行精简实践。首先我们先对以往缺陷的集中点进行了梳理，随后按照以上几个原则进行了精简和重构：  </p>
+<p>精简效果反馈：  </p>
+<p>力度：精简前的用例数据达到了223条用例，经过精简之后，目前用例数目只剩150条用例，减少了73条用例。  </p>
+<p>时间：73条用例一般需要1天/人去执行，这对效率上面是有很大提升。  </p>
+<h2 id="四、-用例精简效果粗略验证"><a href="#四、-用例精简效果粗略验证" class="headerlink" title="四、 用例精简效果粗略验证"></a>四、 用例精简效果粗略验证</h2><p>这里只提到粗略验证，是因为我们认为用例精简有效果验证有两种方式：功能点检查和全量覆盖率结果，功能点的完善性可以通过内部和外部评审实现，但比较耗时，也可以通过标注新旧用例之间的对应关系来确保精简后用例覆盖的功能点不遗漏。  </p>
+<p>全量覆盖率验证，主要是使用同一个版本测试包对精简前后用例进行覆盖率测试。目前覆盖率测试有行覆盖、方法覆盖、块覆盖，行覆盖率相对方法覆盖精度比较高，虽然不能百分之百的精确，但已经可以作为基础的衡量标准，因此我们抽取了部分精简后的用例进行覆盖率测试。  </p>
+<h2 id="五、-精准测试方案和实践"><a href="#五、-精准测试方案和实践" class="headerlink" title="五、 精准测试方案和实践"></a>五、 精准测试方案和实践</h2><p>上面提到用例精简是精准测试的基础之一，因此在用例精简之后我们也做了精准测试的实践。  </p>
+<p>精准测试的本质是，代码有变更时用更少的用例去覆盖变更涉及的功能点，以达到提高测试效率的目的。  </p>
+<p>代码变更到用例挑选，这就很自然地引出一个问题，那就是代码变更时如何快速找到相应的测试用例，目前解决这问题的思路有两种，一种是通过阅读代码从而梳理出软件架构，这种方式的输出是代码文件和功能逻辑的对应关系，当代码有变更时找到对应功能逻辑从而挑选出需要执行的用例，这种思路是一次投入长期收益，但比较耗时，而且要求测试同学的代码功底比较强，同时需要开发同学的帮忙；另一种是执行某个功能模块用例集时输出代码日志，从代码日志里面也可以找到功能模块的对应关系，这种方案对测试同学的代码能力要求不高，比较适合外包同学的执行，但也比较耗时，同时需要不停维护对应关系库。  </p>
+<p>同时，版本间的变更识别也有两种思路，一种是成都同学的查看SVN日志，再从日志详细代码中识别出变更逻辑，找到对应用例；还有一种是通过SVN diff，直接从版本间的SVN diff来获取代码变更；这两种方法的思路是想通的，都是利用SVN来找到版本间的差异，但是相比SVN日志，SVN diff结果没有那么直观，只看到差异部分，而且差异部分不一定能够看到前后代码，只有零散的增删改，没有整体概念，这是因为SVN diff结果只会对有增删改的代码往前追溯7行，比如以下变更代码就很难看出是在哪个功能点有变更：  </p>
+<p>我们的方案和以上两种思路不完全相同，但也采用SVN diff作为技术基础，需要对SVN diff结果再做处理，我们采用类似迭代的思路去逐步求精，也就是开始选择用例时是根据经验尽可能找到对应的用例集，在执行结束时根据此轮覆盖率情况再决定是否需要再挑选更小的用例集。这思路相比预先阅读全部代码和通过日志方案更敏捷，也无需对软件代码细节非常了解，如果结合开发同学的讲解，效率会更高，对架构理解更深。   </p>
+<p>在给出具体的实践之前，也插播下精准测试的背景：作为测试人员，在版本提测时你是否也会经常收到开发这样的信息，那就是开发人员说某个功能没什么大改动，简单过下就好了，但是就这么一句话测试人员可能就要忙半天了，具体改啥了？“简单过下”到什么程度？这些都是头痛的问题，比如广告拦截在手机管家5.1版本中有变更，开发的提测建议如下：  </p>
+<p>广告拦截除了第一点有涉及之外，其他变更内容都浓缩在第四点里面，对这样的一句话你放心吗？作为测试人员怀疑精神是要有的，因此我们要想既保证质量又不做无用功就得考虑精准测试了。  </p>
+<p>我们做了个比较粗糙展示系统，这系统可以实践我们“迭代的思路去逐步求精”想法：  </p>
+<h4 id="1、-分析版本间变更内容"><a href="#1、-分析版本间变更内容" class="headerlink" title="1、 分析版本间变更内容"></a>1、 分析版本间变更内容</h4><p>变更内容的基础是SVN diff,但是因为SVN diff原始结果不直观，因此我们需要对结果再进行解析处理，处理后可以在源码中用不同颜色标明变更内容，而不是直接的SVN diff结果。  </p>
+<p>初次结果报告覆盖率基本上为0：  </p>
+<h5 id="2、-根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。"><a href="#2、-根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。" class="headerlink" title="2、 根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。"></a>2、 根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。</h5><p>根据代码变更内容(快速的办法是找开发同学一起过下变更内容)，我们可以得知5.1和5.0版本之间广告拦截主要有以下功能点变更：  </p>
+<ol>
+<li><p>监测到系统通知栏新消息 </p>
+</li>
+<li><p>调用临时root失败 </p>
+</li>
+<li><p>卸载安装包时清除通知栏消息；</p>
+</li>
+<li><p>启动通知栏监控；</p>
+</li>
+<li><p>获取广告行为表 </p>
+</li>
+<li><p>修改广告软件配置 </p>
+</li>
+<li><p>广告详情页面展示 </p>
+</li>
+<li><p>广告页面刷新</p>
+</li>
+</ol>
+<p>由此可以看到通过查看变更代码可以了解到需要覆盖的测试点  </p>
+<h4 id="3、-执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。"><a href="#3、-执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。" class="headerlink" title="3、 执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。"></a>3、 执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。</h4><h4 id="4、-根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。"><a href="#4、-根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。" class="headerlink" title="4、 根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。"></a>4、 根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。</h4><p>根据以上粗略挑选用例，发现覆盖率仍比较偏低，因此通过查看具体代码再增加测试用例覆盖，逐步提高覆盖率：  </p>
+<h4 id="5、-最终完成变更的覆盖，实现精准测试的目的。"><a href="#5、-最终完成变更的覆盖，实现精准测试的目的。" class="headerlink" title="5、 最终完成变更的覆盖，实现精准测试的目的。"></a>5、 最终完成变更的覆盖，实现精准测试的目的。</h4><p>最终逐步挑选出约50条用例覆这两个版本间的实际代码变更，不再盲目测试。由于变更代码中有大概10%的保护代码，因此90%的行覆盖率已经比较理想了。同时，由于测试人员逐步分析变更代码，也使得大家对广告拦截的代码逻辑更清晰，增加了发布质量的信心。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2016/02/23/完美组合用例精简精准测试/" title="完美组合:用例精简+精准测试">http://wysh.site/2016/02/23/完美组合用例精简精准测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/用例设计/" rel="tag"> <i class="fa fa-tag"></i> 用例设计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/18/负载测试压力测试和性能测试的区别/" rel="next" title="负载测试、压力测试和性能测试的区别">
+                <i class="fa fa-chevron-left"></i> 负载测试、压力测试和性能测试的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/28/移动APP测试用例设计的关注点/" rel="prev" title="移动APP测试用例设计的关注点">
+                移动APP测试用例设计的关注点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-为什么要做用例精简和精准测试"><span class="nav-number">1.</span> <span class="nav-text">一、 为什么要做用例精简和精准测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、-测试用例越来越多，测试效率低下"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、 测试用例越来越多，测试效率低下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、-以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、 以往迭代测试用例更多是功能“点”的覆盖，而不是用户场景“线”、“面”的覆盖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、-用例精简是精准测试的基础之一"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、 用例精简是精准测试的基础之一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、-用例精简降低用例执行的多次投入成本"><span class="nav-number">1.0.4.</span> <span class="nav-text">4、 用例精简降低用例执行的多次投入成本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-用例精简原则概要"><span class="nav-number">2.</span> <span class="nav-text">二、 用例精简原则概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-用例精简实践"><span class="nav-number">3.</span> <span class="nav-text">三、 用例精简实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、-用例精简效果粗略验证"><span class="nav-number">4.</span> <span class="nav-text">四、 用例精简效果粗略验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、-精准测试方案和实践"><span class="nav-number">5.</span> <span class="nav-text">五、 精准测试方案和实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、-分析版本间变更内容"><span class="nav-number">5.0.1.</span> <span class="nav-text">1、 分析版本间变更内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2、-根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。"><span class="nav-number">5.0.1.1.</span> <span class="nav-text">2、 根据源码中的变更，判断大概变更涉及模块，挑选出此轮用例。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、-执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。"><span class="nav-number">5.0.2.</span> <span class="nav-text">3、 执行此轮用例，利用覆盖率执行结果ec文件再次生成用例执行覆盖情况。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、-根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。"><span class="nav-number">5.0.3.</span> <span class="nav-text">4、 根据此轮用例执行覆盖率情况，再决定是否需要做下一轮的用例挑选。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、-最终完成变更的覆盖，实现精准测试的目的。"><span class="nav-number">5.0.4.</span> <span class="nav-text">5、 最终完成变更的覆盖，实现精准测试的目的。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">60.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共60.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
