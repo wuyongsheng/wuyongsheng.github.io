@@ -8,6 +8,7 @@
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="dYPE6dt4jL" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
@@ -87,7 +88,7 @@
 
 
 
-  <meta name="keywords" content="Vincent , 吴勇胜 , 软件测试 " />
+  <meta name="keywords" content="Vincent , 吴勇胜 , 软件测试 , 个人网站" />
 
 
 
@@ -100,17 +101,17 @@
 
 
 
-<meta name="description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
-<meta name="keywords" content="吴勇胜,Vincent,软件测试">
+<meta name="description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
+<meta name="keywords" content="吴勇胜,Vincent,软件测试,个人网站">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vincent&#39;s Home">
 <meta property="og:url" content="http://wysh.site/page/4/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
+<meta property="og:description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vincent&#39;s Home">
-<meta name="twitter:description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
+<meta name="twitter:description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
 
 
 
@@ -181,7 +182,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">欢迎访问！</p>
+        <h1 class="site-subtitle" itemprop="description">欢迎访问！</h1>
       
   </div>
 
@@ -252,7 +253,7 @@
       
         
         <li class="menu-item menu-item-音乐">
-          <a href="/音乐" rel="section">
+          <a href="/music" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
@@ -327,7 +328,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/02/18/负载测试压力测试和性能测试的区别/">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/07/06/性能测试体系的知识分享/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="吴勇胜（Vincent）">
@@ -344,9 +345,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/02/18/负载测试压力测试和性能测试的区别/" itemprop="url">负载测试、压力测试和性能测试的区别</a></h1>
+                <a class="post-title-link" href="/2016/07/06/性能测试体系的知识分享/" itemprop="url">性能测试体系的知识分享</a></h2>
         
 
         <div class="post-meta">
@@ -358,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-18T15:14:54+08:00">
-                2016-02-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-06T22:28:47+08:00">
+                2016-07-06
               </time>
             
 
@@ -381,18 +382,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/性能测试/" itemprop="url" rel="index">
+                  <a href="/categories/性能测试/" itemprop="url" rel="index">
                     <span itemprop="name">性能测试</span>
                   </a>
                 </span>
@@ -423,7 +413,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,926
+                  2,171
                 </span>
               
 
@@ -439,7 +429,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  8
                 </span>
               
             </div>
@@ -462,12 +452,763 @@
       
         
           
-          负载测试（Load testing）、压力测试（Stress Test，应称为强度测试）和性能测试，这三个概念常常引起混淆，难以区分，从而造成不正确的理解和使用。  
-目前对性能测试没有明确的定义，一般地，它主要是针对系统的性能指标制定性能测试方案，执行测试用例，得出测试结果来验证系统的性能指标是否
+          开始性能测试前需要了解的内容：
+项目具体需求。
+
+指标：响应时间在多少以内，并发数多少，tps多少，总tps多少，稳定性交易总量多少，事务成功率，交易波动范围，稳定运行时长，资源利用率，测哪些交易，哪些接口,测试哪些场景。
+
+环境：生产环境服务器数量，测试环境服务器数量，按照资源配比得出测试指标。
+
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/02/18/负载测试压力测试和性能测试的区别/#more" rel="contents">
+            <a class="btn" href="/2016/07/06/性能测试体系的知识分享/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/15/如何写一个好的缺陷（Defect）报告/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/15/如何写一个好的缺陷（Defect）报告/" itemprop="url">如何写一个好的缺陷（Defect）报告</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T16:26:34+08:00">
+                2016-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试文档/" itemprop="url" rel="index">
+                    <span itemprop="name">测试文档</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,060
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          编写缺陷报告是测试人员的日常工作，好的缺陷报告能够让开发人员更容易理解，更快速的定位问题；不好的缺陷报告可能会误导调查方向，增加沟通成本。那么一个好的缺陷报告应该包括哪些方面呢？
+请看我的mindmap：  
+
+标题
+首先要做一个“标题党”（此标题党非彼标题党）。标题一定要清晰简洁易理解，不应该臃长
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/15/如何写一个好的缺陷（Defect）报告/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/14/如何制定测试策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/14/如何制定测试策略/" itemprop="url">如何制定测试策略</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-14T07:47:26+08:00">
+                2016-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/用例设计/" itemprop="url" rel="index">
+                    <span itemprop="name">用例设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,031
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+测试策略是描述测试项目和测试任务之间的关系。它用来说明要测什么，如何测，如何协调测试资源和测试时间等。测试策略制定的是否合理高效会对测试项目的进度产生很大的影响。那么，如何制定一个好的测试策略并且能防止遗漏呢？一个好的测试策略又包含哪些方面呢？下面我给出一个平时经常使用的一个模板供大家参考  
+
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/14/如何制定测试策略/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/09/测试设计中需要考虑的22种测试类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/09/测试设计中需要考虑的22种测试类型/" itemprop="url">测试设计中需要考虑的22种测试类型</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-09T21:04:25+08:00">
+                2016-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/用例设计/" itemprop="url" rel="index">
+                    <span itemprop="name">用例设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,321
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+黑盒测试：不基于内部设计和代码的任何知识，而是基于需求和功能性。
+
+白盒测试：基于一个应用代码的内部逻辑知识，测试是基于覆盖全部代码、分支、路径、条件。
+
+单元测试：最微小规模的测试；以测试某个功能或代码块。典型地由程序员而非测试员来做，因为它需要知道内部程序设计和编码的细节知识。这个工作不容易作
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/09/测试设计中需要考虑的22种测试类型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/09/Web端测试和移动端测试的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/09/Web端测试和移动端测试的区别/" itemprop="url">Web端测试和移动端测试的区别</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-09T12:58:05+08:00">
+                2016-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试理论/" itemprop="url" rel="index">
+                    <span itemprop="name">测试理论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,370
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          之前参加的项目有涉及Web端测试和移动端测试，简单的记录下他们之间的区别：  
+1、记录bug在Web端可以通过系统自带的截图和QQ截图等方式来截取bug的图片，对于错误的地方可以用工具自带的标识来重点标记。  
+对于移动端设备可以用手机自带的截图工具来截图然后传到电脑上，个人一般习惯安装微信的wi
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/09/Web端测试和移动端测试的区别/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -513,7 +1254,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -553,7 +1294,7 @@
                 alt="吴勇胜（Vincent）" />
             
               <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
-              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -644,7 +1385,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -689,7 +1430,6 @@
 <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
 </span>
-<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
 <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>

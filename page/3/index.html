@@ -8,6 +8,7 @@
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="dYPE6dt4jL" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
@@ -87,7 +88,7 @@
 
 
 
-  <meta name="keywords" content="Vincent , 吴勇胜 , 软件测试 " />
+  <meta name="keywords" content="Vincent , 吴勇胜 , 软件测试 , 个人网站" />
 
 
 
@@ -100,17 +101,17 @@
 
 
 
-<meta name="description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
-<meta name="keywords" content="吴勇胜,Vincent,软件测试">
+<meta name="description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
+<meta name="keywords" content="吴勇胜,Vincent,软件测试,个人网站">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vincent&#39;s Home">
 <meta property="og:url" content="http://wysh.site/page/3/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
+<meta property="og:description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vincent&#39;s Home">
-<meta name="twitter:description" content="本网站用于整理个人学习笔记，发布 日记，杂文，所见所想">
+<meta name="twitter:description" content="本网站用于整理个人学习笔记，发布日记，杂文，所见所想">
 
 
 
@@ -181,7 +182,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">欢迎访问！</p>
+        <h1 class="site-subtitle" itemprop="description">欢迎访问！</h1>
       
   </div>
 
@@ -252,7 +253,7 @@
       
         
         <li class="menu-item menu-item-音乐">
-          <a href="/音乐" rel="section">
+          <a href="/music" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
@@ -327,7 +328,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/08/软件测试缺陷度量分析/">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/08/15/产品测试规范四测试用例编写-功能测试框架/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="吴勇胜（Vincent）">
@@ -344,9 +345,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/05/08/软件测试缺陷度量分析/" itemprop="url">软件测试缺陷度量分析</a></h1>
+                <a class="post-title-link" href="/2016/08/15/产品测试规范四测试用例编写-功能测试框架/" itemprop="url">产品测试规范（四：测试用例编写-功能测试框架）</a></h2>
         
 
         <div class="post-meta">
@@ -358,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-08T21:25:46+08:00">
-                2016-05-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-15T17:37:49+08:00">
+                2016-08-15
               </time>
             
 
@@ -381,8 +382,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
+                  <a href="/categories/产品测试/" itemprop="url" rel="index">
+                    <span itemprop="name">产品测试</span>
                   </a>
                 </span>
 
@@ -412,1585 +413,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,228
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          对缺陷的度量有助于测试过程监控，例如：缺陷密度分析，发现和修复的缺陷数目等。另外，缺陷度量应包括追踪过程控制信息的过程改进活动所需的缺陷信息，并引入缺陷来源分析、缺陷趋势分析等作为风险减轻策略的输入。本文介绍了几种常见的缺陷度量指标，在实际项目中，缺陷度量指标通常要和其他指标共同使用以达到测度的目的
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/05/08/软件测试缺陷度量分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/07/作为测试人员一般经历的几个阶段/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/07/作为测试人员一般经历的几个阶段/" itemprop="url">作为测试人员一般经历的几个阶段</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-07T22:43:31+08:00">
-                2016-05-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2,230
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          一、执行测试用例作为一个测试新手来说，最主要的工作应该就是执行测试用例，最基本的要求当然就是不能够出现执行漏测了。是的，达到这个要求毕竟简单，只要严格按照用例来执行就可以了，这里主要考验的就是一个测试人员的执行力和细心的能力。另外，这个阶段测试人员能够学习到自己测试模块的一些基本业务知识，以及如何去
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/05/07/作为测试人员一般经历的几个阶段/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/03/什么是性能瓶颈/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/03/什么是性能瓶颈/" itemprop="url">什么是性能瓶颈？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-03T20:12:37+08:00">
-                2016-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  867
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-在性能测试中，总会用到“性能瓶颈”这个词，也就把它当成基本的一个词汇了，从没想过它到底是个什么东西。今天忽然有人问道什么是“性能瓶颈”，虽然勉强能列举一些例子来说明它，但总不是太令人满意，所以就总结一下。  
- 首先得说明“瓶颈”的意思。瓶颈，通俗地说，就是一个瓶子的脖子，就是整个系统最薄弱的
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/05/03/什么是性能瓶颈/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/05/02/性能测试指标+案例/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/02/性能测试指标+案例/" itemprop="url">性能测试指标+案例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-02T06:57:40+08:00">
-                2016-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,524
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          通用指标（指Web应用服务器、数据库服务器必需测试项)
-  
-Web服务器指标   
-  
-数据库服务器性能指标  
-  
-系统的瓶颈定义  
-
-稳定系统的资源状态  
-  
-通俗理解：  
-
-日访问量
-常用页面最大并发数
-同时在线人数
-访问相应时间
-
-案例：  
-最近公司一个项目，是个门户网站，需
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/05/02/性能测试指标+案例/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/04/27/性能测试如何定位瓶颈/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/27/性能测试如何定位瓶颈/" itemprop="url">性能测试如何定位瓶颈</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-27T07:44:34+08:00">
-                2016-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2,057
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          性能测试这种测试方式在发生过程中，其中一个过渡性的工作，就是对执行过程中的问题，进行定位，对功能的定位，对负载的定位，最重要的，当然就是问题中说的“瓶颈”，接触性能测试不深，更非专家，自己的理解，瓶颈产生在以下几方面：
-
-网络瓶颈，如带宽，流量等形成的网络环境
-
-应用服务瓶颈，如中间件的基本配置，C
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/04/27/性能测试如何定位瓶颈/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/04/25/常见的性能测试方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/25/常见的性能测试方法/" itemprop="url">软常见的性能测试方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-25T09:46:06+08:00">
-                2016-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,358
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          1．负载测试在这里，负载测试指的是最常见的验证一般性能需求而进行的性能测试，在上面我们提到了用户最常见的性能需求就是“既要马儿跑，又要马儿少吃草”。因此负载测试主要是考察软件系统在既定负载下的性能表现。我们对负载测试可以有如下理解：
-
-（1）负载测试是站在用户的角度去观察在一定条件下软件系统的性能表
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/04/25/常见的性能测试方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/03/30/软件测试面试题 - 怎么测电梯（测杯子 椅子 雨伞 电话）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/30/软件测试面试题 - 怎么测电梯（测杯子 椅子 雨伞 电话）/" itemprop="url">软件测试面试题 - 怎么测电梯？（测杯子/椅子/ 雨伞/电话）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-30T19:57:16+08:00">
-                2016-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/用例设计/" itemprop="url" rel="index">
-                    <span itemprop="name">用例设计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,172
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          1. 破题：
-问题是：怎么测电梯
-前提条件是：这是一道软件测试工程师面试题，而非真正的电梯测试人员的面试题
-第二个前提：我没有需求文档，但我了解电梯的基本业务功能  
-
-思路：把电梯当作一个我了解基本业务功能，却没有需求文档的软件来进行测试。也就是说这里考察两点:  
-
-第一，你能不能测没有需求文档
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/30/软件测试面试题 - 怎么测电梯（测杯子 椅子 雨伞 电话）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/03/21/记一次性能测试实践/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/21/记一次性能测试实践/" itemprop="url">记一次性能测试实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-21T11:18:45+08:00">
-                2016-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web测试/" itemprop="url" rel="index">
-                    <span itemprop="name">Web测试</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Web测试/性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  940
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          1. 测试对象这次测了一些http接口和几个网页。
-2. 测试策略
-2.1 基准测试：单个调用各接口循环100次计算平均响应时间  
-2.2 性能测试：单个接口调用以50并发用户数为单位，逐步加压直到预估的实际负载300并发用户，观察测试指标变化
-2.3 压力测试：单个接口调用以50并发用户数为单位
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/21/记一次性能测试实践/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-	
-    
-	<div>
-	
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/02/28/移动APP测试用例设计的关注点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴勇胜（Vincent）">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/28/移动APP测试用例设计的关注点/" itemprop="url">移动APP测试用例设计的关注点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-28T13:49:37+08:00">
-                2016-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/APP测试/" itemprop="url" rel="index">
-                    <span itemprop="name">APP测试</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/APP测试/用例设计/" itemprop="url" rel="index">
-                    <span itemprop="name">用例设计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,726
+                  1,574
                 </span>
               
 
@@ -2029,13 +452,25 @@ Web服务器指标
       
         
           
-          在我们的测试工作中，对于某个APP的测试其实有很多东西都是类似的可以抽象出来的，这里总结一下大部分APP测试的时候都要考虑到的方面。如果漏下了其他方面，欢迎大家补充。1  应用的启动和停止1.1 首次启动
-是否出现欢迎界面，欢迎界面的停留时间合理，欢迎界面后是否正常进入应用;  
-首次启动时间是否合
+          功能测试框架可以包括：界面友好性测试、功能测试、链接测试、容错测试、稳定性测试、常规性能测试、配置测试、算法测试等等。  
+1.5.2 功能测试
+使用所有默认值进行测试
+
+根据所有产品文档、帮助文档中描述的内容要进行遍历测试
+
+输入判断
+
+所有界面出现是和否的逻辑，要测试
+
+异常处理
+
+敏感词
+
+根
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/02/28/移动APP测试用例设计的关注点/#more" rel="contents">
+            <a class="btn" href="/2016/08/15/产品测试规范四测试用例编写-功能测试框架/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2090,7 +525,7 @@ Web服务器指标
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/02/23/完美组合用例精简精准测试/">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/08/15/产品测试规范三测试准备）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="吴勇胜（Vincent）">
@@ -2107,9 +542,9 @@ Web服务器指标
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/02/23/完美组合用例精简精准测试/" itemprop="url">完美组合:用例精简+精准测试</a></h1>
+                <a class="post-title-link" href="/2016/08/15/产品测试规范三测试准备）/" itemprop="url">产品测试规范（三：测试准备）</a></h2>
         
 
         <div class="post-meta">
@@ -2121,8 +556,8 @@ Web服务器指标
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-23T17:36:29+08:00">
-                2016-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-15T17:37:47+08:00">
+                2016-08-15
               </time>
             
 
@@ -2144,19 +579,8 @@ Web服务器指标
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/" itemprop="url" rel="index">
-                    <span itemprop="name">测试理论</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试理论/用例设计/" itemprop="url" rel="index">
-                    <span itemprop="name">用例设计</span>
+                  <a href="/categories/产品测试/" itemprop="url" rel="index">
+                    <span itemprop="name">产品测试</span>
                   </a>
                 </span>
 
@@ -2186,7 +610,7 @@ Web服务器指标
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,519
+                  2,171
                 </span>
               
 
@@ -2202,7 +626,7 @@ Web服务器指标
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  12
+                  8
                 </span>
               
             </div>
@@ -2225,12 +649,585 @@ Web服务器指标
       
         
           
-          一、 为什么要做用例精简和精准测试1、 测试用例越来越多，测试效率低下这是因为在目前的快速迭代开发模式下，测试人员需要不停覆盖不断调整的产品逻辑需求，因此测试用例也越来越庞大了，以病毒查杀为例，目前用例已达500多条用例，导致全量测试时间很长，同时发现的问题并不和用例数成正比
-2、 以往迭代测试用例
+          1.4 测试准备1.4.1 代码管理所有的产品代码应该统一管理起来，开发人员提交代码应与测试代码地址进行分离，做到高效管理代码，当开发人员提交代码到开发的代码库中，需要进行测试时，测试人员可去开发的代码中进行提取代码到测试基线库中，每提取一次就建立一个测试基线，直到此次版本测试合格，在把合格的测试基
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/02/23/完美组合用例精简精准测试/#more" rel="contents">
+            <a class="btn" href="/2016/08/15/产品测试规范三测试准备）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/08/09/产品测试规范二需求梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/09/产品测试规范二需求梳理/" itemprop="url">产品测试规范（二：需求梳理）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-09T15:46:19+08:00">
+                2016-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/产品测试/" itemprop="url" rel="index">
+                    <span itemprop="name">产品测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,636
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          1.2 需求梳理1.2.1  需求梳理根据需求文档、需求规格说明书来对需要测试的功能点进行梳理，而且通过需求文档能够更加了解项目的业务场景，一般情况下，在项目中需求文档有3种现状：  
+
+有详细的需求文档：
+
+比较严谨负责的团队项目的实施是有详细的需求文档的，我们就可以详阅需求文档来进行测试点的梳理
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/09/产品测试规范二需求梳理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/08/09/产品测试规范一测试流程）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/09/产品测试规范一测试流程）/" itemprop="url">产品测试规范（一：测试流程）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-09T15:46:19+08:00">
+                2016-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/产品测试/" itemprop="url" rel="index">
+                    <span itemprop="name">产品测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,630
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          第1章 产品测试规范产品测试流程
+1.1.1 测试流程图  
+1.1.2 测试流程说明
+需求阶段：
+
+测试人员了解项目需求及需求变更，包括需求规格说明书、功能结构及模块划分，根据需求梳理测试点。  
+
+测试计划阶段：
+
+测试计划环节需要考虑测试工具选取，考虑需要测试的业务点，涉及到多业务量测试团队测
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/09/产品测试规范一测试流程）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+	<div>
+	
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2016/07/07/性能测试方案设计思路总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/07/性能测试方案设计思路总结/" itemprop="url">性能测试方案设计思路总结</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-07T09:48:28+08:00">
+                2016-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能测试/" itemprop="url" rel="index">
+                    <span itemprop="name">性能测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,750
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          [TOC]  
+一、需求分析
+测试目的
+
+为什么测？目的在于测试系统相关性能能否满足业务需求。通常分以下两种情况：  
+1）新项目上线  
+2）老项目优化  
+如果是老项目优化，可考虑是否存有历史测试方案，如果有可以参考，或许可以省事很多。
+
+测试对象
+
+要测啥？  
+测试对象可以归结为“业务功能”
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/07/性能测试方案设计思路总结/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2276,7 +1273,7 @@ Web服务器指标
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2316,7 +1313,7 @@ Web服务器指标
                 alt="吴勇胜（Vincent）" />
             
               <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
-              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布 日记，杂文，所见所想</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -2407,7 +1404,7 @@ Web服务器指标
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://github.com/" title="Github" target="_blank">Github</a>
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2452,7 +1449,6 @@ Web服务器指标
 <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
 </span>
-<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
 <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
