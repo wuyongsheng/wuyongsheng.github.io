@@ -1,3 +1,3 @@
+http://wysh.site/2018/11/19/接口自动化测试（Jmeter+Ant+Jenkins）/
 http://wysh.site/2018/10/10/selenium+java+jenkins+maven+testNG+reportNG测试框架/
 http://wysh.site/2018/10/06/珍藏的照片/
-http://wysh.site/2017/07/10/selenium自动化测试流程与规范/
