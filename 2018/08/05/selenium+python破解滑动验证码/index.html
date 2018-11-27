@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="selenium, 爬虫" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="最近在参与公司大数据项目的测试，其中部分数据来源于网络爬虫，想用selenium辅助测试，无奈有验证码（滑动验证码），于是就想着怎么破解，参考了网上的一些破解的方法，发现有一定的失败的概率，自己加以改进后，最终破解成功达到了100%，程序执行破解的过程见如上动图所示：   破解的原理大概是这样的：使用selenium拖动滑块，识别图片中的缺口，然后将滑块拖动至缺口处，完成拼图。整个过程看似简单">
+<meta name="keywords" content="selenium, 爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="selenium+python破解滑动验证码">
+<meta property="og:url" content="http://wysh.site/2018/08/05/selenium+python破解滑动验证码/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="最近在参与公司大数据项目的测试，其中部分数据来源于网络爬虫，想用selenium辅助测试，无奈有验证码（滑动验证码），于是就想着怎么破解，参考了网上的一些破解的方法，发现有一定的失败的概率，自己加以改进后，最终破解成功达到了100%，程序执行破解的过程见如上动图所示：   破解的原理大概是这样的：使用selenium拖动滑块，识别图片中的缺口，然后将滑块拖动至缺口处，完成拼图。整个过程看似简单">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11925665-d70f3ec59f0edc81.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2018-11-27T08:54:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="selenium+python破解滑动验证码">
+<meta name="twitter:description" content="最近在参与公司大数据项目的测试，其中部分数据来源于网络爬虫，想用selenium辅助测试，无奈有验证码（滑动验证码），于是就想着怎么破解，参考了网上的一些破解的方法，发现有一定的失败的概率，自己加以改进后，最终破解成功达到了100%，程序执行破解的过程见如上动图所示：   破解的原理大概是这样的：使用selenium拖动滑块，识别图片中的缺口，然后将滑块拖动至缺口处，完成拼图。整个过程看似简单">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11925665-d70f3ec59f0edc81.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2018/08/05/selenium+python破解滑动验证码/"/>
+
+
+
+
+
+  <title>selenium+python破解滑动验证码 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2018/08/05/selenium+python破解滑动验证码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">selenium+python破解滑动验证码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T09:39:59+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/selenium/" itemprop="url" rel="index">
+                    <span itemprop="name">selenium</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/selenium/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,115
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://upload-images.jianshu.io/upload_images/11925665-d70f3ec59f0edc81.gif?imageMogr2/auto-orient/strip" alt="破解滑动验证码动态图片.gif"></p>
+<blockquote>
+<p>最近在参与公司大数据项目的测试，其中部分数据来源于网络爬虫，想用selenium辅助测试，无奈有验证码（滑动验证码），于是就想着怎么破解，参考了网上的一些破解的方法，发现有一定的失败的概率，自己加以改进后，最终破解成功达到了100%，程序执行破解的过程见如上动图所示：</p>
+</blockquote>
+<hr>
+<p>破解的原理大概是这样的：使用selenium拖动滑块，识别图片中的缺口，然后将滑块拖动至缺口处，完成拼图。整个过程看似简单，但程序处理起来并不简单：1、怎么判断缺口的位置，这个要对比图片背景的色差，2、怎么模拟人类拖动滑块的操作，匀速滑动或者一次性滑动到位都会被判定为程序行为而非人工操作，从而被禁止，这个可以通过随机函数进行随机滑动，3、操作的时候可能会失败，这个可以递归调用滑动操作，失败后重新刷新验证码并再一次进行滑动操作，直至成功。</p>
+<hr>
+<p>找到了两种破解方法，方法一单次破解的成功率在20%左右，通常需要递归调用4到5次就能破解成功，方法二单次破解成功率在90%左右，通常只用调用1次就能破解成功，最多不超过2次。</p>
+<p>以下是方法一和方法二的源代码：</p>
+<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.action_chains <span class="keyword">import</span> ActionChains</span><br><span class="line"><span class="keyword">import</span> PIL.Image <span class="keyword">as</span> image</span><br><span class="line"><span class="keyword">import</span> time,re, random</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> StringIO <span class="keyword">import</span> StringIO</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line"></span><br><span class="line"><span class="comment">#爬虫模拟的浏览器头部信息</span></span><br><span class="line">agent = <span class="string">'Mozilla/5.0 (Windows NT 5.1; rv:33.0) Gecko/20100101 Firefox/33.0'</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'User-Agent'</span>: agent</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据位置对图片进行合并还原</span></span><br><span class="line"><span class="comment"># filename:图片</span></span><br><span class="line"><span class="comment"># location_list:图片位置</span></span><br><span class="line"><span class="comment">#内部两个图片处理函数的介绍</span></span><br><span class="line"><span class="comment">#crop函数带的参数为(起始点的横坐标，起始点的纵坐标，宽度，高度）</span></span><br><span class="line"><span class="comment">#paste函数的参数为(需要修改的图片，粘贴的起始点的横坐标，粘贴的起始点的纵坐标）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merge_image</span><span class="params">(filename,location_list)</span>:</span></span><br><span class="line">    <span class="comment">#打开图片文件</span></span><br><span class="line">    im = image.open(filename)</span><br><span class="line">    <span class="comment">#创建新的图片,大小为260*116</span></span><br><span class="line">    new_im = image.new(<span class="string">'RGB'</span>, (<span class="number">260</span>,<span class="number">116</span>))</span><br><span class="line">    im_list_upper=[]</span><br><span class="line">    im_list_down=[]</span><br><span class="line">    <span class="comment"># 拷贝图片</span></span><br><span class="line">    <span class="keyword">for</span> location <span class="keyword">in</span> location_list:</span><br><span class="line">        <span class="comment">#上面的图片</span></span><br><span class="line">        <span class="keyword">if</span> location[<span class="string">'y'</span>]==<span class="number">-58</span>:</span><br><span class="line">            im_list_upper.append(im.crop((abs(location[<span class="string">'x'</span>]),<span class="number">58</span>,abs(location[<span class="string">'x'</span>])+<span class="number">10</span>,<span class="number">166</span>)))</span><br><span class="line">        <span class="comment">#下面的图片</span></span><br><span class="line">        <span class="keyword">if</span> location[<span class="string">'y'</span>]==<span class="number">0</span>:</span><br><span class="line">            im_list_down.append(im.crop((abs(location[<span class="string">'x'</span>]),<span class="number">0</span>,abs(location[<span class="string">'x'</span>])+<span class="number">10</span>,<span class="number">58</span>)))</span><br><span class="line">    new_im = image.new(<span class="string">'RGB'</span>, (<span class="number">260</span>,<span class="number">116</span>))</span><br><span class="line">    x_offset = <span class="number">0</span></span><br><span class="line">    <span class="comment">#黏贴图片</span></span><br><span class="line">    <span class="keyword">for</span> im <span class="keyword">in</span> im_list_upper:</span><br><span class="line">        new_im.paste(im, (x_offset,<span class="number">0</span>))</span><br><span class="line">        x_offset += im.size[<span class="number">0</span>]</span><br><span class="line">    x_offset = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> im <span class="keyword">in</span> im_list_down:</span><br><span class="line">        new_im.paste(im, (x_offset,<span class="number">58</span>))</span><br><span class="line">        x_offset += im.size[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> new_im</span><br><span class="line"></span><br><span class="line"><span class="comment">#下载并还原图片</span></span><br><span class="line"><span class="comment"># driver:webdriver</span></span><br><span class="line"><span class="comment"># div:图片的div</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_image</span><span class="params">(driver,div)</span>:</span></span><br><span class="line">    <span class="comment">#找到图片所在的div</span></span><br><span class="line">    background_images=driver.find_elements_by_xpath(div)</span><br><span class="line">    location_list=[]</span><br><span class="line">    imageurl=<span class="string">''</span></span><br><span class="line">    <span class="comment">#图片是被CSS按照位移的方式打乱的,我们需要找出这些位移,为后续还原做好准备</span></span><br><span class="line">    <span class="keyword">for</span> background_image <span class="keyword">in</span> background_images:</span><br><span class="line">        location=&#123;&#125;</span><br><span class="line">        <span class="comment">#在html里面解析出小图片的url地址，还有长高的数值</span></span><br><span class="line">        location[<span class="string">'x'</span>]=int(re.findall(<span class="string">"background-image: url\(\"(.*)\"\); background-position: (.*)px (.*)px;"</span>,background_image.get_attribute(<span class="string">'style'</span>))[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">        location[<span class="string">'y'</span>]=int(re.findall(<span class="string">"background-image: url\(\"(.*)\"\); background-position: (.*)px (.*)px;"</span>,background_image.get_attribute(<span class="string">'style'</span>))[<span class="number">0</span>][<span class="number">2</span>])</span><br><span class="line">        imageurl=re.findall(<span class="string">"background-image: url\(\"(.*)\"\); background-position: (.*)px (.*)px;"</span>,background_image.get_attribute(<span class="string">'style'</span>))[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">        location_list.append(location)</span><br><span class="line">    <span class="comment">#替换图片的后缀,获得图片的URL</span></span><br><span class="line">    imageurl=imageurl.replace(<span class="string">"webp"</span>,<span class="string">"jpg"</span>)</span><br><span class="line">    <span class="comment">#获得图片的名字</span></span><br><span class="line">    <span class="comment"># imageName = imageurl.split('/')[-1]</span></span><br><span class="line">    imageName = <span class="string">'77777777'</span></span><br><span class="line">    <span class="comment">#获得图片</span></span><br><span class="line">    session = requests.session()</span><br><span class="line">    r = session.get(imageurl, headers = headers, verify = <span class="keyword">False</span>)</span><br><span class="line">    <span class="comment">#下载图片</span></span><br><span class="line">    <span class="keyword">with</span> open(imageName, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(r.content)</span><br><span class="line">        f.close()</span><br><span class="line">    <span class="comment">#重新合并还原图片</span></span><br><span class="line">    image=get_merge_image(imageName, location_list)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="comment">#对比RGB值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_similar</span><span class="params">(image1,image2,x,y)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">    <span class="comment">#获取指定位置的RGB值</span></span><br><span class="line">    pixel1=image1.getpixel((x,y))</span><br><span class="line">    pixel2=image2.getpixel((x,y))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">        <span class="comment"># 如果相差超过50则就认为找到了缺口的位置</span></span><br><span class="line">        <span class="keyword">if</span> abs(pixel1[i]-pixel2[i])&gt;=<span class="number">50</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#计算缺口的位置</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_diff_location</span><span class="params">(image1,image2)</span>:</span></span><br><span class="line">    i=<span class="number">0</span></span><br><span class="line">    <span class="comment"># 两张原始图的大小都是相同的260*116</span></span><br><span class="line">    <span class="comment"># 那就通过两个for循环依次对比每个像素点的RGB值</span></span><br><span class="line">    <span class="comment"># 如果相差超过50则就认为找到了缺口的位置</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">260</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">116</span>):</span><br><span class="line">            <span class="keyword">if</span> is_similar(image1,image2,i,j)==<span class="keyword">False</span>:</span><br><span class="line">                <span class="keyword">return</span>  i</span><br><span class="line"></span><br><span class="line"><span class="comment">#根据缺口的位置模拟x轴移动的轨迹</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_track</span><span class="params">(length)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">    list=[]</span><br><span class="line">    <span class="comment">#间隔通过随机范围函数来获得,每次移动一步或者两步</span></span><br><span class="line">    x=random.randint(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">    <span class="comment">#生成轨迹并保存到list内</span></span><br><span class="line">    <span class="keyword">while</span> length-x&gt;=<span class="number">5</span>:</span><br><span class="line">        list.append(x)</span><br><span class="line">        length=length-x</span><br><span class="line">        x=random.randint(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">    <span class="comment">#最后五步都是一步步移动</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">        list.append(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">slide</span><span class="params">(driver)</span>:</span></span><br><span class="line">     <span class="comment"># 等待页面的上元素刷新出来</span></span><br><span class="line">     WebDriverWait(driver, <span class="number">30</span>).until(</span><br><span class="line">         <span class="keyword">lambda</span> the_driver: the_driver.find_element_by_xpath(<span class="string">'//a[@class="gt_refresh_button"]'</span>).is_displayed())</span><br><span class="line">     element = driver.find_element_by_xpath(<span class="string">'//a[@class="gt_refresh_button"]'</span>)</span><br><span class="line">     element.click()</span><br><span class="line">     time.sleep(<span class="number">1</span>)</span><br><span class="line">     WebDriverWait(driver, <span class="number">30</span>).until(</span><br><span class="line">        <span class="keyword">lambda</span> the_driver: the_driver.find_element_by_xpath(<span class="string">"//div[@class='gt_slider_knob gt_show']"</span>).is_displayed())</span><br><span class="line">     <span class="comment"># driver.find_element_by_css_selector("/html/body/div[4]/div[2]/div[2]/div[2]/div[2]']").click()</span></span><br><span class="line">     WebDriverWait(driver, <span class="number">30</span>).until(</span><br><span class="line">        <span class="keyword">lambda</span> the_driver: the_driver.find_element_by_xpath(<span class="string">"//div[@class='gt_cut_bg gt_show']"</span>).is_displayed())</span><br><span class="line">     WebDriverWait(driver, <span class="number">30</span>).until(</span><br><span class="line">        <span class="keyword">lambda</span> the_driver: the_driver.find_element_by_xpath(<span class="string">"//div[@class='gt_cut_fullbg gt_show']"</span>).is_displayed())</span><br><span class="line">     element = driver.find_element_by_xpath(<span class="string">'//a[@class="gt_refresh_button"]'</span>)</span><br><span class="line">     element.click()</span><br><span class="line">     time.sleep(<span class="number">1</span>)</span><br><span class="line">     <span class="comment"># 下载图片</span></span><br><span class="line">     image1 = get_image(driver, <span class="string">"//div[@class='gt_cut_bg gt_show']/div"</span>)</span><br><span class="line">     image2 = get_image(driver, <span class="string">"//div[@class='gt_cut_fullbg gt_show']/div"</span>)</span><br><span class="line">     <span class="comment"># 计算缺口位置</span></span><br><span class="line">     loc=get_diff_location(image1, image2)</span><br><span class="line">     <span class="comment">#生成x的移动轨迹点</span></span><br><span class="line">     track_list=get_track(loc)</span><br><span class="line">     <span class="comment">#找到滑动的圆球</span></span><br><span class="line">     element=driver.find_element_by_xpath(<span class="string">"//div[@class='gt_slider_knob gt_show']"</span>)</span><br><span class="line">     location=element.location</span><br><span class="line">     <span class="comment">#获得滑动圆球的高度</span></span><br><span class="line">     y=location[<span class="string">'y'</span>]</span><br><span class="line">     <span class="comment">#鼠标点击元素并按住不放</span></span><br><span class="line">     <span class="keyword">print</span> (<span class="string">"第一步,点击元素"</span>)</span><br><span class="line">     ActionChains(driver).click_and_hold(on_element=element).perform()</span><br><span class="line">     time.sleep(<span class="number">0.15</span>)</span><br><span class="line">     <span class="keyword">print</span> (<span class="string">"第二步，拖动元素"</span>)</span><br><span class="line">     track_string = <span class="string">""</span></span><br><span class="line">     <span class="keyword">for</span> track <span class="keyword">in</span> track_list:</span><br><span class="line">        <span class="comment">#不能移动太快,否则会被认为是程序执行</span></span><br><span class="line">        track_string = track_string + <span class="string">"&#123;%d,%d&#125;,"</span> % (track, y - <span class="number">445</span>)</span><br><span class="line">        <span class="comment">#xoffset=track+22:这里的移动位置的值是相对于滑动圆球左上角的相对值，而轨迹变量里的是圆球的中心点，所以要加上圆球长度的一半。</span></span><br><span class="line">        <span class="comment">#yoffset=y-445:这里也是一样的。不过要注意的是不同的浏览器渲染出来的结果是不一样的，要保证最终的计算后的值是22，也就是圆球高度的一半</span></span><br><span class="line">        ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=track+<span class="number">22</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">        <span class="comment">#间隔时间也通过随机函数来获得,间隔不能太快,否则会被认为是程序执行</span></span><br><span class="line">        time.sleep(random.randint(<span class="number">10</span>,<span class="number">50</span>)/<span class="number">100</span>)</span><br><span class="line">     <span class="keyword">print</span> (track_string)</span><br><span class="line">     <span class="comment">#xoffset=21，本质就是向后退一格。这里退了5格是因为圆球的位置和滑动条的左边缘有5格的距离</span></span><br><span class="line">     ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=<span class="number">21</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">     time.sleep(<span class="number">0.1</span>)</span><br><span class="line">     ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=<span class="number">21</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">     time.sleep(<span class="number">0.1</span>)</span><br><span class="line">     ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=<span class="number">21</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">     time.sleep(<span class="number">0.1</span>)</span><br><span class="line">     ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=<span class="number">21</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">     time.sleep(<span class="number">0.1</span>)</span><br><span class="line">     ActionChains(driver).move_to_element_with_offset(to_element=element, xoffset=<span class="number">21</span>, yoffset=y<span class="number">-445</span>).perform()</span><br><span class="line">     <span class="keyword">print</span> (<span class="string">"第三步，释放鼠标"</span>)</span><br><span class="line">     <span class="comment">#释放鼠标</span></span><br><span class="line">     ActionChains(driver).release(on_element=element).perform()</span><br><span class="line">     time.sleep(<span class="number">3</span>)</span><br><span class="line">     s = driver.find_elements_by_xpath(<span class="string">'//*[@id="wrap1"]/div[3]/div/div/p'</span>)</span><br><span class="line">     <span class="keyword">if</span> len(s) == <span class="number">0</span>:</span><br><span class="line">         print(<span class="string">"滑动解锁失败"</span>)</span><br><span class="line">         slide(driver)</span><br><span class="line">     <span class="keyword">else</span>:</span><br><span class="line">         print(<span class="string">"滑动解锁成功"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#滑动验证码破解程序</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#打开火狐浏览器</span></span><br><span class="line">    driver=webdriver.Chrome(<span class="string">"D:\Google\Chrome\Application\chromedriver.exe"</span>)</span><br><span class="line">    <span class="comment">#用火狐浏览器打开网页</span></span><br><span class="line">    driver.get(<span class="string">"http://www.sgs.gov.cn/notice/"</span>)</span><br><span class="line">    driver.find_element_by_id(<span class="string">"keyword"</span>).send_keys(<span class="string">'中国长城工业上海有限公司'</span>)</span><br><span class="line">    driver.find_element_by_id(<span class="string">"buttonSearch"</span>).click()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    slide(driver)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">#点击验证</span></span><br><span class="line">    <span class="comment"># submit = driver.find_element_by_xpath("//div[@class='gt_ajax_tip success']")</span></span><br><span class="line">    <span class="comment"># print(submit.location)</span></span><br><span class="line">    <span class="comment"># time.sleep(5)</span></span><br><span class="line">    <span class="comment">#关闭浏览器,为了演示方便,暂时注释掉.</span></span><br><span class="line">    <span class="comment">#driver.quit()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#主函数入口</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time, re</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> TimeoutException</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.action_chains <span class="keyword">import</span> ActionChains</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vincent</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        chrome_option = webdriver.ChromeOptions()</span><br><span class="line">        <span class="comment"># chrome_option.set_headless()</span></span><br><span class="line"></span><br><span class="line">        self.driver = webdriver.Chrome(executable_path=<span class="string">r"D:\Google\Chrome\Application\chromedriver.exe"</span>, chrome_options=chrome_option)</span><br><span class="line">        <span class="comment"># self.driver =webdriver.Chrome("D:\Google\Chrome\Application\chromedriver.exe")</span></span><br><span class="line">        self.driver.set_window_size(<span class="number">1440</span>, <span class="number">900</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">visit_index</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># self.driver.get("https://www.Vincent.com/")</span></span><br><span class="line">        self.driver.get(<span class="string">"http://www.sgs.gov.cn/notice/"</span>)</span><br><span class="line"></span><br><span class="line">        self.driver.find_element_by_id(<span class="string">"keyword"</span>).send_keys(<span class="string">'中国长城工业上海有限公司'</span>)</span><br><span class="line">        WebDriverWait(self.driver, <span class="number">10</span>, <span class="number">0.5</span>).until(EC.element_to_be_clickable((By.ID, <span class="string">'buttonSearch'</span>)))</span><br><span class="line">        reg_element = self.driver.find_element_by_id(<span class="string">"buttonSearch"</span>)</span><br><span class="line">        reg_element.click()</span><br><span class="line"></span><br><span class="line">        WebDriverWait(self.driver, <span class="number">10</span>, <span class="number">0.5</span>).until(</span><br><span class="line">            EC.element_to_be_clickable((By.XPATH, <span class="string">'//div[@class="gt_slider_knob gt_show"]'</span>)))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 进入模拟拖动流程</span></span><br><span class="line">        self.analog_drag()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">analog_drag</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 鼠标移动到拖动按钮，显示出拖动图片</span></span><br><span class="line">        element = self.driver.find_element_by_xpath(<span class="string">'//div[@class="gt_slider_knob gt_show"]'</span>)</span><br><span class="line">        ActionChains(self.driver).move_to_element(element).perform()</span><br><span class="line">        time.sleep(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 刷新一下极验图片</span></span><br><span class="line">        element = self.driver.find_element_by_xpath(<span class="string">'//a[@class="gt_refresh_button"]'</span>)</span><br><span class="line">        element.click()</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取图片地址和位置坐标列表</span></span><br><span class="line">        cut_image_url, cut_location = self.get_image_url(<span class="string">'//div[@class="gt_cut_bg_slice"]'</span>)</span><br><span class="line">        full_image_url, full_location = self.get_image_url(<span class="string">'//div[@class="gt_cut_fullbg_slice"]'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据坐标拼接图片</span></span><br><span class="line">        cut_image = self.mosaic_image(cut_image_url, cut_location)</span><br><span class="line">        full_image = self.mosaic_image(full_image_url, full_location)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 保存图片方便查看</span></span><br><span class="line">        cut_image.save(<span class="string">"cut.jpg"</span>)</span><br><span class="line">        full_image.save(<span class="string">"full.jpg"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据两个图片计算距离</span></span><br><span class="line">        distance = self.get_offset_distance(cut_image, full_image)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 开始移动</span></span><br><span class="line">        self.start_move(distance)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果出现error</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            WebDriverWait(self.driver, <span class="number">5</span>, <span class="number">0.5</span>).until(</span><br><span class="line">                EC.element_to_be_clickable((By.XPATH, <span class="string">'//div[@class="gt_ajax_tip gt_error"]'</span>)))</span><br><span class="line">            print(<span class="string">"验证失败"</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">except</span> TimeoutException <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 判断是否验证成功</span></span><br><span class="line">        s = self.driver.find_elements_by_xpath(<span class="string">'//*[@id="wrap1"]/div[3]/div/div/p'</span>)</span><br><span class="line">        <span class="keyword">if</span> len(s) == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"滑动解锁失败,继续尝试"</span>)</span><br><span class="line">            self.analog_drag()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"滑动解锁成功"</span>)</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            ss=self.driver.find_element_by_xpath(<span class="string">'//*[@id="wrap1"]/div[3]/div/div/div[2]'</span>).get_attribute(<span class="string">"onclick"</span>)</span><br><span class="line">            print(ss)</span><br><span class="line">            ss=self.driver.find_element_by_xpath(<span class="string">'//*[@id="wrap1"]/div[3]/div/div/div[2]'</span>).click()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取图片和位置列表</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_image_url</span><span class="params">(self, xpath)</span>:</span></span><br><span class="line">        link = re.compile(<span class="string">'background-image: url\("(.*?)"\); background-position: (.*?)px (.*?)px;'</span>)</span><br><span class="line">        elements = self.driver.find_elements_by_xpath(xpath)</span><br><span class="line">        image_url = <span class="keyword">None</span></span><br><span class="line">        location = list()</span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> elements:</span><br><span class="line">            style = element.get_attribute(<span class="string">"style"</span>)</span><br><span class="line">            groups = link.search(style)</span><br><span class="line">            url = groups[<span class="number">1</span>]</span><br><span class="line">            x_pos = groups[<span class="number">2</span>]</span><br><span class="line">            y_pos = groups[<span class="number">3</span>]</span><br><span class="line">            location.append((int(x_pos), int(y_pos)))</span><br><span class="line">            image_url = url</span><br><span class="line">        <span class="keyword">return</span> image_url, location</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拼接图片</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mosaic_image</span><span class="params">(self, image_url, location)</span>:</span></span><br><span class="line">        resq = requests.get(image_url)</span><br><span class="line">        file = BytesIO(resq.content)</span><br><span class="line">        img = Image.open(file)</span><br><span class="line">        image_upper_lst = []</span><br><span class="line">        image_down_lst = []</span><br><span class="line">        <span class="keyword">for</span> pos <span class="keyword">in</span> location:</span><br><span class="line">            <span class="keyword">if</span> pos[<span class="number">1</span>] == <span class="number">0</span>:</span><br><span class="line">                <span class="comment"># y值==0的图片属于上半部分，高度58</span></span><br><span class="line">                image_upper_lst.append(img.crop((abs(pos[<span class="number">0</span>]), <span class="number">0</span>, abs(pos[<span class="number">0</span>]) + <span class="number">10</span>, <span class="number">58</span>)))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># y值==58的图片属于下半部分</span></span><br><span class="line">                image_down_lst.append(img.crop((abs(pos[<span class="number">0</span>]), <span class="number">58</span>, abs(pos[<span class="number">0</span>]) + <span class="number">10</span>, img.height)))</span><br><span class="line"></span><br><span class="line">        x_offset = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 创建一张画布，x_offset主要为新画布使用</span></span><br><span class="line">        new_img = Image.new(<span class="string">"RGB"</span>, (<span class="number">260</span>, img.height))</span><br><span class="line">        <span class="keyword">for</span> img <span class="keyword">in</span> image_upper_lst:</span><br><span class="line">            new_img.paste(img, (x_offset, <span class="number">58</span>))</span><br><span class="line">            x_offset += img.width</span><br><span class="line"></span><br><span class="line">        x_offset = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> img <span class="keyword">in</span> image_down_lst:</span><br><span class="line">            new_img.paste(img, (x_offset, <span class="number">0</span>))</span><br><span class="line">            x_offset += img.width</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> new_img</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断颜色是否相近</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_similar_color</span><span class="params">(self, x_pixel, y_pixel)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i, pixel <span class="keyword">in</span> enumerate(x_pixel):</span><br><span class="line">            <span class="keyword">if</span> abs(y_pixel[i] - pixel) &gt; <span class="number">50</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算距离</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_offset_distance</span><span class="params">(self, cut_image, full_image)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(cut_image.width):</span><br><span class="line">            <span class="keyword">for</span> y <span class="keyword">in</span> range(cut_image.height):</span><br><span class="line">                cpx = cut_image.getpixel((x, y))</span><br><span class="line">                fpx = full_image.getpixel((x, y))</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> self.is_similar_color(cpx, fpx):</span><br><span class="line">                    img = cut_image.crop((x, y, x + <span class="number">50</span>, y + <span class="number">40</span>))</span><br><span class="line">                    <span class="comment"># 保存一下计算出来位置图片，看看是不是缺口部分</span></span><br><span class="line">                    img.save(<span class="string">"1.jpg"</span>)</span><br><span class="line">                    <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 开始移动</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_move</span><span class="params">(self, distance)</span>:</span></span><br><span class="line">        element = self.driver.find_element_by_xpath(<span class="string">'//div[@class="gt_slider_knob gt_show"]'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 这里就是根据移动进行调试，计算出来的位置不是百分百正确的，加上一点偏移</span></span><br><span class="line">        distance -= element.size.get(<span class="string">'width'</span>) / <span class="number">2</span></span><br><span class="line">        distance += <span class="number">15</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 按下鼠标左键</span></span><br><span class="line">        ActionChains(self.driver).click_and_hold(element).perform()</span><br><span class="line">        time.sleep(<span class="number">0.5</span>)</span><br><span class="line">        <span class="keyword">while</span> distance &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> distance &gt; <span class="number">10</span>:</span><br><span class="line">                <span class="comment"># 如果距离大于10，就让他移动快一点</span></span><br><span class="line">                span = random.randint(<span class="number">5</span>, <span class="number">8</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 快到缺口了，就移动慢一点</span></span><br><span class="line">                span = random.randint(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">            ActionChains(self.driver).move_by_offset(span, <span class="number">0</span>).perform()</span><br><span class="line">            distance -= span</span><br><span class="line">            time.sleep(random.randint(<span class="number">10</span>, <span class="number">50</span>) / <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">        ActionChains(self.driver).move_by_offset(distance, <span class="number">1</span>).perform()</span><br><span class="line">        ActionChains(self.driver).release(on_element=element).perform()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    h = Vincent()</span><br><span class="line">    h.visit_index()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2018/08/05/selenium+python破解滑动验证码/" title="selenium+python破解滑动验证码">http://wysh.site/2018/08/05/selenium+python破解滑动验证码/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/10/selenium自动化测试流程与规范/" rel="next" title="Selenium 自动化测试流程与规范">
+                <i class="fa fa-chevron-left"></i> Selenium 自动化测试流程与规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/06/珍藏的照片/" rel="prev" title="近几年拍摄并珍藏的一些照片">
+                近几年拍摄并珍藏的一些照片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#方法一"><span class="nav-number">1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法二"><span class="nav-number">2.</span> <span class="nav-text">方法二</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">76.5k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共76.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>

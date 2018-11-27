@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Django, 接口, 自动化测试, REST" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章记录了对 Django Rest API 接口进行自动化测试的过程。对接执行POST，DELETE，PUT，GET请求，会对系统中的数据进行增删改查，每执行一次增删改操作后，系统中的数据就会发生变化，为了解决这个问题，需要在每次执行接口请求之前对数据进行初始化，故本篇文章侧重于对接口测试过程中数据的处理。  用到的一些工具、模块及作用 Django：提供待测试的API接口 Request">
+<meta name="keywords" content="Django, 接口, 自动化测试, REST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Django Rest API 的接口自动化测试">
+<meta property="og:url" content="http://wysh.site/2018/11/27/基于Django Rest API 的接口自动化测试/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="这篇文章记录了对 Django Rest API 接口进行自动化测试的过程。对接执行POST，DELETE，PUT，GET请求，会对系统中的数据进行增删改查，每执行一次增删改操作后，系统中的数据就会发生变化，为了解决这个问题，需要在每次执行接口请求之前对数据进行初始化，故本篇文章侧重于对接口测试过程中数据的处理。  用到的一些工具、模块及作用 Django：提供待测试的API接口 Request">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-b1831951b175b714.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-af58bcc83a845f3a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-9a1e15103c106c89.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3993b085cd848145.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-890e43dbd5992c97.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-b51651f7ded06ee2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-2f85c4660eb5a0d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-b7daf4aea05d1fac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-27T08:49:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Django Rest API 的接口自动化测试">
+<meta name="twitter:description" content="这篇文章记录了对 Django Rest API 接口进行自动化测试的过程。对接执行POST，DELETE，PUT，GET请求，会对系统中的数据进行增删改查，每执行一次增删改操作后，系统中的数据就会发生变化，为了解决这个问题，需要在每次执行接口请求之前对数据进行初始化，故本篇文章侧重于对接口测试过程中数据的处理。  用到的一些工具、模块及作用 Django：提供待测试的API接口 Request">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-b1831951b175b714.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2018/11/27/基于Django Rest API 的接口自动化测试/"/>
+
+
+
+
+
+  <title>基于Django Rest API 的接口自动化测试 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2018/11/27/基于Django Rest API 的接口自动化测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Django Rest API 的接口自动化测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-27T21:35:36+08:00">
+                2018-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/自动化测试/" itemprop="url" rel="index">
+                    <span itemprop="name">自动化测试</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/自动化测试/接口/" itemprop="url" rel="index">
+                    <span itemprop="name">接口</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,571
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>这篇文章记录了对 Django Rest API 接口进行自动化测试的过程。对接执行POST，DELETE，PUT，GET请求，会对系统中的数据进行增删改查，每执行一次增删改操作后，系统中的数据就会发生变化，为了解决这个问题，需要在每次执行接口请求之前对数据进行初始化，故本篇文章侧重于对接口测试过程中数据的处理。</p>
+</blockquote>
+<h3 id="用到的一些工具、模块及作用"><a href="#用到的一些工具、模块及作用" class="headerlink" title="用到的一些工具、模块及作用"></a>用到的一些工具、模块及作用</h3><ul>
+<li>Django：提供待测试的API接口</li>
+<li>Requests：用来发起HTTP请求</li>
+<li>Pymysql：对接口测试的数据进行操作</li>
+<li>Unittest：单元测试框架，对测试结果进行断言</li>
+<li>logging：python的日志模块，对测试执行过程进行记录，方便定位问题</li>
+<li>PyYAML: 数据初始化，存放初始数据</li>
+<li>BSTestRunner：用来成产测试报告，对测试报告进行美化</li>
+<li>Jenkins：持续集成工具，可设置测试过程定期执行或者手动执行</li>
+</ul>
+<h3 id="测试脚本目录结构"><a href="#测试脚本目录结构" class="headerlink" title="测试脚本目录结构"></a>测试脚本目录结构</h3><p>目录结构及各文件的作用</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-b1831951b175b714.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="目录结构.jpg"></p>
+<h3 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h3><h4 id="搭建Django-rest-api-环境"><a href="#搭建Django-rest-api-环境" class="headerlink" title="搭建Django rest api 环境"></a>搭建Django rest api 环境</h4><p>基本的搭建的过程这里面不做介绍，这里介绍数据库迁移过程。</p>
+<p>在Django自带的数据库是Sqllite3，要将数据库迁移到MySQL方便操作。需要注意的是Django 2.1.X版本不支持MySQL 5.5以下的版本，我之前用的是5.5的版本，迁移时报了错，在网上查了，是因为版本不兼容。</p>
+<p>使用如下命令进行数据库迁移：</p>
+<ul>
+<li>python manage.py makemigrations api</li>
+<li>python manage.py migrate</li>
+</ul>
+<p>迁移完成后，需要创建一个超级管理员账号进行登录，使用如下命令：</p>
+<ul>
+<li>python manage.py createsuperuser</li>
+</ul>
+<p>创建超级管理员账号后，我们就可以用超级管理员账号登录Django了，登录后的界面如下（访问地址：<a href="http://127.0.0.1:8009/" target="_blank" rel="noopener">http://127.0.0.1:8009/</a> ，端口号可以自己指定）：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-af58bcc83a845f3a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Django.jpg"></p>
+<p>在浏览器地址栏输入：</p>
+<p><a href="http://127.0.0.1:8009/users/" target="_blank" rel="noopener">http://127.0.0.1:8009/users/</a>  可以返回系统中所有用户信息，用户信息包含url，username，email，groups字段，返回信息格式如下：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">GET /users/</span><br><span class="line">HTTP <span class="number">200</span> OK</span><br><span class="line">Allow: GET, POST, HEAD, OPTIONS</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Vary: Accept</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/users/1/"</span>,</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"wysh1"</span>,</span><br><span class="line">        <span class="string">"email"</span>: <span class="string">"wysh555@163.com"</span>,</span><br><span class="line">        <span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:8009/groups/1/"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/users/2/"</span>,</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"wysh2"</span>,</span><br><span class="line">        <span class="string">"email"</span>: <span class="string">"wysh2@qq.com"</span>,</span><br><span class="line">        <span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:8009/groups/2/"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/users/3/"</span>,</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"wysh3"</span>,</span><br><span class="line">        <span class="string">"email"</span>: <span class="string">"wysh3@qq.com"</span>,</span><br><span class="line">        <span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:8009/groups/3/"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/users/5/"</span>,</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"wysh5"</span>,</span><br><span class="line">        <span class="string">"email"</span>: <span class="string">"wysh5@qq.com"</span>,</span><br><span class="line">        <span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:8009/groups/5/"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/users/6/"</span>,</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"wysh6"</span>,</span><br><span class="line">        <span class="string">"email"</span>: <span class="string">"wysh5@163.com"</span>,</span><br><span class="line">        <span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:8000/groups/2/"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>在浏览器地址栏输入：</p>
+<p><a href="http://127.0.0.1:8009/groups/" target="_blank" rel="noopener">http://127.0.0.1:8009/groups/</a>  可以返回系统中所有用户组信息，用户信息包含 url，name 字段，返回信息格式如下：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">GET /groups/</span><br><span class="line">HTTP <span class="number">200</span> OK</span><br><span class="line">Allow: GET, POST, HEAD, OPTIONS</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Vary: Accept</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/groups/2/"</span>,</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"Boss"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/groups/3/"</span>,</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"wysh_group3"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/groups/4/"</span>,</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"wysh_group4"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/groups/5/"</span>,</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"wysh_group5"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"url"</span>: <span class="string">"http://127.0.0.1:8009/groups/6/"</span>,</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"Pm"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>在 MySQL 数据库中，django_restful存放的是数据库迁移后，Django系统的数据，如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-9a1e15103c106c89.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MySQL.jpg"></p>
+<p>其中 api_user 和 api_group 存放的是上面接口中用户和用户组的信息，以下的接口操作也是针对用户和用户组进行操作，api_user表如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-3993b085cd848145.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="user表.jpg"></p>
+<h3 id="测试脚本介绍"><a href="#测试脚本介绍" class="headerlink" title="测试脚本介绍"></a>测试脚本介绍</h3><ul>
+<li>mysql_action.py：进行数据库的初始化操作，代码如下：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">from pymysql import connect</span><br><span class="line">import yaml</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DB</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'==================init data==============='</span>)</span><br><span class="line">        logging.info(<span class="string">'connect db...'</span>)</span><br><span class="line">        <span class="keyword">self</span>.conn = connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, password=<span class="string">'123456'</span>, db=<span class="string">'django_restful'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clear</span><span class="params">(<span class="keyword">self</span>, table_name)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'clear db...'</span>)</span><br><span class="line">        clear_sql = <span class="string">'truncate '</span> + table_name + <span class="string">';'</span></span><br><span class="line">        with <span class="keyword">self</span>.conn.cursor() as <span class="symbol">cursor:</span></span><br><span class="line">            cursor.execute(<span class="string">'set foreign_key_checks=0;'</span>)</span><br><span class="line">            cursor.execute(clear_sql)</span><br><span class="line">        <span class="keyword">self</span>.conn.commit()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(<span class="keyword">self</span>, table_name, table_data)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'inser data...'</span>)</span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> <span class="symbol">table_data:</span></span><br><span class="line">            table_data[key] = <span class="string">"'"</span> + str(table_data[key]) + <span class="string">"'"</span></span><br><span class="line"></span><br><span class="line">        key = <span class="string">','</span>.join(table_data.keys())</span><br><span class="line">        value = <span class="string">','</span>.join(table_data.values())</span><br><span class="line"></span><br><span class="line">        logging.info(key)</span><br><span class="line">        logging.info(value)</span><br><span class="line"></span><br><span class="line">        insert_sql = <span class="string">'insert into '</span> + table_name + <span class="string">'('</span> + key + <span class="string">')'</span> + <span class="string">'values'</span> + <span class="string">'('</span> + value + <span class="string">')'</span></span><br><span class="line">        logging.info(insert_sql)</span><br><span class="line"></span><br><span class="line">        with <span class="keyword">self</span>.conn.cursor() as <span class="symbol">cursor:</span></span><br><span class="line">            cursor.execute(insert_sql)</span><br><span class="line">        <span class="keyword">self</span>.conn.commit()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'close db'</span>)</span><br><span class="line">        <span class="keyword">self</span>.conn.close()</span><br><span class="line">        logging.info(<span class="string">'=============init finished!============'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_data</span><span class="params">(<span class="keyword">self</span>, datas)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">for</span> table, data <span class="keyword">in</span> datas.items()<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.clear(table)</span><br><span class="line">            <span class="keyword">for</span> d <span class="keyword">in</span> <span class="symbol">data:</span></span><br><span class="line">                <span class="keyword">self</span>.insert(table, d)</span><br><span class="line">        <span class="keyword">self</span>.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name_<span class="number">_</span> == <span class="string">'__main__'</span><span class="symbol">:</span></span><br><span class="line">    db = DB()</span><br><span class="line">    <span class="comment"># db.clear('api_user')</span></span><br><span class="line">    <span class="comment"># db.clear('api_group')</span></span><br><span class="line">    <span class="comment"># user_data=&#123;'id':1,'username':'wysh','email':'wysh<span class="doctag">@qq</span>.com'&#125;</span></span><br><span class="line">    <span class="comment"># db.insert('api_user',user_data)</span></span><br><span class="line">    <span class="comment"># db.close()</span></span><br><span class="line"></span><br><span class="line">    f = open(<span class="string">'datas.yaml'</span>, <span class="string">'r'</span>)</span><br><span class="line">    datas = yaml.load(f)</span><br><span class="line">    db.init_data(datas)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>test_django_restful.py：对不同类型的接口请求（post，put，get，delete）进行单元测试，代码如下：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import unittest</span><br><span class="line">from  mysql_action import DB</span><br><span class="line">import yaml</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserTest</span>(<span class="title">unittest</span>.<span class="title">TestCase</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.base_url=<span class="string">'http://127.0.0.1:8009/users'</span></span><br><span class="line">        <span class="keyword">self</span>.auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_001_get_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_001_get_user'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'username'</span>],<span class="string">'wysh1'</span>)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh1@qq.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_002_add_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_002_add_user'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'username'</span><span class="symbol">:<span class="string">'wysh6'</span></span>,<span class="string">'email'</span><span class="symbol">:<span class="string">'wysh5@163.com'</span></span>,<span class="string">'groups'</span><span class="symbol">:<span class="string">'http://127.0.0.1:8000/groups/2/'</span></span>&#125;</span><br><span class="line">        r=requests.post(<span class="keyword">self</span>.base_url+<span class="string">'/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'username'</span>],<span class="string">'wysh6'</span>)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh5@163.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_003_update_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_003_update_user'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'email'</span><span class="symbol">:<span class="string">'wysh555@163.com'</span></span>&#125;</span><br><span class="line">        r=requests.patch(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh555@163.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_004_delete_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_004_delete_user'</span>)</span><br><span class="line">        r=requests.delete(<span class="keyword">self</span>.base_url+<span class="string">'/4/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(r.status_code,<span class="number">204</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_005_no_auth</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_005_no_auth'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'detail'</span>],<span class="string">'Authentication credentials were not provided.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GroupTest</span>(<span class="title">unittest</span>.<span class="title">TestCase</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.base_url=<span class="string">'http://127.0.0.1:8009/groups'</span></span><br><span class="line">        <span class="keyword">self</span>.auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_001_group_wysh</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_001_group'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'wysh_group1'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_002_add_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_002_add_group'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'name'</span><span class="symbol">:<span class="string">'Pm'</span></span>&#125;</span><br><span class="line">        r=requests.post(<span class="keyword">self</span>.base_url+<span class="string">'/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'Pm'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_003_update_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_003_update_group'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'name'</span><span class="symbol">:<span class="string">'Boss'</span></span>&#125;</span><br><span class="line">        r=requests.patch(<span class="keyword">self</span>.base_url+<span class="string">'/2/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'Boss'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_004_delete_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_004_delete_group'</span>)</span><br><span class="line">        r=requests.delete(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(r.status_code,<span class="number">204</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name_<span class="number">_</span> == <span class="string">'__main__'</span><span class="symbol">:</span></span><br><span class="line">    db=DB()</span><br><span class="line">    f=open(<span class="string">'datas.yaml'</span>,<span class="string">'r'</span>)</span><br><span class="line">    datas=yaml.load(f)</span><br><span class="line">    db.init_data(datas)</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>data.yaml：以yaml格式存放接口初始数据，方便读取，代码如下：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import unittest</span><br><span class="line">from  mysql_action import DB</span><br><span class="line">import yaml</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserTest</span>(<span class="title">unittest</span>.<span class="title">TestCase</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.base_url=<span class="string">'http://127.0.0.1:8009/users'</span></span><br><span class="line">        <span class="keyword">self</span>.auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_001_get_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_001_get_user'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'username'</span>],<span class="string">'wysh1'</span>)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh1@qq.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_002_add_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_002_add_user'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'username'</span><span class="symbol">:<span class="string">'wysh6'</span></span>,<span class="string">'email'</span><span class="symbol">:<span class="string">'wysh5@163.com'</span></span>,<span class="string">'groups'</span><span class="symbol">:<span class="string">'http://127.0.0.1:8000/groups/2/'</span></span>&#125;</span><br><span class="line">        r=requests.post(<span class="keyword">self</span>.base_url+<span class="string">'/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'username'</span>],<span class="string">'wysh6'</span>)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh5@163.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_003_update_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_003_update_user'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'email'</span><span class="symbol">:<span class="string">'wysh555@163.com'</span></span>&#125;</span><br><span class="line">        r=requests.patch(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'email'</span>],<span class="string">'wysh555@163.com'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_004_delete_user</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_004_delete_user'</span>)</span><br><span class="line">        r=requests.delete(<span class="keyword">self</span>.base_url+<span class="string">'/4/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(r.status_code,<span class="number">204</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_005_no_auth</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_005_no_auth'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'detail'</span>],<span class="string">'Authentication credentials were not provided.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GroupTest</span>(<span class="title">unittest</span>.<span class="title">TestCase</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.base_url=<span class="string">'http://127.0.0.1:8009/groups'</span></span><br><span class="line">        <span class="keyword">self</span>.auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_001_group_wysh</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_001_group'</span>)</span><br><span class="line">        r=requests.get(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'wysh_group1'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_002_add_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_002_add_group'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'name'</span><span class="symbol">:<span class="string">'Pm'</span></span>&#125;</span><br><span class="line">        r=requests.post(<span class="keyword">self</span>.base_url+<span class="string">'/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'Pm'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_003_update_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_003_update_group'</span>)</span><br><span class="line">        form_data=&#123;<span class="string">'name'</span><span class="symbol">:<span class="string">'Boss'</span></span>&#125;</span><br><span class="line">        r=requests.patch(<span class="keyword">self</span>.base_url+<span class="string">'/2/'</span>,data=form_data,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        result=r.json()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.assertEqual(result[<span class="string">'name'</span>],<span class="string">'Boss'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_004_delete_group</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        logging.info(<span class="string">'test_004_delete_group'</span>)</span><br><span class="line">        r=requests.delete(<span class="keyword">self</span>.base_url+<span class="string">'/1/'</span>,auth=<span class="keyword">self</span>.auth)</span><br><span class="line">        <span class="keyword">self</span>.assertEqual(r.status_code,<span class="number">204</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name_<span class="number">_</span> == <span class="string">'__main__'</span><span class="symbol">:</span></span><br><span class="line">    db=DB()</span><br><span class="line">    f=open(<span class="string">'datas.yaml'</span>,<span class="string">'r'</span>)</span><br><span class="line">    datas=yaml.load(f)</span><br><span class="line">    db.init_data(datas)</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>log.conf：日志配置文件，代码如下：</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[loggers]</span></span><br><span class="line"><span class="attr">keys</span>=root,infoLogger</span><br><span class="line"></span><br><span class="line"><span class="section">[logger_root]</span></span><br><span class="line"><span class="attr">level</span>=DEBUG</span><br><span class="line"><span class="attr">handlers</span>=consoleHandler,fileHandler</span><br><span class="line"></span><br><span class="line"><span class="section">[logger_infoLogger]</span></span><br><span class="line"><span class="attr">handlers</span>=consoleHandler,fileHandler</span><br><span class="line"><span class="attr">qualname</span>=infoLogger</span><br><span class="line"><span class="attr">propagate</span>=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="section">[handlers]</span></span><br><span class="line"><span class="attr">keys</span>=consoleHandler,fileHandler</span><br><span class="line"></span><br><span class="line"><span class="section">[handler_consoleHandler]</span></span><br><span class="line"><span class="attr">class</span>=StreamHandler</span><br><span class="line"><span class="attr">level</span>=INFO</span><br><span class="line"><span class="attr">formatter</span>=form02</span><br><span class="line"><span class="attr">args</span>=(sys.stdout,)</span><br><span class="line"></span><br><span class="line"><span class="section">[handler_fileHandler]</span></span><br><span class="line"><span class="attr">class</span>=FileHandler</span><br><span class="line"><span class="attr">level</span>=INFO</span><br><span class="line"><span class="attr">formatter</span>=form01</span><br><span class="line"><span class="attr">args</span>=(<span class="string">'./logs/runlog.log'</span>, <span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line"><span class="section">[formatters]</span></span><br><span class="line"><span class="attr">keys</span>=form01,form02</span><br><span class="line"></span><br><span class="line"><span class="section">[formatter_form01]</span></span><br><span class="line"><span class="attr">format</span>=%(asctime)s %(filename)s[line:%(line<span class="literal">no</span>)d] %(levelname)s %(message)s</span><br><span class="line"></span><br><span class="line"><span class="section">[formatter_form02]</span></span><br><span class="line"><span class="attr">format</span>=%(asctime)s %(filename)s[line:%(line<span class="literal">no</span>)d] %(levelname)s %(message)s</span><br></pre></td></tr></table></figure>
+<ul>
+<li>run.py：程序的入口，代码如下：</li>
+</ul>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="title">from</span> <span class="type">BSTestRunner</span> <span class="keyword">import</span> BSTestRunner</span><br><span class="line"><span class="keyword">import</span> time,yaml</span><br><span class="line"><span class="title">from</span> mysql_action <span class="keyword">import</span> DB</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line"><span class="type">CON_LOG</span>='log.conf'</span><br><span class="line"><span class="title">logging</span>.config.fileConfig(<span class="type">CON_LOG</span>)</span><br><span class="line"><span class="title">logging</span>=logging.getLogger()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title">db</span>=<span class="type">DB</span>()</span><br><span class="line"><span class="title">f</span>=open('datas.yaml','r')</span><br><span class="line"><span class="title">datas</span>=yaml.load(f)</span><br><span class="line"><span class="title">db</span>.init_data(datas)</span><br><span class="line"></span><br><span class="line"><span class="title">test_dir</span>='.'</span><br><span class="line"><span class="title">report_dir</span>='./reports'</span><br><span class="line"></span><br><span class="line">discover=unittest.defaultTestLoader.discover(test_dir,pattern='test_django_restful.py')</span><br><span class="line"></span><br><span class="line">now=time.strftime('%<span class="type">Y</span>-%m-%d %<span class="type">H_</span>%<span class="type">M_</span>%<span class="type">S</span>')</span><br><span class="line">report_name=report_dir+'/'+now+' test_report.html'</span><br><span class="line"></span><br><span class="line">with open (report_name,'wb') as f:</span><br><span class="line">    runner=BSTestRunner(stream=f,title='<span class="type">Vincent</span> <span class="type">API</span> <span class="type">Test</span> <span class="type">Report</span>',description='<span class="type">Vincent</span> <span class="type">Django</span> <span class="type">Restful</span> <span class="type">API</span> <span class="type">Test</span> <span class="type">Report</span>')</span><br><span class="line">    logging.info('=========<span class="type">Start</span> <span class="type">API</span> <span class="type">Test</span>=============')</span><br><span class="line">    runner.run(discover)</span><br></pre></td></tr></table></figure>
+<h3 id="程序执行"><a href="#程序执行" class="headerlink" title="程序执行"></a>程序执行</h3><p>运行run.py，会调用数据初始化、单元测试、日志、测试报告生成模块，测试报告生成在reports目录下，打开测试包括，会显示各个单元测试用例执行结果，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-890e43dbd5992c97.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="report.jpg"></p>
+<p>打开logs目录下的日志文件，会显示程序执行过程中的日志记录，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-b51651f7ded06ee2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="日志.jpg"></p>
+<h3 id="Jenkins集成"><a href="#Jenkins集成" class="headerlink" title="Jenkins集成"></a>Jenkins集成</h3><p>打开Jenkins持续集成平台，我们可以自动定时执行自动化任务，通过邮件发送测试报告，这样会有效提高测试效率</p>
+<p>创建名称为：wysh_interface_tes 的任务，在构建中选择执行Windows批处理命令，输入如下内容：<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d:</span><br><span class="line">cd D:<span class="symbol">\d</span>jango_restful<span class="symbol">\a</span>pi<span class="symbol">\i</span>nterface_wysh</span><br><span class="line">E:<span class="symbol">\P</span>ython<span class="symbol">\P</span>ython36-32<span class="symbol">\p</span>ython3.exe run.py</span><br></pre></td></tr></table></figure></p>
+<p>如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-2f85c4660eb5a0d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="windows批处理.jpg"></p>
+<p>构建过程如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-b7daf4aea05d1fac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jenkins.jpg"></p>
+<p>构建完成后，同样也会在 reports 目录下生成相应的测试报告。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2018/11/27/基于Django Rest API 的接口自动化测试/" title="基于Django Rest API 的接口自动化测试">http://wysh.site/2018/11/27/基于Django Rest API 的接口自动化测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自动化测试/" rel="tag"> <i class="fa fa-tag"></i> 自动化测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/19/接口自动化测试（Jmeter+Ant+Jenkins）/" rel="next" title="接口自动化测试（Jmeter+Ant+Jenkins）">
+                <i class="fa fa-chevron-left"></i> 接口自动化测试（Jmeter+Ant+Jenkins）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#用到的一些工具、模块及作用"><span class="nav-number">1.</span> <span class="nav-text">用到的一些工具、模块及作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试脚本目录结构"><span class="nav-number">2.</span> <span class="nav-text">测试脚本目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试过程"><span class="nav-number">3.</span> <span class="nav-text">测试过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#搭建Django-rest-api-环境"><span class="nav-number">3.1.</span> <span class="nav-text">搭建Django rest api 环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试脚本介绍"><span class="nav-number">4.</span> <span class="nav-text">测试脚本介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序执行"><span class="nav-number">5.</span> <span class="nav-text">程序执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins集成"><span class="nav-number">6.</span> <span class="nav-text">Jenkins集成</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">76.5k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共76.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
