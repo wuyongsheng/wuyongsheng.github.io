@@ -116,15 +116,18 @@
 <meta property="og:site_name" content="Vincent&#39;s Home">
 <meta property="og:description" content="这段时间接触了一款新的性能测试工具：Locust，和Loadrunner及Jmeter一样，也是一款很好的性能测试工具。  简介在Locust测试框架中，测试场景是采用纯Python脚本进行描述的。对于最常见的HTTP(S)协议的系统，Locust采用Python的requests库作为客户端，使得脚本编写大大简化，富有表现力的同时且极具美感。而对于其它协议类型的系统，Locust也提供了接口，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-7c81bf49d7d77c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-b6ae63aff585b937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-125041ec48a13dbb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-052fa96eba4d3414.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-9bb0cdbf1a1becff.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-5c8e088a8f726315.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-7328063025899c76.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-03T15:34:08.000Z">
+<meta property="og:updated_time" content="2018-12-03T15:53:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能测试工具Locust的简单实用">
 <meta name="twitter:description" content="这段时间接触了一款新的性能测试工具：Locust，和Loadrunner及Jmeter一样，也是一款很好的性能测试工具。  简介在Locust测试框架中，测试场景是采用纯Python脚本进行描述的。对于最常见的HTTP(S)协议的系统，Locust采用Python的requests库作为客户端，使得脚本编写大大简化，富有表现力的同时且极具美感。而对于其它协议类型的系统，Locust也提供了接口，">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-052fa96eba4d3414.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-7c81bf49d7d77c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -445,7 +448,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,517
+                  1,459
                 </span>
               
 
@@ -495,27 +498,36 @@
 <p>Django 的安装，菜鸟教程有介绍</p>
 <p><a href="http://www.runoob.com/django/django-install.html" target="_blank" rel="noopener">http://www.runoob.com/django/django-install.html</a></p>
 <p>安装完成后，使用如下命令启动，</p>
-<figure class="highlight plain"><figcaption><span>manage.py runserver 127.0.0.1:9000  ```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动完成之后，在浏览器中输入如下地址，就可以访问api接口：</span><br><span class="line"></span><br><span class="line">http://127.0.0.1:9000/</span><br><span class="line"></span><br><span class="line">如下图所示：</span><br><span class="line"></span><br><span class="line">![Django.jpg](https://upload-images.jianshu.io/upload_images/12273007-7c81bf49d7d77c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">点击其中的 users 和 groups 链接，会分别显示相应的用户和组的信息，如下图：</span><br><span class="line"></span><br><span class="line">![users.jpg](https://upload-images.jianshu.io/upload_images/12273007-b6ae63aff585b937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">![groups.jpg](https://upload-images.jianshu.io/upload_images/12273007-125041ec48a13dbb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">本次针对如下两个接口进行测试：</span><br></pre></td></tr></table></figure>
-<pre><code>&quot;users&quot;: &quot;http://127.0.0.1:9000/users/&quot;,
-&quot;groups&quot;: &quot;http://127.0.0.1:9000/groups/&quot;
-</code></pre><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#### 编写简单的测试脚本</span><br><span class="line"></span><br><span class="line">创建 locust_test.py 文件，通过 Python 编写性能测试脚本。</span><br></pre></td></tr></table></figure>
-<p>from locust import HttpLocust,TaskSet,task</p>
-<p>class UserBehavior(TaskSet):<br>    def on_start(self):<br>        self.users_index=0<br>        self.groups_index=0</p>
-<pre><code>@task(2)
-def test_users(self):
-    users_id=self.locust.id[self.users_index]
-    url=&apos;/users/&apos;+str(users_id)+&apos;/&apos;
-    self.client.get(url,auth=(&apos;wysh&apos;,&apos;123456&apos;))
-    self.users_index=(self.users_index+1)%len(self.locust.id)
-
-@task(1)
-def test_groups(self):
-    groups_id=self.locust.id[self.groups_index]
-    url=&apos;/groups/&apos;+str(groups_id)+&apos;/&apos;
-    self.client.get(url,auth=(&apos;wysh&apos;,&apos;123456&apos;))
-    self.groups_index=(self.groups_index+1)%len(self.locust.id)
-</code></pre><p>class WebsiteUser(HttpLocust):<br>    task_set = UserBehavior<br>    id=[1,2]<br>    min_wait = 3000<br>    max_wait = 6000<br>    host = ‘<a href="http://127.0.0.1:9000&#39;" target="_blank" rel="noopener">http://127.0.0.1:9000&#39;</a><br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">那么，如上Python脚本是如何表达出以上测试场景的呢？</span><br><span class="line"></span><br><span class="line">-<span class="ruby"> 从脚本中可以看出，脚本主要包含两个类，一个是WebsiteUser（继承自HttpLocust，而HttpLocust继承自Locust），另一个是UserBehavior（继承自TaskSet）。事实上，在Locust的测试脚本中，所有业务测试场景都是在Locust和TaskSet两个类的继承子类中进行描述的。</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-  <span class="symbol">task:</span>装饰该方法为一个事务后面的数字表示请求比例,上面的比例为<span class="number">2</span><span class="symbol">:</span><span class="number">1</span>默认都是<span class="number">1</span><span class="symbol">:</span><span class="number">1</span></span></span><br><span class="line"><span class="ruby">-  test<span class="number">_</span> users()方法表示个用户行为,这里是请求user接口。</span></span><br><span class="line"><span class="ruby">-  test<span class="number">_</span> groups()方法表示请求 group接口</span></span><br><span class="line"><span class="ruby">-  client.get()用于指定请求的路径</span></span><br><span class="line"><span class="ruby">-  Websiteuser类用于设置性能测试。</span></span><br><span class="line"><span class="ruby">-  <span class="symbol">task_set:</span>指向一个定义的用户行为类。</span></span><br><span class="line"><span class="ruby">-  min <span class="symbol">wait:</span>执行事务之间用户等待时间的下界(单位<span class="symbol">:</span>亳秒)</span></span><br><span class="line"><span class="ruby">-  max <span class="symbol">wait:</span>执行事务之间用户等待时间的上界(单位<span class="symbol">:</span>亳秒)</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby"><span class="comment">####  执行性能测试</span></span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">Locust脚本调试通过后，就算是完成了所有准备工作，可以开始进行压力测试了。</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">使用如下命令，开始执行性能测试：</span></span><br></pre></td></tr></table></figure></p>
-<p>locust -f D:\PycharmProjects\locust\locust_test.py –host<br>=<a href="http://127.0.0.1:9000" target="_blank" rel="noopener">http://127.0.0.1:9000</a><br><code>`</code><br><img src="https://upload-images.jianshu.io/upload_images/12273007-052fa96eba4d3414.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="启动locust.jpg"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">D</span>:\<span class="selector-tag">django_restful</span>&gt;<span class="selector-tag">python3</span> <span class="selector-tag">manage</span><span class="selector-class">.py</span> <span class="selector-tag">runserver</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:9000</span></span><br></pre></td></tr></table></figure>
+<p>启动完成之后，在浏览器中输入如下地址，就可以访问api接口：</p>
+<p><a href="http://127.0.0.1:9000/" target="_blank" rel="noopener">http://127.0.0.1:9000/</a></p>
+<p>如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-7c81bf49d7d77c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Django.jpg"></p>
+<p>点击其中的 users 和 groups 链接，会分别显示相应的用户和组的信息，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-b6ae63aff585b937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="users.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-125041ec48a13dbb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="groups.jpg"></p>
+<p>本次针对如下两个接口进行测试：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"users"</span>: <span class="string">"http://127.0.0.1:9000/users/"</span>,</span><br><span class="line"><span class="string">"groups"</span>: <span class="string">"http://127.0.0.1:9000/groups/"</span></span><br></pre></td></tr></table></figure>
+<h4 id="编写简单的测试脚本"><a href="#编写简单的测试脚本" class="headerlink" title="编写简单的测试脚本"></a>编写简单的测试脚本</h4><p>创建 locust_test.py 文件，通过 Python 编写性能测试脚本。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from locust import HttpLocust,TaskSet,task</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserBehavior</span>(<span class="title">TaskSet</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_start</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.users_index=<span class="number">0</span></span><br><span class="line">        <span class="keyword">self</span>.groups_index=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">    @task(<span class="number">2</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_users</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        users_id=<span class="keyword">self</span>.locust.id[<span class="keyword">self</span>.users_index]</span><br><span class="line">        url=<span class="string">'/users/'</span>+str(users_id)+<span class="string">'/'</span></span><br><span class="line">        <span class="keyword">self</span>.client.get(url,auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>))</span><br><span class="line">        <span class="keyword">self</span>.users_index=(<span class="keyword">self</span>.users_index+<span class="number">1</span>)%len(<span class="keyword">self</span>.locust.id)</span><br><span class="line"></span><br><span class="line">    @task(<span class="number">1</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_groups</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        groups_id=<span class="keyword">self</span>.locust.id[<span class="keyword">self</span>.groups_index]</span><br><span class="line">        url=<span class="string">'/groups/'</span>+str(groups_id)+<span class="string">'/'</span></span><br><span class="line">        <span class="keyword">self</span>.client.get(url,auth=(<span class="string">'wysh'</span>,<span class="string">'123456'</span>))</span><br><span class="line">        <span class="keyword">self</span>.groups_index=(<span class="keyword">self</span>.groups_index+<span class="number">1</span>)%len(<span class="keyword">self</span>.locust.id)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebsiteUser</span>(<span class="title">HttpLocust</span>):</span></span><br><span class="line">    task_set = UserBehavior</span><br><span class="line">    id=[<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">    min_wait = <span class="number">3000</span></span><br><span class="line">    max_wait = <span class="number">6000</span></span><br><span class="line">    host = <span class="string">'http://127.0.0.1:9000'</span></span><br></pre></td></tr></table></figure>
+<p>那么，如上Python脚本是如何表达出以上测试场景的呢？</p>
+<ul>
+<li><p>从脚本中可以看出，脚本主要包含两个类，一个是WebsiteUser（继承自HttpLocust，而HttpLocust继承自Locust），另一个是UserBehavior（继承自TaskSet）。事实上，在Locust的测试脚本中，所有业务测试场景都是在Locust和TaskSet两个类的继承子类中进行描述的。</p>
+</li>
+<li><p>task:装饰该方法为一个事务后面的数字表示请求比例,上面的比例为2:1默认都是1:1</p>
+</li>
+<li>test_ users()方法表示个用户行为,这里是请求user接口。</li>
+<li>test_ groups()方法表示请求 group接口</li>
+<li>client.get()用于指定请求的路径</li>
+<li>Websiteuser类用于设置性能测试。</li>
+<li>task_set:指向一个定义的用户行为类。</li>
+<li>min wait:执行事务之间用户等待时间的下界(单位:亳秒)</li>
+<li>max wait:执行事务之间用户等待时间的上界(单位:亳秒)</li>
+</ul>
+<h4 id="执行性能测试"><a href="#执行性能测试" class="headerlink" title="执行性能测试"></a>执行性能测试</h4><p>Locust脚本调试通过后，就算是完成了所有准备工作，可以开始进行压力测试了。</p>
+<p>使用如下命令，开始执行性能测试：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">locust -f <span class="symbol">D:</span>\PycharmProjects\locust\locust_test.py --host</span><br><span class="line">=ht<span class="symbol">tp:</span>//<span class="number">127.0</span>.<span class="number">0.1</span><span class="symbol">:9000</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-052fa96eba4d3414.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="启动locust.jpg"></p>
 <p>参数说明：</p>
 <p>Locust是通过在Terminal中执行命令进行启动的，通用的参数有如下两个：</p>
 <ul>
@@ -824,7 +836,7 @@ def test_groups(self):
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试案例"><span class="nav-number">3.</span> <span class="nav-text">测试案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试场景"><span class="nav-number">3.1.</span> <span class="nav-text">测试场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置测试"><span class="nav-number">3.2.</span> <span class="nav-text">设置测试</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试案例"><span class="nav-number">3.</span> <span class="nav-text">测试案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试场景"><span class="nav-number">3.1.</span> <span class="nav-text">测试场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单的测试脚本"><span class="nav-number">3.2.</span> <span class="nav-text">编写简单的测试脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行性能测试"><span class="nav-number">3.3.</span> <span class="nav-text">执行性能测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置测试"><span class="nav-number">3.4.</span> <span class="nav-text">设置测试</span></a></li></ol></li></ol></div>
             
 
           </div>
