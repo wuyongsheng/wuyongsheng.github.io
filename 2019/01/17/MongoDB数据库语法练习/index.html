@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用百">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB数据库语法练习">
+<meta property="og:url" content="http://wysh.site/2019/01/17/MongoDB数据库语法练习/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用百">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-acf9fd4c36ec418b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-d4ff8b27e0d9f720.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-5bcd34fb9d4ddc47.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-84c1ea28f872b653.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-16T16:27:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB数据库语法练习">
+<meta name="twitter:description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用百">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-acf9fd4c36ec418b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/01/17/MongoDB数据库语法练习/"/>
+
+
+
+
+
+  <title>MongoDB数据库语法练习 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/01/17/MongoDB数据库语法练习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB数据库语法练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-17T00:14:15+08:00">
+                2019-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,370
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。</p>
+</blockquote>
+<h3 id="MongoDB-介绍"><a href="#MongoDB-介绍" class="headerlink" title="MongoDB 介绍"></a>MongoDB 介绍</h3><p>引用百度百科对 MongoDB 的介绍：</p>
+<p>MongoDB是一个基于分布式文件存储的数据库。由C++语言编写。旨在为WEB应用提供可扩展的高性能数据存储解决方案。</p>
+<p>MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。它支持的数据结构非常松散，是类似json的bson格式，因此可以存储比较复杂的数据类型。</p>
+<p>Mongo最大的特点是它支持的查询语言非常强大，其语法有点类似于面向对象的查询语言，几乎可以实现类似关系数据库单表查询的绝大部分功能，而且还支持对数据建立索引。</p>
+<h3 id="MongoDB-的安装"><a href="#MongoDB-的安装" class="headerlink" title="MongoDB 的安装"></a>MongoDB 的安装</h3><p>可以直接在 MongoDB 的官网上下载 MongoDB 的安装包进行安装，地址：<a href="http://www.mongodb.com/download-center#community" target="_blank" rel="noopener">www.mongodb.com/download-center#community</a><br>安装的过程很简单，参照网上的方法进行安装就可以了，我安装的是最新的 v4.0.5</p>
+<ul>
+<li>连接MongoDB</li>
+</ul>
+<p>我们可以在命令窗口中运行 mongo.exe 命令即可连接上 MongoDB，执行如下命令：<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="symbol">\M</span>ongoDB<span class="symbol">\b</span>in&gt;mongo.exe</span><br></pre></td></tr></table></figure></p>
+<p>执行以上命令后，会自动进入到 MongoDB Shell（它是 MongoDB 自带的交互式Javascript shell,用来对 MongoDB 进行操作和管理的交互式环境）。</p>
+<p>同时，它默认会链接到 test 文档（数据库），使用 db 命令即可查看当前所处的数据库，如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-acf9fd4c36ec418b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="mongodb连接.jpg"></p>
+<h3 id="MongoDB-概念解析"><a href="#MongoDB-概念解析" class="headerlink" title="MongoDB 概念解析"></a>MongoDB 概念解析</h3><p>下表将帮助您更容易理解Mongo中的一些概念：</p>
+<table>
+<thead>
+<tr>
+<th>SQL术语/概念</th>
+<th>MongoDB术语/概念</th>
+<th>解释/说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>database</td>
+<td>database</td>
+<td>数据库</td>
+</tr>
+<tr>
+<td>table</td>
+<td>collection</td>
+<td>数据库表/集合</td>
+</tr>
+<tr>
+<td>row</td>
+<td>document</td>
+<td>数据记录行/文档</td>
+</tr>
+<tr>
+<td>column</td>
+<td>field</td>
+<td>数据字段/域</td>
+</tr>
+<tr>
+<td>index</td>
+<td>index</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>table joins</td>
+<td></td>
+<td>表连接,MongoDB不支持</td>
+</tr>
+<tr>
+<td>primary key</td>
+<td>primary key</td>
+<td>主键,MongoDB自动将_id字段设置为主键</td>
+</tr>
+</tbody>
+</table>
+<h3 id="MongoDB的可视化工具"><a href="#MongoDB的可视化工具" class="headerlink" title="MongoDB的可视化工具"></a>MongoDB的可视化工具</h3><p>上文的截图中是通过在 Windows 的 DOS 窗口执行安装目录下的 mongo.exe 命令连接到 MongoDB 的，也可以通过一些可视化工具连接到 MongoDB ，我是用过三款 MongoDB 的可视化工具：robo 3t、nosqlbooster 、adminmongo，其中 adminmongo 是一款 web 工具，使用的时候要启动 web 服务，不太推荐。下面介绍robo 3t和nosqlbooster：</p>
+<ul>
+<li>nosqlbooster</li>
+</ul>
+<p>个人感觉 nosqlbooster 是这三款可视化工具中功能最强大的，启动nosqlbooster后，在Basic选项卡中填入下图所示参数（name可以自定义），其他的默认，点击左下方的 Test Connection 按钮测试连接是否通过，通过之后，点击 Save &amp; Connect 即可连接成功<br><img src="https://upload-images.jianshu.io/upload_images/12273007-d4ff8b27e0d9f720.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="nosqlbooter.jpg"></p>
+<p>连接成功后，按照如下图所示即可对指定数据库进行查询（类似于 mysql的 Navicat工具）：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-5bcd34fb9d4ddc47.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="nosqlbooter查询.jpg"></p>
+<ul>
+<li>robo 3t</li>
+</ul>
+<p>robo 3t 连接MongoDB的方式类似于 nosqlbooster，连接成功之后，按下图的方式即可对MongoDB数据库进行查询操作：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-84c1ea28f872b653.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3t查询.jpg"></p>
+<ul>
+<li>这两款工具的比较</li>
+</ul>
+<p>个人感觉这两款工具各有优劣：nosqlbooter 功能强大，但如果电脑的配置不好，使用起来可能会比较卡顿（我在我的腾讯云主机上使用时会比较卡），robo 3t提供的功能不多，但在配置比较差的机器上也不会卡顿。</p>
+<h3 id="MongoDB-创建数据库"><a href="#MongoDB-创建数据库" class="headerlink" title="MongoDB 创建数据库"></a>MongoDB 创建数据库</h3><ul>
+<li>语法</li>
+</ul>
+<p>MongoDB 创建数据库的语法格式如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> DATABASE_NAME</span><br></pre></td></tr></table></figure></p>
+<p>如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
+<ul>
+<li>实例</li>
+</ul>
+<p>以下实例我们创建了数据库 wys:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> use wys</span></span><br><span class="line">switched to db wys</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db</span></span><br><span class="line">wys</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<p>如果你想查看所有数据库，可以使用 show dbs 命令：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">test    0.000GB</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，我们刚创建的数据库 wys 并不在数据库的列表中， 要显示它，我们需要向 wys 数据库插入一些数据。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.wys.insert(&#123;<span class="string">"name"</span>:<span class="string">"wysh"</span>&#125;)</span><br><span class="line">WriteResult(&#123; <span class="string">"nInserted"</span> : 1 &#125;)</span><br><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">test    0.000GB</span><br><span class="line">wys     0.000GB</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>MongoDB 中默认的数据库为 test，如果你没有创建新的数据库，集合将存放在 test 数据库中。</p>
+<p>注意: 在 MongoDB 中，集合只有在内容插入后才会创建! 就是说，创建集合(数据表)后要再插入一个文档(记录)，集合才会真正创建</p>
+<h3 id="MongoDB-删除数据库"><a href="#MongoDB-删除数据库" class="headerlink" title="MongoDB 删除数据库"></a>MongoDB 删除数据库</h3><ul>
+<li>语法</li>
+</ul>
+<p>MongoDB 删除数据库的语法格式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">db</span><span class="selector-class">.dropDatabase</span>()</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>实例</li>
+</ul>
+<p>以下实例我们删除了数据库 wys。</p>
+<p>首先，查看所有数据库：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">test    0.000GB</span><br><span class="line">wys     0.000GB</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们切换到数据库 wys：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> use wys</span></span><br><span class="line">switched to db wys</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure></p>
+<p>执行删除命令：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.dropDatabase<span class="comment">()</span></span><br><span class="line">&#123; <span class="string">"dropped"</span> : <span class="string">"wys"</span>, <span class="string">"ok"</span> : <span class="number">1</span> &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>最后，我们再通过 show dbs 命令数据库是否删除成功：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">test    0.000GB</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="MongoDB-创建集合"><a href="#MongoDB-创建集合" class="headerlink" title="MongoDB 创建集合"></a>MongoDB 创建集合</h3><p>MongoDB 中使用 createCollection() 方法来创建集合。</p>
+<ul>
+<li>语法格式：</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(<span class="built_in">name</span>, options)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数说明：</li>
+</ul>
+<ol>
+<li>name: 要创建的集合名称</li>
+<li>options: 可选参数, 指定有关内存大小及索引的选项</li>
+</ol>
+<ul>
+<li>实例<br>在 test 数据库中创建 wys 集合：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> use <span class="built_in">test</span></span></span><br><span class="line">switched to db test</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db.createCollection(<span class="string">"wysh"</span>)</span></span><br><span class="line">&#123; "ok" : 1 &#125;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果要查看已有集合，可以使用 show collections 命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> show collections</span></span><br><span class="line">col</span><br><span class="line">nihao</span><br><span class="line">wysh</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<p>在 MongoDB 中，你不需要创建集合。当你插入一些文档时，MongoDB 会自动创建集合。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; db<span class="selector-class">.wysh1</span><span class="selector-class">.insert</span>(&#123;<span class="string">"name"</span>:<span class="string">"zhangsan"</span>&#125;)</span><br><span class="line"><span class="function"><span class="title">WriteResult</span><span class="params">(&#123; <span class="string">"nInserted"</span> : <span class="number">1</span> &#125;)</span></span></span><br><span class="line">&gt; show collections</span><br><span class="line">col</span><br><span class="line">nihao</span><br><span class="line">wysh</span><br><span class="line">wysh1</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="MongoDB-删除集合"><a href="#MongoDB-删除集合" class="headerlink" title="MongoDB 删除集合"></a>MongoDB 删除集合</h3><p>MongoDB 中使用 drop() 方法来删除集合。</p>
+<ul>
+<li>语法格式：</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.collection</span><span class="selector-class">.drop</span>()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回值</li>
+</ul>
+<p>如果成功删除选定集合，则 drop() 方法返回 true，否则返回 false。</p>
+<ul>
+<li>实例<br>在数据库 test 中，我们可以先通过 show collections 命令查看已存在的集合</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> use <span class="built_in">test</span></span></span><br><span class="line">switched to db test</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> show collections</span></span><br><span class="line">col</span><br><span class="line">nihao</span><br><span class="line">wysh</span><br><span class="line">wysh1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<p>接着删除集合 wysh1 :<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> db.wysh1.drop()</span></span><br><span class="line">true</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> show collections</span></span><br><span class="line">col</span><br><span class="line">nihao</span><br><span class="line">wysh</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="MongoDB-插入文档"><a href="#MongoDB-插入文档" class="headerlink" title="MongoDB 插入文档"></a>MongoDB 插入文档</h3><p>文档的数据结构和JSON基本一样。</p>
+<p>所有存储在集合中的数据都是BSON格式。</p>
+<p>BSON是一种类json的一种二进制形式的存储格式,简称Binary JSON。</p>
+<ul>
+<li>插入文档</li>
+</ul>
+<p>MongoDB 使用 insert() 或 save() 方法向集合中插入文档，语法如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.COLLECTION_NAME</span><span class="selector-class">.insert</span>(document)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>实例</li>
+</ul>
+<p>以下文档可以存储在 MongoDB 的 wysh 数据库 的 wy 集合中：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; use wysh</span><br><span class="line">switched to db wysh</span><br><span class="line">&gt; db</span><br><span class="line">wysh</span><br><span class="line">&gt; db<span class="selector-class">.wy</span><span class="selector-class">.insert</span>(&#123;<span class="string">"name"</span>:<span class="string">"wysh"</span>,<span class="string">"age"</span>:<span class="number">55</span>,<span class="string">"sex"</span>:<span class="string">"male"</span>,<span class="string">"country"</span>:<span class="string">"China"</span>&#125;)</span><br><span class="line"><span class="function"><span class="title">WriteResult</span><span class="params">(&#123; <span class="string">"nInserted"</span> : <span class="number">1</span> &#125;)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>以上实例中 wy 是我们的集合名，如果该集合不在该数据库中， MongoDB 会自动创建该集合并插入文档。</p>
+<ul>
+<li><p>查看已插入文档：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.wy.<span class="builtin-name">find</span>()</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f485b3f1190b4d7b9906c"</span>), <span class="string">"name"</span> : <span class="string">"wysh"</span>, <span class="string">"age"</span> : 55, <span class="string">"se</span></span><br><span class="line"><span class="string">x"</span> : <span class="string">"male"</span>, <span class="string">"country"</span> : <span class="string">"China"</span> &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.2 版本后还有以下几种语法可用于插入文档:</p>
+</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.wy.insertOne(&#123;<span class="string">"aaa"</span>:<span class="string">"333"</span>&#125;)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"acknowledged"</span> : true,</span><br><span class="line">        <span class="string">"insertedId"</span> : ObjectId(<span class="string">"5c3f4aae3f1190b4d7b9906d"</span>)</span><br><span class="line">&#125;</span><br><span class="line">&gt;</span><br><span class="line">&gt; db.wy.insertMany([&#123;<span class="string">"bbb"</span>:<span class="string">"444"</span>&#125;,&#123;<span class="string">"ccc"</span>:<span class="string">"444"</span>&#125;])</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"acknowledged"</span> : true,</span><br><span class="line">        <span class="string">"insertedIds"</span> : [</span><br><span class="line">                ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906e"</span>),</span><br><span class="line">                ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906f"</span>)</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line">&gt; db.wy.find()</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f485b3f1190b4d7b9906c"</span>), <span class="string">"name"</span> : <span class="string">"wysh"</span>, <span class="string">"age"</span> : <span class="number">55</span>, <span class="string">"se</span></span><br><span class="line"><span class="string">x"</span> : <span class="string">"male"</span>, <span class="string">"country"</span> : <span class="string">"China"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4aae3f1190b4d7b9906d"</span>), <span class="string">"aaa"</span> : <span class="string">"333"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906e"</span>), <span class="string">"bbb"</span> : <span class="string">"444"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906f"</span>), <span class="string">"ccc"</span> : <span class="string">"444"</span> &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="MongoDB-更新文档"><a href="#MongoDB-更新文档" class="headerlink" title="MongoDB 更新文档"></a>MongoDB 更新文档</h3><p>MongoDB 使用 update() 和 save() 方法来更新集合中的文档。接下来让我们详细来看下两个函数的应用及其区别。</p>
+<ul>
+<li>update() 方法</li>
+</ul>
+<p>update() 方法用于更新已存在的文档。语法格式如下：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update(</span><br><span class="line">   <span class="params">&lt;query&gt;</span>,</span><br><span class="line">   <span class="params">&lt;update&gt;</span>,</span><br><span class="line">   &#123;</span><br><span class="line"><span class="symbol">     upsert:</span> <span class="params">&lt;boolean&gt;</span>,</span><br><span class="line"><span class="symbol">     multi:</span> <span class="params">&lt;boolean&gt;</span>,</span><br><span class="line"><span class="symbol">     writeConcern:</span> <span class="params">&lt;document&gt;</span></span><br><span class="line">   &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li>query :</li>
+</ul>
+<p>update的查询条件，类似sql<br>update查询内where后面的。</p>
+<ul>
+<li>update : </li>
+</ul>
+<p>update的对象和一些更新的操作符（如$,$inc…）等，也可以理解为sql update查询内set后面的</p>
+<ul>
+<li>upsert : </li>
+</ul>
+<p>可选，这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。</p>
+<ul>
+<li>multi : </li>
+</ul>
+<p>可选，mongodb 默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。</p>
+<ul>
+<li>writeConcern :</li>
+</ul>
+<p>可选，抛出异常的级别。</p>
+<ul>
+<li>实例</li>
+</ul>
+<p>我们在集合 wy 中插入如下数据：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">db</span><span class="selector-class">.wy</span><span class="selector-class">.insert</span>(&#123;</span><br><span class="line">    <span class="attribute">title</span>: <span class="string">'MongoDB 教程'</span>, </span><br><span class="line">    description: <span class="string">'MongoDB 是一个 Nosql 数据库'</span>,</span><br><span class="line">    by: <span class="string">'wysh'</span>,</span><br><span class="line">    url: <span class="string">'http://www.wysh.site'</span>,</span><br><span class="line">    tags: [<span class="string">'mongodb'</span>, <span class="string">'database'</span>, <span class="string">'NoSQL'</span>],</span><br><span class="line">    likes: <span class="number">100</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>接着我们通过 update() 方法来更新标题(title):</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.wy.<span class="keyword">update</span>(&#123;<span class="string">'title'</span>:<span class="string">'MongoDB 教程'</span>&#125;,&#123;$set:&#123;<span class="string">'title'</span>:<span class="string">'MongoDB'</span>&#125;&#125;)</span><br><span class="line"></span><br><span class="line">Updated <span class="number">1</span> existing record(s) <span class="keyword">in</span> <span class="number">106</span>ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.wy.find().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f485b3f1190b4d7b9906c"</span>),</span><br><span class="line">        <span class="string">"name"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"age"</span> : <span class="number">55</span>,</span><br><span class="line">        <span class="string">"sex"</span> : <span class="string">"male"</span>,</span><br><span class="line">        <span class="string">"country"</span> : <span class="string">"China"</span></span><br><span class="line">&#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4aae3f1190b4d7b9906d"</span>), <span class="string">"aaa"</span> : <span class="string">"333"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906e"</span>), <span class="string">"bbb"</span> : <span class="string">"444"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906f"</span>), <span class="string">"ccc"</span> : <span class="string">"444"</span> &#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f51dec305b104a14e4618"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到标题(title)由原来的 “MongoDB 教程” 更新为了 “MongoDB”。<br>以上语句只会修改第一条发现的文档，如果你要修改多条相同的文档，则需要设置 multi 参数为 true。<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;db.col.<span class="keyword">update</span>(&#123;<span class="string">'title'</span>:<span class="string">'MongoDB 教程'</span>&#125;,&#123;$set:&#123;<span class="string">'title'</span>:<span class="string">'MongoDB'</span>&#125;&#125;,&#123;multi:true&#125;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>save() 方法</li>
+</ul>
+<p>save() 方法通过传入的文档来替换已有文档。语法格式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.save</span>(</span><br><span class="line">   &lt;<span class="selector-tag">document</span>&gt;,</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="attribute">writeConcern</span>: &lt;document&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li><p>document : 文档数据。</p>
+</li>
+<li><p>writeConcern :可选，抛出异常的级别。</p>
+</li>
+<li>实例</li>
+</ul>
+<p>以下实例中我们替换了 _id 为 56064f89ade2f21f36b03136 的文档数据：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.col</span><span class="selector-class">.save</span>(&#123;</span><br><span class="line">    <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906f"</span>),</span><br><span class="line">    <span class="string">"title"</span> : <span class="string">"MongoDB"</span>,</span><br><span class="line">    <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">    <span class="string">"by"</span> : <span class="string">"wysh.site"</span>,</span><br><span class="line">    <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">    <span class="string">"tags"</span> : [</span><br><span class="line">            <span class="string">"mongodb"</span>,</span><br><span class="line">            <span class="string">"NoSQL"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"likes"</span> : <span class="number">110</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>替换成功后，我们可以通过 find() 命令来查看替换后的数据</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.wy.find().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f485b3f1190b4d7b9906c"</span>),</span><br><span class="line">        <span class="string">"name"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"age"</span> : <span class="number">55</span>,</span><br><span class="line">        <span class="string">"sex"</span> : <span class="string">"male"</span>,</span><br><span class="line">        <span class="string">"country"</span> : <span class="string">"China"</span></span><br><span class="line">&#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4aae3f1190b4d7b9906d"</span>), <span class="string">"aaa"</span> : <span class="string">"333"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906e"</span>), <span class="string">"bbb"</span> : <span class="string">"444"</span> &#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f4b293f1190b4d7b9906f"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh.site"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">110</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f51dec305b104a14e4618"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="MongoDB-删除文档"><a href="#MongoDB-删除文档" class="headerlink" title="MongoDB 删除文档"></a>MongoDB 删除文档</h3><p>MongoDB remove()函数是用来移除集合中的数据。</p>
+<p>MongoDB数据更新可以使用update()函数。在执行remove()函数前先执行find()命令来判断执行的条件是否正确，这是一个比较好的习惯。</p>
+<ul>
+<li>语法</li>
+</ul>
+<p>remove() 方法的基本语法格式如下所示：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.collection</span><span class="selector-class">.remove</span>(</span><br><span class="line">   &lt;query&gt;,</span><br><span class="line">   &lt;justOne&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li>query :</li>
+</ul>
+<p>（可选）删除的文档的条件。</p>
+<ul>
+<li>justOne : </li>
+</ul>
+<p>（可选）如果设为 true 或 1，则只删除一个文档，如果不设置该参数，或使用默认值 false，则删除所有匹配条件的文档。</p>
+<ul>
+<li>writeConcern :</li>
+</ul>
+<p>（可选）抛出异常的级别。</p>
+<ul>
+<li>实例</li>
+</ul>
+<p>以下文档我们执行两次插入操作：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">db</span><span class="selector-class">.wy</span><span class="selector-class">.insert</span>(&#123;</span><br><span class="line">    <span class="attribute">title</span>: <span class="string">'MongoDB test'</span>, </span><br><span class="line">    description: <span class="string">'MongoDB 是一个 Nosql 数据库'</span>,</span><br><span class="line">    by: <span class="string">'wysh'</span>,</span><br><span class="line">    url: <span class="string">'http://www.wysh.site.com'</span>,</span><br><span class="line">    tags: [<span class="string">'mongodb'</span>, <span class="string">'database'</span>, <span class="string">'NoSQL'</span>],</span><br><span class="line">    likes: <span class="number">101010</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>使用 find() 函数查询数据：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&gt; db<span class="selector-class">.wy</span><span class="selector-class">.find</span>().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f576bc305b104a14e4619"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB test"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">101010</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f576cc305b104a14e461a"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB test"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">101010</span></span><br><span class="line">&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们移除 title 为 ‘MongoDB 教程’ 的文档：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.wy</span><span class="selector-class">.remove</span>(&#123;<span class="string">'title'</span>:<span class="string">'MongoDB test'</span>&#125;)</span><br><span class="line">Removed <span class="number">2</span> record(s) <span class="keyword">in</span> <span class="number">2ms</span></span><br></pre></td></tr></table></figure></p>
+<p>如果你只想删除第一条找到的记录可以设置 justOne 为 1，如下所示：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;db<span class="selector-class">.COLLECTION_NAME</span><span class="selector-class">.remove</span>(DELETION_CRITERIA,<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果你想删除所有数据，可以使用以下方式（类似常规 SQL 的 truncate 命令）：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">db.wy.remove(&#123;&#125;)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">db.wy.find()</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="MongoDB-查询文档"><a href="#MongoDB-查询文档" class="headerlink" title="MongoDB 查询文档"></a>MongoDB 查询文档</h3><p>MongoDB 查询文档使用 find() 方法。</p>
+<p>find() 方法以非结构化的方式来显示所有文档。</p>
+<ul>
+<li>语法</li>
+</ul>
+<p>MongoDB 查询数据的语法格式如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db<span class="selector-class">.collection</span><span class="selector-class">.find</span>(query, projection)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>query ：</li>
+</ul>
+<p>可选，使用查询操作符指定查询条件</p>
+<ul>
+<li>projection ：</li>
+</ul>
+<p>可选，使用投影操作符指定返回的键。查询时返回文档中所有键值， 只需省略该参数即可（默认省略）。<br>如果你需要以易读的方式来读取数据，可以使用 pretty() 方法，语法格式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="selector-tag">db</span><span class="selector-class">.wy</span><span class="selector-class">.find</span>()<span class="selector-class">.pretty</span>()</span><br></pre></td></tr></table></figure></p>
+<p>pretty() 方法以格式化的方式来显示所有文档。</p>
+<ul>
+<li>实例</li>
+</ul>
+<p>以下实例我们查询了集合 wy 中的数据：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; db<span class="selector-class">.wy</span><span class="selector-class">.find</span>().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f576bc305b104a14e4619"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB test"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">101010</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"_id"</span> : ObjectId(<span class="string">"5c3f576cc305b104a14e461a"</span>),</span><br><span class="line">        <span class="string">"title"</span> : <span class="string">"MongoDB test"</span>,</span><br><span class="line">        <span class="string">"description"</span> : <span class="string">"MongoDB 是一个 Nosql 数据库"</span>,</span><br><span class="line">        <span class="string">"by"</span> : <span class="string">"wysh"</span>,</span><br><span class="line">        <span class="string">"url"</span> : <span class="string">"http://www.wysh.site.com"</span>,</span><br><span class="line">        <span class="string">"tags"</span> : [</span><br><span class="line">                <span class="string">"mongodb"</span>,</span><br><span class="line">                <span class="string">"database"</span>,</span><br><span class="line">                <span class="string">"NoSQL"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"likes"</span> : <span class="number">101010</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>除了 find() 方法之外，还有一个 findOne() 方法，它只返回一个文档。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/01/17/MongoDB数据库语法练习/" title="MongoDB数据库语法练习">http://wysh.site/2019/01/17/MongoDB数据库语法练习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"> <i class="fa fa-tag"></i> MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/06/docker使用笔记/" rel="next" title="docker使用笔记">
+                <i class="fa fa-chevron-left"></i> docker使用笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-介绍"><span class="nav-number">1.</span> <span class="nav-text">MongoDB 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-的安装"><span class="nav-number">2.</span> <span class="nav-text">MongoDB 的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-概念解析"><span class="nav-number">3.</span> <span class="nav-text">MongoDB 概念解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB的可视化工具"><span class="nav-number">4.</span> <span class="nav-text">MongoDB的可视化工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-创建数据库"><span class="nav-number">5.</span> <span class="nav-text">MongoDB 创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-删除数据库"><span class="nav-number">6.</span> <span class="nav-text">MongoDB 删除数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-创建集合"><span class="nav-number">7.</span> <span class="nav-text">MongoDB 创建集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-删除集合"><span class="nav-number">8.</span> <span class="nav-text">MongoDB 删除集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-插入文档"><span class="nav-number">9.</span> <span class="nav-text">MongoDB 插入文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-更新文档"><span class="nav-number">10.</span> <span class="nav-text">MongoDB 更新文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-删除文档"><span class="nav-number">11.</span> <span class="nav-text">MongoDB 删除文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-查询文档"><span class="nav-number">12.</span> <span class="nav-text">MongoDB 查询文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">85.6k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共85.6k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
