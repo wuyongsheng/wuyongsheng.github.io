@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB, Python" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="工作中，经常会对MongoDB里面的数据进行读写，比如使用MongoDB对爬虫爬取的数据进行存取，MongoDB支持包括Python在内的多种编程语言的操作，这篇笔记主要是记叙Python对MongoDB的一些常用操作，参考了菜鸟教程。  Python3 JSON 数据解析由于MongoDB使用的数据类型是 BSON（类似 JSON），所有对MongoDB进行操作时，经常涉及对 JSON 数据">
+<meta name="keywords" content="MongoDB, Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Python操作MongoDB数据库">
+<meta property="og:url" content="http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="工作中，经常会对MongoDB里面的数据进行读写，比如使用MongoDB对爬虫爬取的数据进行存取，MongoDB支持包括Python在内的多种编程语言的操作，这篇笔记主要是记叙Python对MongoDB的一些常用操作，参考了菜鸟教程。  Python3 JSON 数据解析由于MongoDB使用的数据类型是 BSON（类似 JSON），所有对MongoDB进行操作时，经常涉及对 JSON 数据">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-1127579dc575f46c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-9deb2742d4de59b3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-9dd3d766bfef42bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-20T14:35:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Python操作MongoDB数据库">
+<meta name="twitter:description" content="工作中，经常会对MongoDB里面的数据进行读写，比如使用MongoDB对爬虫爬取的数据进行存取，MongoDB支持包括Python在内的多种编程语言的操作，这篇笔记主要是记叙Python对MongoDB的一些常用操作，参考了菜鸟教程。  Python3 JSON 数据解析由于MongoDB使用的数据类型是 BSON（类似 JSON），所有对MongoDB进行操作时，经常涉及对 JSON 数据">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-1127579dc575f46c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/"/>
+
+
+
+
+
+  <title>使用Python操作MongoDB数据库 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用Python操作MongoDB数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-20T22:41:29+08:00">
+                2019-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/大数据/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,174
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 工作中，经常会对MongoDB里面的数据进行读写，比如使用MongoDB对爬虫爬取的数据进行存取，MongoDB支持包括Python在内的多种编程语言的操作，这篇笔记主要是记叙Python对MongoDB的一些常用操作，参考了菜鸟教程。</p>
+</blockquote>
+<h3 id="Python3-JSON-数据解析"><a href="#Python3-JSON-数据解析" class="headerlink" title="Python3 JSON 数据解析"></a>Python3 JSON 数据解析</h3><p>由于MongoDB使用的数据类型是 BSON（类似 JSON），所有对MongoDB进行操作时，经常涉及对 JSON 数据格式的读写。</p>
+<p>Python3 中可以使用 json 模块来对 JSON 数据进行编解码，它包含了两个函数：</p>
+<ul>
+<li>json.dumps(): 对数据进行编码。</li>
+<li>json.loads(): 对数据进行解码。</li>
+</ul>
+<p>在json的编解码过程中，python 的原始类型与json类型会相互转换</p>
+<p><strong>json.dumps 与 json.loads 实例</strong><br>以下实例演示了 Python 数据结构转换为JSON：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line"># Python 字典类型转换为 JSON 对象</span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">'no'</span> : <span class="number">1</span>,</span><br><span class="line">    <span class="string">'name'</span> : <span class="string">'Runoob'</span>,</span><br><span class="line">    <span class="string">'url'</span> : <span class="string">'http://www.runoob.com'</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">json_str = json.dumps(data)</span><br><span class="line">print (<span class="string">"Python 原始数据："</span>, repr(data))</span><br><span class="line">print (<span class="string">"JSON 对象："</span>, json_str)</span><br><span class="line"></span><br><span class="line"># 输出：</span><br><span class="line"># Python 原始数据： &#123;<span class="string">'no'</span>: <span class="number">1</span>, <span class="string">'name'</span>: <span class="string">'wysh'</span>, <span class="string">'url'</span>: <span class="string">'http://wysh.site'</span>&#125;</span><br><span class="line"># JSON 对象： &#123;<span class="string">"no"</span>: <span class="number">1</span>, <span class="string">"name"</span>: <span class="string">"wysh"</span>, <span class="string">"url"</span>: <span class="string">"http://wysh.site"</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-1127579dc575f46c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="json_dumps.jpg"></p>
+<p>通过输出的结果可以看出，简单类型通过编码后跟其原始的repr()输出结果非常相似。</p>
+<p>接着以上实例，我们可以将一个JSON编码的字符串转换回一个Python数据结构：<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Python 字典类型转换为 JSON 对象</span></span><br><span class="line"><span class="keyword">data</span>1 = &#123;</span><br><span class="line">    <span class="string">'no'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'name'</span>: <span class="string">'wysh'</span>,</span><br><span class="line">    <span class="string">'url'</span>: <span class="string">'http://wysh.site'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">json_str = json.dumps(<span class="keyword">data</span>1)</span><br><span class="line">print(<span class="string">"Python 原始数据："</span>, repr(<span class="keyword">data</span>1))</span><br><span class="line">print(<span class="string">"JSON 对象："</span>, json_str)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 JSON 对象转换为 Python 字典</span></span><br><span class="line"><span class="keyword">data</span>2 = json.loads(json_str)</span><br><span class="line">print(<span class="string">"data2['name']: "</span>, <span class="keyword">data</span>2[<span class="string">'name'</span>])</span><br><span class="line">print(<span class="string">"data2['url']: "</span>, <span class="keyword">data</span>2[<span class="string">'url'</span>])</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JSON 对象： &#123;<span class="string">"no"</span>: <span class="number">1</span>, <span class="string">"name"</span>: <span class="string">"wysh"</span>, <span class="string">"url"</span>: <span class="string">"http://wysh.site"</span>&#125;</span><br><span class="line">data2[<span class="string">'name'</span>]:  wysh</span><br><span class="line">data2[<span class="string">'url'</span>]:  <span class="string">http:</span><span class="comment">//wysh.site</span></span><br></pre></td></tr></table></figure></p>
+<p>如果你要处理的是文件而不是字符串，你可以使用 json.dump() 和 json.load() 来编码和解码JSON数据。<br>例如：使用 json.dump()将Python字典的内容写入本地的磁盘文件中，代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">data=&#123;<span class="string">"name"</span>:<span class="string">"吴"</span>,<span class="string">"age"</span>:<span class="number">26</span>&#125;</span><br><span class="line"><span class="comment"># 写入 JSON 数据到本地的磁盘文件：c:\1.json</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">r'c:\1.json'</span>, <span class="string">'w+'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f)</span><br></pre></td></tr></table></figure></p>
+<p>查询运行结束之后，可以看到，本地的生产了一个 1.json文件，内容如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-9deb2742d4de59b3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="json_dump.jpg"></p>
+<p> 使用 json.load() 解码本地文件的JSON数据。<br> 代码如下：<br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> json</span><br><span class="line"><span class="comment"># 读取本地磁盘 c:\1.json 的 json 文件</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">r'c:\1.json'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = json.load(f)</span><br><span class="line">print(repr(data))</span><br><span class="line">print(<span class="string">"name: "</span>+data[<span class="string">"name"</span>])</span><br></pre></td></tr></table></figure></p>
+<p>运行结果如下图：</p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/12273007-9dd3d766bfef42bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="json_load.jpg"></p>
+<h3 id="建立-MongoDB-的连接"><a href="#建立-MongoDB-的连接" class="headerlink" title="建立 MongoDB 的连接"></a>建立 MongoDB 的连接</h3><ul>
+<li>安装pymongo</li>
+</ul>
+<p>使用 pip3 install pymongo 安装MongoDB 驱动，如果已经安装，会有相应的提示：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">C:</span>\Users\Administrator&gt;pip3 install pymongo</span><br><span class="line">Requirement already <span class="symbol">satisfied:</span> pymongo in <span class="symbol">e:</span>\python\python36-<span class="number">32</span>\<span class="class"><span class="keyword">lib</span>\<span class="title">si</span></span></span><br><span class="line">te-packages (<span class="number">3.7</span>.<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>创建一个数据库</li>
+</ul>
+<p>创建数据库需要使用 MongoClient 对象，并且指定连接的 URL 地址和要创建的数据库名。</p>
+<p>如下实例中，我们创建的数据库 wysh :<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>判断数据库是否已存在</li>
+</ul>
+<p>我们可以读取 MongoDB 中的所有数据库，并判断指定的数据库是否存在：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">'mongodb://localhost:27017/'</span>)</span><br><span class="line"></span><br><span class="line">dblist = myclient.list_database_names()</span><br><span class="line"><span class="comment"># dblist = myclient.database_names()</span></span><br><span class="line"><span class="built_in">print</span>(dblist)</span><br><span class="line"><span class="keyword">if</span> <span class="string">"wysh"</span> <span class="keyword">in</span> dblist:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"数据库已存在！"</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>*注意:</strong> 在 MongoDB 中，数据库只有在内容插入后才会创建! 就是说，数据库创建后要创建集合(数据表)并插入一个文档(记录)，数据库才会真正创建。*</p>
+<p>输出结果如下：<br><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">'admin</span>', <span class="symbol">'config</span>', <span class="symbol">'local</span>', <span class="symbol">'nihao</span>', <span class="symbol">'test</span>']</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>创建集合</li>
+</ul>
+<p>MongoDB 中的集合类似 SQL 的表。</p>
+<p>MongoDB 使用数据库对象来创建集合，实例如下：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">wysh = myclient[<span class="string">"wysh"</span>]</span><br><span class="line"></span><br><span class="line">mycol = wysh[<span class="string">"sites"</span>]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>判断集合是否已存在</li>
+</ul>
+<p>我们可以读取 MongoDB 数据库中的所有集合，并判断指定的集合是否存在：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient('mongodb://localhost:27017/')</span><br><span class="line"></span><br><span class="line">mydb = myclient['wysh']</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line">collist = mydb.list_collection_names()</span><br><span class="line">print(collist)</span><br><span class="line"><span class="comment"># collist = mydb.collection_names()</span></span><br><span class="line">if <span class="string">"sites"</span> in collist:  <span class="comment"># 判断 sites 集合是否存在</span></span><br><span class="line">    print(<span class="string">"集合已存在！"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为空</p>
+<h3 id="Python-Mongodb-插入文档"><a href="#Python-Mongodb-插入文档" class="headerlink" title="Python Mongodb 插入文档"></a>Python Mongodb 插入文档</h3><p>MongoDB 中的一个文档类似 SQL 表中的一条记录。</p>
+<ul>
+<li>插入集合</li>
+</ul>
+<p>集合中插入文档使用 insert_one() 方法，该方法的第一参数是字典 name =&gt; value 对。</p>
+<p>以下实例向 sites 集合中插入文档：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">mydict = &#123;<span class="string">"name"</span>: <span class="string">"wysh"</span>, <span class="string">"alexa"</span>: <span class="string">"10000"</span>, <span class="string">"url"</span>: <span class="string">"https://wysh.site"</span>&#125;</span><br><span class="line"></span><br><span class="line">x = mycol.insert_one(mydict)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;pymongo<span class="selector-class">.results</span><span class="selector-class">.InsertOneResult</span> <span class="selector-tag">object</span> at <span class="number">0</span>x024DCDA0&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>返回 _id 字段</li>
+</ul>
+<p>insert_one() 方法返回 InsertOneResult 对象，该对象包含 inserted_id 属性，它是插入文档的 id 值。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">mydict = &#123;<span class="string">"name"</span>: <span class="string">"wysh"</span>, <span class="string">"alexa"</span>: <span class="string">"10000"</span>, <span class="string">"url"</span>: <span class="string">"https://wysh.site"</span>&#125;</span><br><span class="line"></span><br><span class="line">x = mycol.insert_one(mydict)</span><br><span class="line">print(x.inserted_id)</span><br></pre></td></tr></table></figure></p>
+<p>返回结果：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>c447686d7a6<span class="number">232500733686</span></span><br></pre></td></tr></table></figure></p>
+<p>如果我们在插入文档时没有指定 _id，MongoDB 会为每个文档添加一个唯一的 id。</p>
+<ul>
+<li>插入多个文档</li>
+</ul>
+<p>集合中插入多个文档使用 insert_many() 方法，该方法的第一参数是字典列表。<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mylist = [</span><br><span class="line">    &#123;<span class="string">"name"</span>: <span class="string">"Taobao"</span>, <span class="string">"alexa"</span>: <span class="string">"100"</span>, <span class="string">"url"</span>: <span class="string">"https://www.taobao.com"</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>: <span class="string">"QQ"</span>, <span class="string">"alexa"</span>: <span class="string">"101"</span>, <span class="string">"url"</span>: <span class="string">"https://www.qq.com"</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>: <span class="string">"Facebook"</span>, <span class="string">"alexa"</span>: <span class="string">"10"</span>, <span class="string">"url"</span>: <span class="string">"https://www.facebook.com"</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>: <span class="string">"知乎"</span>, <span class="string">"alexa"</span>: <span class="string">"103"</span>, <span class="string">"url"</span>: <span class="string">"https://www.zhihu.com"</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>: <span class="string">"Github"</span>, <span class="string">"alexa"</span>: <span class="string">"109"</span>, <span class="string">"url"</span>: <span class="string">"https://www.github.com"</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">x = mycol.insert_many(mylist)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Python-Mongodb-查询文档"><a href="#Python-Mongodb-查询文档" class="headerlink" title="Python Mongodb 查询文档"></a>Python Mongodb 查询文档</h3><p>MongoDB 中使用了 find 和 find_one 方法来查询集合中的数据，它类似于 SQL 中的 SELECT 语句。</p>
+<ul>
+<li>查询一条数据</li>
+</ul>
+<p>我们可以使用 find_one() 方法来查询集合中的一条数据。</p>
+<p>查询 sites 文档中的第一条数据<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">x = mycol.find_one()</span><br><span class="line"></span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure></p>
+<p>查询的结果如下：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">x = mycol.find_one()</span><br><span class="line"></span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure></p>
+<p>查询结果如下：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>查询集合中所有数据</li>
+</ul>
+<p>find() 方法可以查询集合中的所有数据，类似 SQL 中的 SELECT * 操作。</p>
+<p>以下实例查找 sites 集合中的所有数据：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">for x in mycol.find():</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>9'), 'name': 'Taobao', 'alexa': '100', 'url': 'https://www.taobao.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>a'), 'name': 'QQ', 'alexa': '101', 'url': 'https://www.qq.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>b'), 'name': 'Facebook', 'alexa': '10', 'url': 'https://www.facebook.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>c'), 'name': '知乎', 'alexa': '103', 'url': 'https://www.zhihu.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>d'), 'name': 'Github', 'alexa': '109', 'url': 'https://www.github.com'&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>查询指定字段的数据</li>
+</ul>
+<p>我们可以使用 find() 方法来查询指定字段的数据，将要返回的字段对应值设置为 1。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">for x in mycol.find(&#123;&#125;, &#123;<span class="string">"_id"</span>: 0, <span class="string">"name"</span>: 1, <span class="string">"alexa"</span>: 1&#125;):</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果如下：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'wysh'</span>, <span class="string">'alexa'</span>: <span class="string">'10000'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'wysh'</span>, <span class="string">'alexa'</span>: <span class="string">'10000'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Taobao'</span>, <span class="string">'alexa'</span>: <span class="string">'100'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'QQ'</span>, <span class="string">'alexa'</span>: <span class="string">'101'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Facebook'</span>, <span class="string">'alexa'</span>: <span class="string">'10'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'知乎'</span>, <span class="string">'alexa'</span>: <span class="string">'103'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Github'</span>, <span class="string">'alexa'</span>: <span class="string">'109'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'wysh'</span>, <span class="string">'alexa'</span>: <span class="string">'10000'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'wysh'</span>, <span class="string">'alexa'</span>: <span class="string">'10000'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Taobao'</span>, <span class="string">'alexa'</span>: <span class="string">'100'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'QQ'</span>, <span class="string">'alexa'</span>: <span class="string">'101'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Facebook'</span>, <span class="string">'alexa'</span>: <span class="string">'10'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'知乎'</span>, <span class="string">'alexa'</span>: <span class="string">'103'</span>&#125;</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Github'</span>, <span class="string">'alexa'</span>: <span class="string">'109'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>根据指定条件查询</li>
+</ul>
+<p>我们可以在 find() 中设置参数来过滤数据。</p>
+<p>以下实例查找 name 字段为 “wysh” 的数据：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: <span class="string">"wysh"</span>&#125;</span><br><span class="line"></span><br><span class="line">mydoc = mycol.find(myquery)</span><br><span class="line"></span><br><span class="line">for x in mydoc:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>高级查询</li>
+</ul>
+<p>查询的条件语句中，我们还可以使用修饰符。</p>
+<p>以下实例用于读取 name 字段中第一个字母 ASCII 值大于 “H” 的数据，大于的修饰符条件为 {“$gt”: “R”} :<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: &#123;<span class="string">"$gt"</span>: <span class="string">"R"</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">mydoc = mycol.find(myquery)</span><br><span class="line"></span><br><span class="line">for x in mydoc:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>9'), 'name': 'Taobao', 'alexa': '100', 'url': 'https://www.taobao.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>c'), 'name': '知乎', 'alexa': '103', 'url': 'https://www.zhihu.com'&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>使用正则表达式查询</li>
+</ul>
+<p>我们还可以使用正则表达式作为修饰符。</p>
+<p>正则表达式修饰符只用于搜索字符串的字段。</p>
+<p>以下实例用于读取 name 字段中第一个字母为 “w” 的数据，正则表达式修饰符条件为 {“$regex”: “^W”} :<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: &#123;<span class="string">"$regex"</span>: <span class="string">"^w"</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">mydoc = mycol.find(myquery)</span><br><span class="line"></span><br><span class="line">for x in mydoc:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Python-Mongodb-修改文档"><a href="#Python-Mongodb-修改文档" class="headerlink" title="Python Mongodb 修改文档"></a>Python Mongodb 修改文档</h3><p>我们可以在 MongoDB 中使用 update_one() 方法修改文档中的记录。该方法第一个参数为查询的条件，第二个参数为要修改的字段。</p>
+<p>如果查找到的匹配数据多余一条，则只会修改第一条。<br>以下实例将 alexa 字段的值 10000 改为 12345:<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"alexa"</span>: <span class="string">"10000"</span>&#125;</span><br><span class="line">newvalues = &#123;<span class="string">"$set"</span>: &#123;<span class="string">"alexa"</span>: <span class="string">"12345"</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">mycol.update_one(myquery, newvalues)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出修改后的  "sites"  集合</span></span><br><span class="line">for x in mycol.find():</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '<span class="number">1234</span>5', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '<span class="number">1000</span>0', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>9'), 'name': 'Taobao', 'alexa': '100', 'url': 'https://www.taobao.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>a'), 'name': 'QQ', 'alexa': '101', 'url': 'https://www.qq.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>b'), 'name': 'Facebook', 'alexa': '10', 'url': 'https://www.facebook.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>c'), 'name': '知乎', 'alexa': '103', 'url': 'https://www.zhihu.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>d'), 'name': 'Github', 'alexa': '109', 'url': 'https://www.github.com'&#125;</span><br></pre></td></tr></table></figure></p>
+<p>update_one() 方法只能修匹配到的第一条记录，如果要修改所有匹配到的记录，可以使用 update_many()。</p>
+<p>以下实例将查找所有以 F 开头的 name 字段，并将匹配到所有记录的 alexa 字段修改为 123：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: &#123;<span class="string">"$regex"</span>: <span class="string">"^w"</span>&#125;&#125;</span><br><span class="line">newvalues = &#123;<span class="string">"$set"</span>: &#123;<span class="string">"alexa"</span>: <span class="string">"123"</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">x = mycol.update_many(myquery, newvalues)</span><br><span class="line"></span><br><span class="line">print(x.modified_count, <span class="string">"文档已修改"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">2 </span>文档已修改</span><br></pre></td></tr></table></figure></p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>sort() 方法可以指定升序或降序排序。</p>
+<p>sort() 方法第一个参数为要排序的字段，第二个字段指定排序规则，1 为升序，-1 为降序，默认为升序。</p>
+<ul>
+<li>对字段 alexa 按升序排序：</li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">mydoc = mycol.find().sort(<span class="string">"alexa"</span>,-1)</span><br><span class="line">for x in mydoc:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
+<p>结果如下：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;'_id': ObjectId('5c<span class="number">4475</span>3fd7a<span class="number">62342601</span>8eaed'), 'name': 'wysh', 'alexa': '123', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">447686</span>d7a<span class="number">623250073368</span>6'), 'name': 'wysh', 'alexa': '123', 'url': 'https://wysh.site'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>d'), 'name': 'Github', 'alexa': '109', 'url': 'https://www.github.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>c'), 'name': '知乎', 'alexa': '103', 'url': 'https://www.zhihu.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>a'), 'name': 'QQ', 'alexa': '101', 'url': 'https://www.qq.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>9'), 'name': 'Taobao', 'alexa': '100', 'url': 'https://www.taobao.com'&#125;</span><br><span class="line">&#123;'_id': ObjectId('5c<span class="number">4477</span>c9d7a<span class="number">6234</span>cbca<span class="number">8121</span>b'), 'name': 'Facebook', 'alexa': '10', 'url': 'https://www.facebook.com'&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Python-Mongodb-删除数据"><a href="#Python-Mongodb-删除数据" class="headerlink" title="Python Mongodb 删除数据"></a>Python Mongodb 删除数据</h3><p>我们可以使用 delete_one() 方法来删除一个文档，该方法第一个参数为查询对象，指定要删除哪些数据。</p>
+<p>以下实例删除 name 字段值为 “Taobao” 的文档：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: <span class="string">"Taobao"</span>&#125;</span><br><span class="line"></span><br><span class="line">mycol.delete_one(myquery)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除后输出</span></span><br><span class="line">for x in mycol.find():</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果中，name 字段值为 “Taobao” 的文档被删除</p>
+<ul>
+<li>删除多个文档</li>
+</ul>
+<p>我们可以使用 delete_many() 方法来删除多个文档，该方法第一个参数为查询对象，指定要删除哪些数据。</p>
+<p>删除所有 name 字段中以 w 开头的文档:<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">myquery = &#123;<span class="string">"name"</span>: &#123;<span class="string">"$regex"</span>: <span class="string">"^w"</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">x = mycol.delete_many(myquery)</span><br><span class="line"></span><br><span class="line">print(x.deleted_count, <span class="string">"个文档已删除"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果为：<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">2 </span>个文档已删除</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>删除集合中的所有文档</li>
+</ul>
+<p>delete_many() 方法如果传入的是一个空的查询对象，则会删除集合中的所有文档：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"wysh"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"sites"</span>]</span><br><span class="line"></span><br><span class="line">x = mycol.delete_many(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">print(x.deleted_count, <span class="string">"个文档已删除"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">4 </span>个文档已删除</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/" title="使用Python操作MongoDB数据库">http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"> <i class="fa fa-tag"></i> MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/MongoDB数据库语法练习/" rel="next" title="MongoDB数据库语法练习">
+                <i class="fa fa-chevron-left"></i> MongoDB数据库语法练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python3-JSON-数据解析"><span class="nav-number">1.</span> <span class="nav-text">Python3 JSON 数据解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-MongoDB-的连接"><span class="nav-number">2.</span> <span class="nav-text">建立 MongoDB 的连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Mongodb-插入文档"><span class="nav-number">3.</span> <span class="nav-text">Python Mongodb 插入文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Mongodb-查询文档"><span class="nav-number">4.</span> <span class="nav-text">Python Mongodb 查询文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Mongodb-修改文档"><span class="nav-number">5.</span> <span class="nav-text">Python Mongodb 修改文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">6.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Mongodb-删除数据"><span class="nav-number">7.</span> <span class="nav-text">Python Mongodb 删除数据</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">88.8k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共88.8k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
