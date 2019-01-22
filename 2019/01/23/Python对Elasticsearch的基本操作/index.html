@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Elasticsearch, Python" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta name="keywords" content="Elasticsearch, Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python对Elasticsearch的基本操作">
+<meta property="og:url" content="http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-fcfb173f32384b26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-43a241f4a2f4e7c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3e329f44e59a826a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-c7b8a80242a840b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-22T16:05:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python对Elasticsearch的基本操作">
+<meta name="twitter:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-fcfb173f32384b26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/"/>
+
+
+
+
+
+  <title>Python对Elasticsearch的基本操作 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python对Elasticsearch的基本操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-23T00:01:54+08:00">
+                2019-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">Elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Elasticsearch/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Elasticsearch/大数据/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  914
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）</p>
+</blockquote>
+<h3 id="Python-Elasticsearch-Clien-的介绍"><a href="#Python-Elasticsearch-Clien-的介绍" class="headerlink" title="Python Elasticsearch Clien 的介绍"></a>Python Elasticsearch Clien 的介绍</h3><p>Elasticsearch 的语法在前面写的笔记中已有介绍，这里只介绍通过Python操作elasticsearch。</p>
+<p>Elasticsearch 不仅仅是一个开源的全文搜索引擎，它还是一个分布式实时分析搜索引擎，同时它还是支持分布式的实时文档存储，每个字段可以被索引与搜索，支持 PB 级别的结构化或者非结构化数据。</p>
+<p>Elasticsearch 提供了一系列 Restful API 来进行存取和查询操作，我们可以使用 curl 等命令来进行操作，但毕竟命令行模式没那么方便，所以这里我们就直接介绍利用 Python 来对接 Elasticsearch 的相关方法。</p>
+<p>用 Python 操作 elasticsearch 可以使用 Python Elasticsearch Client，它是ES官方推荐的python客户端，这里以它为工具操作elasticsearch。</p>
+<p>关于 Python Elasticsearch Client ，官方给出了相关的文档，，所有的用法都可以在文档里查的到，包括方法的说明、参数及返回值等。地址如下：</p>
+<p><a href="https://elasticsearch-py.readthedocs.io/en/master/api.html" target="_blank" rel="noopener">https://elasticsearch-py.readthedocs.io/en/master/api.html</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-fcfb173f32384b26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Python-elasticsearch.jpg"></p>
+<ul>
+<li>Python 中对接 Elasticsearch</li>
+</ul>
+<p>使用的是一个同名的库，安装方式非常简单：</p>
+<p>pip3 install elasticsearch</p>
+<h3 id="创建-Index"><a href="#创建-Index" class="headerlink" title="创建 Index"></a>创建 Index</h3><p>在操作之前，我们先来看一下 elasticsearch 中有哪些索引，我们可以访问这个链接：</p>
+<p><a href="http://localhost:9200/_cat/indices?v" target="_blank" rel="noopener">http://localhost:9200/_cat/indices?v</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-43a241f4a2f4e7c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="查看所有的索引.jpg"></p>
+<p>可以看到，elasticsearch 中现在没有名称为 bank 的索引，下面我们使用 Python 来创建一个名为 bank 的 索引：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> elasticsearch import Elasticsearch</span><br><span class="line"></span><br><span class="line">es = Elasticsearch()</span><br><span class="line">result = es.indices.create(<span class="attribute">index</span>=<span class="string">'bank'</span>, <span class="attribute">ignore</span>=400)</span><br><span class="line"><span class="builtin-name">print</span>(result)</span><br></pre></td></tr></table></figure>
+<p>输出的结果如下：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">'acknowledged</span>': <span class="literal">True</span>, <span class="symbol">'shards_acknowledged</span>': <span class="literal">True</span>, <span class="symbol">'index</span>': <span class="symbol">'bank</span>'&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们再次访问：<br><a href="http://localhost:9200/_cat/indices?v" target="_blank" rel="noopener">http://localhost:9200/_cat/indices?v</a><br>发现索引创建成功了</p>
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><p>删除 Index 也是类似的，代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from elasticsearch import Elasticsearch</span><br><span class="line"></span><br><span class="line">es = Elasticsearch()</span><br><span class="line">result = es<span class="selector-class">.indices</span><span class="selector-class">.delete</span>(index=<span class="string">'bank'</span>, ignore=[<span class="number">400</span>, <span class="number">404</span>])</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(result)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>返回结果如下：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">'acknowledged</span>': <span class="literal">True</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们再次访问：<br><a href="http://localhost:9200/_cat/indices?v" target="_blank" rel="noopener">http://localhost:9200/_cat/indices?v</a><br>发现索引被删除了</p>
+<h3 id="增加一条文档"><a href="#增加一条文档" class="headerlink" title="增加一条文档"></a>增加一条文档</h3><p>通过以下代码可以增加一条文档：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> elasticsearch <span class="keyword">import</span> Elasticsearch</span><br><span class="line">es = Elasticsearch([&#123;<span class="string">"host"</span>:<span class="string">"localhost"</span>,<span class="string">"port"</span>:<span class="number">9200</span>&#125;])</span><br><span class="line">b= &#123;<span class="string">"name"</span>: <span class="string">'lu'</span>, <span class="string">'sex'</span>:<span class="string">'female'</span>, <span class="string">'age'</span>: <span class="number">10</span>&#125;</span><br><span class="line">es.index(index=<span class="string">'bank'</span>, doc_type=<span class="string">'typeName'</span>,body=b,id=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure></p>
+<p>代码执行完成之后，我们在 kibana 里面查询 bank 索引中的数据，发现新增的文档已经被插入到索引中：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-3e329f44e59a826a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="插入数据.jpg"></p>
+<h3 id="增加一条文档-1"><a href="#增加一条文档-1" class="headerlink" title="增加一条文档"></a>增加一条文档</h3><p>通过以下代码可以删除一条文档<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> elasticsearch import Elasticsearch</span><br><span class="line">es = Elasticsearch([&#123;<span class="string">"host"</span>:<span class="string">"localhost"</span>,<span class="string">"port"</span>:9200&#125;])</span><br><span class="line">es.delete(<span class="attribute">index</span>=<span class="string">'bank'</span>, <span class="attribute">doc_type</span>=<span class="string">'typeName'</span>, <span class="attribute">id</span>=<span class="string">"AWh2Jj_Ey6XG0WYYFrgI"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>在代码中，我们传入文档的 id ，代码执行完成后，我们在kibana中查询 bank 索引，发现文档被删除了，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-c7b8a80242a840b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除文档.jpg"></p>
+<h3 id="修改一条文档"><a href="#修改一条文档" class="headerlink" title="修改一条文档"></a>修改一条文档</h3><p>通过以下代码可以修改一条文档<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from elasticsearch <span class="keyword">import</span> Elasticsearch</span><br><span class="line">es = Elasticsearch([&#123;<span class="string">"host"</span>:<span class="string">"localhost"</span>,<span class="string">"port"</span>:<span class="number">9200</span>&#125;])</span><br><span class="line"></span><br><span class="line">b= &#123;<span class="string">"name"</span>: <span class="string">'lu'</span>, <span class="string">'sex'</span>:<span class="string">'female'</span>, <span class="string">'age'</span>: <span class="number">101</span>&#125;</span><br><span class="line">es.<span class="keyword">update</span>(index=<span class="string">'bank'</span>, doc_type=<span class="string">'typeName'</span>,body=b,id=<span class="string">'AWh2Mmuoy6XG0WYYFrgL'</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="查询一条文档"><a href="#查询一条文档" class="headerlink" title="查询一条文档"></a>查询一条文档</h3><p>通过以下代码可以查询一条文档<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> elasticsearch import Elasticsearch</span><br><span class="line">es = Elasticsearch([&#123;<span class="string">"host"</span>:<span class="string">"localhost"</span>,<span class="string">"port"</span>:9200&#125;])</span><br><span class="line"><span class="attribute">find</span>=es.get(index='bank', <span class="attribute">doc_type</span>=<span class="string">'typeName'</span>, <span class="attribute">id</span>=<span class="string">'AWh2Mmuoy6XG0WYYFrgL'</span>)</span><br><span class="line"><span class="builtin-name">print</span>(find)</span><br></pre></td></tr></table></figure></p>
+<p>输出的结果如下：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'_index'</span>: <span class="string">'bank'</span>, <span class="string">'_type'</span>: <span class="string">'typeName'</span>, <span class="string">'_id'</span>: <span class="string">'AWh2Mmuoy6XG0WYYFrgL'</span>, <span class="string">'_version'</span>: <span class="number">1</span>, <span class="string">'found'</span>: True, <span class="string">'_source'</span>: &#123;<span class="string">'name'</span>: <span class="string">'lu'</span>, <span class="string">'sex'</span>: <span class="string">'female'</span>, <span class="string">'age'</span>: <span class="number">10</span>&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p>参考了一下文章：</p>
+<p><a href="https://blog.csdn.net/wufaliang003/article/details/81368365" target="_blank" rel="noopener">https://blog.csdn.net/wufaliang003/article/details/81368365</a></p>
+<p><a href="https://blog.csdn.net/u011682283/article/details/85265121" target="_blank" rel="noopener">https://blog.csdn.net/u011682283/article/details/85265121</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/" title="Python对Elasticsearch的基本操作">http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag"> <i class="fa fa-tag"></i> Elasticsearch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/20/使用Python操作MongoDB数据库/" rel="next" title="使用Python操作MongoDB数据库">
+                <i class="fa fa-chevron-left"></i> 使用Python操作MongoDB数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="思否" target="_blank">思否</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://coding.net/" title="Coding" target="_blank">Coding</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Elasticsearch-Clien-的介绍"><span class="nav-number">1.</span> <span class="nav-text">Python Elasticsearch Clien 的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Index"><span class="nav-number">2.</span> <span class="nav-text">创建 Index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除索引"><span class="nav-number">3.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加一条文档"><span class="nav-number">4.</span> <span class="nav-text">增加一条文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加一条文档-1"><span class="nav-number">5.</span> <span class="nav-text">增加一条文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改一条文档"><span class="nav-number">6.</span> <span class="nav-text">修改一条文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询一条文档"><span class="nav-number">7.</span> <span class="nav-text">查询一条文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">8.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">89.7k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共89.7k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
