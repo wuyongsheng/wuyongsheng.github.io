@@ -1,3 +1,3 @@
+http://wysh.site/2019/02/15/Selenium_Python最佳实战/
 http://wysh.site/2019/01/26/Selenium_Python常用操作/
 http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/
-http://wysh.site/2019/01/20/使用Python操作MongoDB数据库/
