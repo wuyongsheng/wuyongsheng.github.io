@@ -218,12 +218,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-简历">
+          <a href="/resume" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            关于
+            简历
           </a>
         </li>
       
@@ -416,7 +416,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -464,9 +464,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                    <a href="http://wysh.site/resume/" target="_blank" title="我的 简历">
                       
-                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                        <i class="fa fa-fw fa-envelope"></i>我的 简历</a>
                   </span>
                 
             </div>
@@ -552,7 +552,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">99.2k</span>
+    <span title="Site words total count">99.3k</span>
   
 </div>
 
@@ -568,7 +568,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共99.3k字</span>
 </div>
 
         
@@ -1100,26 +1100,7 @@
 <script type="text/javascript" src="/js/src/love.js"></script>
 <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
 </html>
-ght.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
+   if (event.keyCode === 13) {
                 inputEventFunction();
               }
             });

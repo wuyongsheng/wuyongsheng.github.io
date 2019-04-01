@@ -108,22 +108,22 @@
 
 
 
-<meta name="description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta name="description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  提示：文中的图片点击可放大 Python Elasticsearch C">
 <meta name="keywords" content="Elasticsearch, Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python对Elasticsearch的基本操作">
 <meta property="og:url" content="http://wysh.site/2019/01/23/Python对Elasticsearch的基本操作/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta property="og:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  提示：文中的图片点击可放大 Python Elasticsearch C">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-fcfb173f32384b26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-43a241f4a2f4e7c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3e329f44e59a826a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-c7b8a80242a840b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-22T16:07:08.000Z">
+<meta property="og:updated_time" content="2019-04-01T14:01:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python对Elasticsearch的基本操作">
-<meta name="twitter:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  Python Elasticsearch Clien 的介绍Elasti">
+<meta name="twitter:description" content="在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）  提示：文中的图片点击可放大 Python Elasticsearch C">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-fcfb173f32384b26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -224,12 +224,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-简历">
+          <a href="/resume" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            关于
+            简历
           </a>
         </li>
       
@@ -445,7 +445,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  914
+                  926
                 </span>
               
 
@@ -485,6 +485,7 @@
         <blockquote>
 <p>在公司的大数据项目中，经常涉及对elasticsearch的查询操作，也会涉及利用Python对elasticsearch的数据的进行存取，为了系统地学习用Python语言操作elasticsearch，最近查阅了网上的一些资料，发现CSDN上有两篇文章写得很好，这篇笔记主要参考了这两篇文章（文末会附上这两篇文章的链接）</p>
 </blockquote>
+<p><strong><em>提示：文中的图片点击可放大</em></strong></p>
 <h3 id="Python-Elasticsearch-Clien-的介绍"><a href="#Python-Elasticsearch-Clien-的介绍" class="headerlink" title="Python Elasticsearch Clien 的介绍"></a>Python Elasticsearch Clien 的介绍</h3><p>Elasticsearch 的语法在前面写的笔记中已有介绍，这里只介绍通过Python操作elasticsearch。</p>
 <p>Elasticsearch 不仅仅是一个开源的全文搜索引擎，它还是一个分布式实时分析搜索引擎，同时它还是支持分布式的实时文档存储，每个字段可以被索引与搜索，支持 PB 级别的结构化或者非结构化数据。</p>
 <p>Elasticsearch 提供了一系列 Restful API 来进行存取和查询操作，我们可以使用 curl 等命令来进行操作，但毕竟命令行模式没那么方便，所以这里我们就直接介绍利用 Python 来对接 Elasticsearch 的相关方法。</p>
@@ -675,7 +676,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -723,9 +724,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                    <a href="http://wysh.site/resume/" target="_blank" title="我的 简历">
                       
-                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                        <i class="fa fa-fw fa-envelope"></i>我的 简历</a>
                   </span>
                 
             </div>
@@ -827,7 +828,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">99.2k</span>
+    <span title="Site words total count">99.3k</span>
   
 </div>
 
@@ -843,7 +844,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共99.3k字</span>
 </div>
 
         

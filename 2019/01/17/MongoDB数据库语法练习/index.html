@@ -108,22 +108,22 @@
 
 
 
-<meta name="description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用">
+<meta name="description" content="提示：文中的图片点击可放大   最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。">
 <meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB数据库语法练习">
 <meta property="og:url" content="http://wysh.site/2019/01/17/MongoDB数据库语法练习/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用">
+<meta property="og:description" content="提示：文中的图片点击可放大   最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-acf9fd4c36ec418b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-d4ff8b27e0d9f720.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-5bcd34fb9d4ddc47.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-84c1ea28f872b653.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-22T15:55:40.000Z">
+<meta property="og:updated_time" content="2019-04-01T14:06:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB数据库语法练习">
-<meta name="twitter:description" content="最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。  MongoDB 介绍引用">
+<meta name="twitter:description" content="提示：文中的图片点击可放大   最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-acf9fd4c36ec418b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -224,12 +224,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-简历">
+          <a href="/resume" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            关于
+            简历
           </a>
         </li>
       
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,371
+                  3,383
                 </span>
               
 
@@ -471,7 +471,8 @@
       
 
       
-        <blockquote>
+        <p><strong><em>提示：文中的图片点击可放大</em></strong></p>
+<blockquote>
 <p> 最近在工作中越来越多地使用到MongoDB数据库，接触MongoDB的时间也不算太长，感觉MongoDB作为非关系型数据库，在语法上与关系型数据库中的 Mysql 有些类似。这几天看了下菜鸟教程上 MongoDB的章节，觉得写得很好很全面。结合菜鸟教程以及自己对MongoDB的使用，把 MongoDB 的语法以及使用 Python 操作 MongoDB 做一个总结。</p>
 </blockquote>
 <h3 id="MongoDB-介绍"><a href="#MongoDB-介绍" class="headerlink" title="MongoDB 介绍"></a>MongoDB 介绍</h3><p>引用百度百科对 MongoDB 的介绍：</p>
@@ -883,7 +884,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -931,9 +932,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                    <a href="http://wysh.site/resume/" target="_blank" title="我的 简历">
                       
-                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                        <i class="fa fa-fw fa-envelope"></i>我的 简历</a>
                   </span>
                 
             </div>
@@ -1035,7 +1036,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">99.2k</span>
+    <span title="Site words total count">99.3k</span>
   
 </div>
 
@@ -1051,7 +1052,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共99.3k字</span>
 </div>
 
         

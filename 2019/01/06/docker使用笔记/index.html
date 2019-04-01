@@ -108,13 +108,13 @@
 
 
 
-<meta name="description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何">
+<meta name="description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  提示：文中的图片点击可放大 什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker使用笔记">
 <meta property="og:url" content="http://wysh.site/2019/01/06/docker使用笔记/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何">
+<meta property="og:description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  提示：文中的图片点击可放大 什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-58b9e7bf1a4fd8ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-969cf84b8a0c7c72.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -124,10 +124,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-8d96c8c1ae5ca635.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-76515302fb0f693d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-4f374bfdf093883e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-06T15:35:44.000Z">
+<meta property="og:updated_time" content="2019-04-01T14:08:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker使用笔记">
-<meta name="twitter:description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何">
+<meta name="twitter:description" content="近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用  提示：文中的图片点击可放大 什么是docker直接引用百度百科的介绍： Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-58b9e7bf1a4fd8ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -228,12 +228,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-简历">
+          <a href="/resume" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            关于
+            简历
           </a>
         </li>
       
@@ -427,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,871
+                  1,883
                 </span>
               
 
@@ -467,6 +467,7 @@
         <blockquote>
 <p>近几年docker越来越火，我们公司也在项目中使用了微服务+docker的组合，最近尝试着搭建了一套docker的环境，下面是环境的搭建以及简单地使用</p>
 </blockquote>
+<p><strong><em>提示：文中的图片点击可放大</em></strong></p>
 <h3 id="什么是docker"><a href="#什么是docker" class="headerlink" title="什么是docker"></a>什么是docker</h3><p>直接引用百度百科的介绍：</p>
 <p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</p>
 <p>一个完整的Docker有以下几个部分组成：</p>
@@ -729,7 +730,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -777,9 +778,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                    <a href="http://wysh.site/resume/" target="_blank" title="我的 简历">
                       
-                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                        <i class="fa fa-fw fa-envelope"></i>我的 简历</a>
                   </span>
                 
             </div>
@@ -881,7 +882,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">99.2k</span>
+    <span title="Site words total count">99.3k</span>
   
 </div>
 
@@ -897,7 +898,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共99.3k字</span>
 </div>
 
         
