@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB, Python" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta name="keywords" content="MongoDB, Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据测试之异常数据识别">
+<meta property="og:url" content="http://wysh.site/2019/04/05/大数据测试之异常数据识别/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-eb3e972eeaa1293b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-05T14:11:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据测试之异常数据识别">
+<meta name="twitter:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-eb3e972eeaa1293b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/04/05/大数据测试之异常数据识别/"/>
+
+
+
+
+
+  <title>大数据测试之异常数据识别 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/04/05/大数据测试之异常数据识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大数据测试之异常数据识别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-05T22:10:54+08:00">
+                2019-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/大数据/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,958
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效</p>
+</blockquote>
+<h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><p>对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些数据库的客户端工具(比如：MongoDB 的 NoSQLBooster，ElasticSearch 的 Kibana)，通过手工查询是否存在异常数据，但通常数据库中会有很多表、每个表有很多个字段，每个字段都要从多个维度（比如是否为空，字段是否缺失，是否存在异常字符等）进行验证，工作量会很大</p>
+<p>对于那些普遍的、基本的验证操作，我们可以通过 Python 操作对应的数据库，通过脚本的方式进行验证，这样可以大大加快测试的速度</p>
+<h3 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h3><p>本文通过 Python 代码，对 MongoDB 数据库中的数据进行了以下几方面的验证：</p>
+<ul>
+<li>重复数据的过滤</li>
+<li>包含异常字符的数据的过滤</li>
+<li>包含字段缺失的数据的过滤</li>
+<li>包含多余字段的数据的过滤</li>
+<li>非空字段为空的数据的过滤</li>
+</ul>
+<h3 id="测试脚本"><a href="#测试脚本" class="headerlink" title="测试脚本"></a>测试脚本</h3><p>在对数据进行测试之前，我们首先要了解的就是这些数据的表结构是怎样的：有哪些字段、字段的约束等，一般都会有相应的数据库设计文档进行说明，比如，本次我们要测试的数据的表结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>数据类型</th>
+<th>是否空</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_id</td>
+<td>Objectid</td>
+<td>No</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>uniformSocialCreditCode</td>
+<td>String</td>
+<td>No</td>
+<td>统一社会信用代码</td>
+</tr>
+<tr>
+<td>enterpriseName</td>
+<td>String</td>
+<td>No</td>
+<td>企业名称 </td>
+</tr>
+<tr>
+<td>legalRepresentative</td>
+<td>String</td>
+<td>Yes</td>
+<td>法定代表人</td>
+</tr>
+<tr>
+<td>provinceCode</td>
+<td>String</td>
+<td>No</td>
+<td>6位省份代码</td>
+</tr>
+</tbody>
+</table>
+<p>下面是测试的脚本，在脚本中，我进行了详尽的注释</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''导入MongoDB的驱动：pymongo '''</span></span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"><span class="string">'''mylist 列表是我造的测试数据，将其插入到 MongoDB 数据库中'''</span></span><br><span class="line">mylist = [</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">20</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050020"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司01"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"张三01"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420001"</span>,<span class="string">"createDate"</span>:<span class="string">"20190320"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">21</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050020"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司01"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">""</span>      ,<span class="string">"provinceCode"</span>:<span class="string">"420002"</span>,<span class="string">"createDate"</span>:<span class="string">"20190321"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">22</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050022"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司03"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"张三03"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420003"</span>,<span class="string">"createDate"</span>:<span class="string">"20190322"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">23</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050022"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司03"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">""</span>      ,<span class="string">"provinceCode"</span>:<span class="string">""</span>      ,<span class="string">"createDate"</span>:<span class="string">"20190323"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">24</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"4200010\t\r\n   24"</span>                                  ,<span class="string">"legalRepresentative"</span>: <span class="string">"张三03"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420005"</span>,<span class="string">"createDate"</span>:<span class="string">"20190324"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">25</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420             25"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司06"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">""</span>       ,<span class="string">"provinceCode"</span>:<span class="string">"420006"</span>,<span class="string">"createDate"</span>:<span class="string">"20190325"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">26</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050026"</span>, <span class="string">"enterpriseName"</span>: <span class="string">""</span>,            <span class="string">"legalRepresentative"</span>: <span class="string">""</span>      ,<span class="string">"provinceCode"</span>:<span class="string">"420007"</span>,<span class="string">"createDate"</span>:<span class="string">"20190326"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">27</span>,                                                  <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司06"</span>,                               <span class="string">"provinceCode"</span>:<span class="string">"420008"</span>,<span class="string">"createDate"</span>:<span class="string">"20190327"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">28</span>,                                                  <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司09"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"张三09"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420009"</span>,<span class="string">"createDate"</span>:<span class="string">"20190328"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">29</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">""</span>,                   <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司19"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">""</span>      ,<span class="string">"provinceCode"</span>:<span class="string">"420\n "</span>,<span class="string">"createDate"</span>:<span class="string">"20190329"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">30</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">""</span>,                   <span class="string">"enterpriseName"</span>: <span class="string">"某科&lt;html112"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"张三11"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420011"</span>,<span class="string">"createDate"</span>:<span class="string">"20190330"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">31</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050031"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司13"</span>             ,<span class="string">"legalRepresentative"</span>: <span class="string">"张三12"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420012"</span>,<span class="string">"createDate"</span>:<span class="string">"20190331"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">32</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050032"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司13"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"&lt;html&gt;23"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420013"</span>,<span class="string">"createDate"</span>:<span class="string">"20190401"</span>&#125;,</span><br><span class="line">&#123;<span class="string">"_id"</span>: <span class="number">33</span>, <span class="string">"uniformSocialCreditCode"</span>: <span class="string">"420001007161050033"</span>, <span class="string">"enterpriseName"</span>: <span class="string">"某科技公司14"</span>,<span class="string">"legalRepresentative"</span>: <span class="string">"张三14"</span>,<span class="string">"provinceCode"</span>:<span class="string">"420014"</span>,<span class="string">"createDate"</span>:<span class="string">"20190402"</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="string">'''check()方法用来对数据库设计文档中所有的字段是否缺失、是否存在特殊字符以及非空字段是否为空进行检查'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(full_list, not_null_list, special_list)</span>:</span></span><br><span class="line">    <span class="string">'''for循环依次遍历参数列表中所有的字段'''</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> full_list:</span><br><span class="line">        <span class="string">'''查询缺失的字段'''</span></span><br><span class="line">        qurey_no_exists = &#123;</span><br><span class="line">            j: &#123;</span><br><span class="line">                <span class="string">"$exists"</span>: <span class="keyword">False</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="string">'''查询字段缺失的记录，并返回缺失该字段的记录数量'''</span></span><br><span class="line">        count1 = mycol.find(qurey_no_exists).count() </span><br><span class="line">        <span class="string">'''如果存在字段缺失的记录，则打印缺失该字段的记录的数量及部分记录'''</span></span><br><span class="line">        <span class="keyword">if</span> (count1 &gt; <span class="number">0</span>):</span><br><span class="line">            print(<span class="string">"对比数据库设计文档，存在 "</span> + j + <span class="string">" 字段缺失的记录，"</span> + <span class="string">" 缺失的记录数为："</span> + str(count1))</span><br><span class="line">            print(<span class="string">"其中一条 "</span>+j+<span class="string">" 字段缺失的记录为："</span>)</span><br><span class="line">            <span class="string">'''打印一条该字段缺失的记录，通过limit()函数中的参数，可控制打印的记录的数量'''</span></span><br><span class="line">            <span class="keyword">for</span> m <span class="keyword">in</span> mycol.find(qurey_no_exists).limit(<span class="number">1</span>):</span><br><span class="line">                print(m)</span><br><span class="line">        <span class="string">'''对 MongoDB 中的所有记录的该字段，遍历是否存在特殊字符列表中的异常字符'''</span></span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> special_list:</span><br><span class="line">            qurey_special = &#123;</span><br><span class="line">                j: &#123;</span><br><span class="line">                    <span class="string">"$regex"</span>: p</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="string">'''查询包含异常字符的记录，并返回记录的数量'''</span></span><br><span class="line">            count2 = mycol.find(qurey_special).count() </span><br><span class="line">            <span class="string">'''如果存在包含异常字符的记录，则打印记录的数量及部分记录'''</span></span><br><span class="line">            <span class="keyword">if</span> (count2 &gt; <span class="number">0</span>):</span><br><span class="line">                print(<span class="string">"字段： "</span> + j + <span class="string">" 存在异常字符："</span> + p + <span class="string">"， 记录数为： "</span> + str(count2))</span><br><span class="line">                print(<span class="string">"其中的一条包含异常字符 "</span> + p + <span class="string">" 的记录为："</span>)</span><br><span class="line">                <span class="string">'''打印一条包含异常字符的记录，通过limit()函数中的参数，可控制打印的记录的数量'''</span></span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> mycol.find(qurey_special).limit(<span class="number">1</span>):</span><br><span class="line">                    print(k)</span><br><span class="line">        <span class="string">'''对数据库设计文档中的非空字段进行判空'''</span></span><br><span class="line">        <span class="keyword">if</span> (j <span class="keyword">in</span> not_null_list):</span><br><span class="line">            qurey_null = &#123;</span><br><span class="line">                <span class="string">"$or"</span>: [&#123;</span><br><span class="line">                    j: <span class="string">""</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    j: []</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="string">'''如果存在非空字段为空的记录，则打印记录的数量及部分记录'''</span></span><br><span class="line">            count3 = mycol.find(qurey_null).count()</span><br><span class="line">            <span class="keyword">if</span> (count3 &gt; <span class="number">0</span>):</span><br><span class="line">                print(<span class="string">"数据库设计中 "</span>+j+<span class="string">" 字段非空，"</span>+<span class="string">"存在 "</span> + j + <span class="string">" 字段为空的记录， "</span> + <span class="string">" 为空的记录数为："</span> + str(count3))</span><br><span class="line">                print(<span class="string">"其中一条字段为空的记录为："</span>)</span><br><span class="line">                <span class="string">'''打印一条非空字段为空的记录，通过limit()函数中的参数，可控制打印的记录的数量'''</span></span><br><span class="line">                <span class="keyword">for</span> g <span class="keyword">in</span> mycol.find(qurey_null).limit(<span class="number">1</span>):</span><br><span class="line">                    print(g)</span><br><span class="line"></span><br><span class="line"><span class="string">'''check_duplicates()方法用来检查是否存在重复的数据，若MongoDB中，某个字段或某几个字段的组合不能重复，</span></span><br><span class="line"><span class="string">        则将该字段或字段的组合以列表的方式传入到方法的参数 duplicates_list 中'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_duplicates</span><span class="params">(duplicates_list)</span>:</span> </span><br><span class="line">    </span><br><span class="line">    <span class="string">'''下面的查询语句用到了MongoDB 的聚合 '''</span></span><br><span class="line">    duplicates_query = [&#123;</span><br><span class="line">        <span class="string">"$group"</span>: &#123;</span><br><span class="line"><span class="comment">#           聚合的分组初始为空</span></span><br><span class="line">            <span class="string">"_id"</span>: &#123;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"uniqueIds"</span>: &#123;</span><br><span class="line">                <span class="string">"$addToSet"</span>: <span class="string">"$_id"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            </span><br><span class="line"><span class="comment">#         计算分组中记录的数量之和</span></span><br><span class="line">            <span class="string">"count"</span>: &#123;</span><br><span class="line">                <span class="string">"$sum"</span>: <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line"><span class="comment">#         匹配记录数量之和大于1的分组</span></span><br><span class="line">        <span class="string">"$match"</span>: &#123;</span><br><span class="line">            <span class="string">"count"</span>: &#123;</span><br><span class="line">                <span class="string">"$gt"</span>: <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">    </span><br><span class="line">    <span class="string">'''未传入分组的字段'''</span></span><br><span class="line">    <span class="keyword">if</span>(len(duplicates_list) == <span class="number">0</span>):</span><br><span class="line">        print(<span class="string">"输入的参数长度有误 ！！！"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="string">'''将传入的字段添加到查询语句的分组中（"_id"所对应的值）'''</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(duplicates_list)):</span><br><span class="line">            duplicates_query[<span class="number">0</span>][<span class="string">"$group"</span>][<span class="string">"_id"</span>][duplicates_list[i]] = <span class="string">"$"</span> + duplicates_list[i]</span><br><span class="line">        cursor = mycol.aggregate(duplicates_query)</span><br><span class="line">        <span class="string">'''打印存在重复数据的字段的组合'''</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">for</span> doc <span class="keyword">in</span> cursor:</span><br><span class="line">                print(<span class="string">"字段  "</span> + str(doc[<span class="string">"_id"</span>])+<span class="string">" 的组合存在重复数据"</span>)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            cursor.close() </span><br><span class="line"></span><br><span class="line"><span class="string">'''check_redundant()方法用来检查 MongoDB 中的记录是否存在多于的字段</span></span><br><span class="line"><span class="string">     （多于的字段指的是不包含在数据库设计文档中的字段）'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_redundant</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''读取集合中的一条记录'''</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> mycol.find().limit(<span class="number">1</span>):</span><br><span class="line">        <span class="string">'''记录是字典形式的，获取字典的键值并转化为列表'''</span></span><br><span class="line">        l = list(i.keys())</span><br><span class="line">        print(<span class="string">"MongoDB中的记录的字段为："</span> + <span class="string">"\n"</span> + str(l))</span><br><span class="line">        <span class="string">'''检查MongoDB中的字段是否有不包含在数据库设计文档中的字段'''</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> l:</span><br><span class="line">            <span class="keyword">if</span> (k <span class="keyword">not</span> <span class="keyword">in</span> full_list):</span><br><span class="line">                print(<span class="string">"对比数据库设计文档，MongoDb 中 "</span> + k + <span class="string">" 字段多余"</span>)</span><br><span class="line">                print(<span class="string">"其中的一条 "</span>+ k +<span class="string">" 字段多余的记录为： "</span> + <span class="string">"\n"</span> + str(i))</span><br><span class="line">            <span class="keyword">if</span>(k == <span class="string">''</span>):</span><br><span class="line">                print(<span class="string">"MongoDB 中存在名称为空的字段"</span>)</span><br><span class="line">                </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"> print(<span class="string">"--------"</span> + <span class="string">"开始测试"</span> + <span class="string">"--------"</span>)</span><br><span class="line"> <span class="keyword">try</span>:</span><br><span class="line">    <span class="string">'''指定数据库'''</span></span><br><span class="line">    db_name  = <span class="string">"wys_db"</span></span><br><span class="line">    <span class="string">'''指定集合'''</span></span><br><span class="line">    col_name = <span class="string">"wys_col"</span></span><br><span class="line">    myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">    mydb = myclient[db_name]</span><br><span class="line">    mycol = mydb[col_name]</span><br><span class="line">    <span class="string">'''异常字符列表，只列举了部分字符'''</span></span><br><span class="line">    special_list = [<span class="string">'     '</span>, <span class="string">'\t'</span>, <span class="string">'\r'</span>, <span class="string">'\n'</span>, <span class="string">'&lt;html'</span>, <span class="string">'&lt;meta'</span>, <span class="string">'null'</span>]</span><br><span class="line">    <span class="string">'''指定可以确定重复数据的字段组合，统一社会信用代码和企业名称的组合可唯一确定一个企业，选这两个字段'''</span></span><br><span class="line">    duplicates_list = [<span class="string">"uniformSocialCreditCode"</span>,<span class="string">"enterpriseName"</span>]</span><br><span class="line">    <span class="string">'''full_list 用来放数据库设计文档中的所有字段 '''</span></span><br><span class="line">    full_list = [<span class="string">"_id"</span>,<span class="string">"uniformSocialCreditCode"</span>,<span class="string">"enterpriseName"</span>,<span class="string">"legalRepresentative"</span>,<span class="string">"provinceCode"</span>]</span><br><span class="line">    <span class="string">'''not_null_list 用来放数据库设计文档中的非空字段'''</span></span><br><span class="line">    not_null_list = [<span class="string">"_id"</span>,<span class="string">"uniformSocialCreditCode"</span>,<span class="string">"enterpriseName"</span>,<span class="string">"provinceCode"</span>]</span><br><span class="line">    <span class="string">'''将测试数据插入到  MongoDB 中'''</span></span><br><span class="line">    mycol.insert_many(mylist)</span><br><span class="line">    <span class="string">'''检查是否存在重复数据'''</span></span><br><span class="line">    check_duplicates(duplicates_list)</span><br><span class="line">    <span class="string">'''检查是否存在字段缺失、包含特殊字符、非空字段为空的数据'''</span></span><br><span class="line">    check(full_list, not_null_list, special_list)</span><br><span class="line">    <span class="string">'''检查 MongoDB 中是否有字段多于'''</span></span><br><span class="line">    check_redundant()</span><br><span class="line"> <span class="keyword">finally</span>:</span><br><span class="line">    <span class="string">'''测试执行完成之后，将插入的测试数据删除，以免第二次运行时插入重复的数据报错'''</span></span><br><span class="line">    myclient.drop_database(<span class="string">"wys_db"</span>)</span><br><span class="line">    print(<span class="string">"--------"</span> + <span class="string">"完成测试"</span> + <span class="string">"--------"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="测试运行的结脚本"><a href="#测试运行的结脚本" class="headerlink" title="测试运行的结脚本"></a>测试运行的结脚本</h3><p>脚本执行后，会向MongoDB数据库中插入数据，如图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-eb3e972eeaa1293b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MongoDB查询.png"></p>
+<p>测试运行的结果如下：</p>
+<p><code>`</code><br>——–开始测试——–<br>字段  {‘uniformSocialCreditCode’: ‘420001007161050022’, ‘enterpriseName’: ‘某科技公司03’} 的组合存在重复数据<br>字段  {‘uniformSocialCreditCode’: ‘420001007161050020’, ‘enterpriseName’: ‘某科技公司01’} 的组合存在重复数据<br>对比数据库设计文档，存在 uniformSocialCreditCode 字段缺失的记录， 缺失的记录数为：2<br>其中一条 uniformSocialCreditCode 字段缺失的记录为：<br>{‘_id’: 27, ‘enterpriseName’: ‘某科技公司06’, ‘provinceCode’: ‘420008’, ‘createDate’: ‘20190327’}<br>字段： uniformSocialCreditCode 存在异常字符：     ， 记录数为： 1<br>其中的一条包含异常字符       的记录为：<br>{‘_id’: 25, ‘uniformSocialCreditCode’: ‘420             25’, ‘enterpriseName’: ‘某科技公司06’, ‘legalRepresentative’: ‘’, ‘provinceCode’: ‘420006’, ‘createDate’: ‘20190325’}<br>字段： uniformSocialCreditCode 存在异常字符：    ， 记录数为： 1<br>其中的一条包含异常字符      的记录为：<br>{‘_id’: 24, ‘uniformSocialCreditCode’: ‘4200010\t\r\n   24’, ‘legalRepresentative’: ‘张三03’, ‘provinceCode’: ‘420005’, ‘createDate’: ‘20190324’}<br>字段： uniformSocialCreditCode 存在异常字符：<br>， 记录数为： 1<br>其中的一条包含异常字符<br> 的记录为：<br>{‘_id’: 24, ‘uniformSocialCreditCode’: ‘4200010\t\r\n   24’, ‘legalRepresentative’: ‘张三03’, ‘provinceCode’: ‘420005’, ‘createDate’: ‘20190324’}<br>字段： uniformSocialCreditCode 存在异常字符：<br>， 记录数为： 1<br>其中的一条包含异常字符<br> 的记录为：<br>{‘_id’: 24, ‘uniformSocialCreditCode’: ‘4200010\t\r\n   24’, ‘legalRepresentative’: ‘张三03’, ‘provinceCode’: ‘420005’, ‘createDate’: ‘20190324’}<br>数据库设计中 uniformSocialCreditCode 字段非空，存在 uniformSocialCreditCode 字段为空的记录，  为空的记录数为：2<br>其中一条字段为空的记录为：<br>{‘_id’: 29, ‘uniformSocialCreditCode’: ‘’, ‘enterpriseName’: ‘某科技公司19’, ‘legalRepresentative’: ‘’, ‘provinceCode’: ‘420\n ‘, ‘createDate’: ‘20190329’}<br>对比数据库设计文档，存在 enterpriseName 字段缺失的记录， 缺失的记录数为：1<br>其中一条 enterpriseName 字段缺失的记录为：<br>{‘_id’: 24, ‘uniformSocialCreditCode’: ‘4200010\t\r\n   24’, ‘legalRepresentative’: ‘张三03’, ‘provinceCode’: ‘420005’, ‘createDate’: ‘20190324’}<br>字段： enterpriseName 存在异常字符：&lt;html， 记录数为： 1<br>其中的一条包含异常字符 &lt;html 的记录为：<br>{‘_id’: 30, ‘uniformSocialCreditCode’: ‘’, ‘enterpriseName’: ‘某科&lt;html112’, ‘legalRepresentative’: ‘张三11’, ‘provinceCode’: ‘420011’, ‘createDate’: ‘20190330’}<br>数据库设计中 enterpriseName 字段非空，存在 enterpriseName 字段为空的记录，  为空的记录数为：1<br>其中一条字段为空的记录为：<br>{‘_id’: 26, ‘uniformSocialCreditCode’: ‘420001007161050026’, ‘enterpriseName’: ‘’, ‘legalRepresentative’: ‘’, ‘provinceCode’: ‘420007’, ‘createDate’: ‘20190326’}<br>对比数据库设计文档，存在 legalRepresentative 字段缺失的记录， 缺失的记录数为：1<br>其中一条 legalRepresentative 字段缺失的记录为：<br>{‘_id’: 27, ‘enterpriseName’: ‘某科技公司06’, ‘provinceCode’: ‘420008’, ‘createDate’: ‘20190327’}<br>字段： legalRepresentative 存在异常字符：&lt;html， 记录数为： 1<br>其中的一条包含异常字符 &lt;html 的记录为：<br>{‘_id’: 32, ‘uniformSocialCreditCode’: ‘420001007161050032’, ‘enterpriseName’: ‘某科技公司13’, ‘legalRepresentative’: ‘<html>23’, ‘provinceCode’: ‘420013’, ‘createDate’: ‘20190401’}<br>字段： provinceCode 存在异常字符：<br>， 记录数为： 1<br>其中的一条包含异常字符<br> 的记录为：<br>{‘_id’: 29, ‘uniformSocialCreditCode’: ‘’, ‘enterpriseName’: ‘某科技公司19’, ‘legalRepresentative’: ‘’, ‘provinceCode’: ‘420\n ‘, ‘createDate’: ‘20190329’}<br>数据库设计中 provinceCode 字段非空，存在 provinceCode 字段为空的记录，  为空的记录数为：1<br>其中一条字段为空的记录为：<br>{‘_id’: 23, ‘uniformSocialCreditCode’: ‘420001007161050022’, ‘enterpriseName’: ‘某科技公司03’, ‘legalRepresentative’: ‘’, ‘provinceCode’: ‘’, ‘createDate’: ‘20190323’}<br>MongoDB中的记录的字段为：<br>[‘_id’, ‘uniformSocialCreditCode’, ‘enterpriseName’, ‘legalRepresentative’, ‘provinceCode’, ‘createDate’]<br>对比数据库设计文档，MongoDb 中 createDate 字段多余<br>其中的一条 createDate 字段多余的记录为：<br>{‘_id’: 20, ‘uniformSocialCreditCode’: ‘420001007161050020’, ‘enterpriseName’: ‘某科技公司01’, ‘legalRepresentative’: ‘张三01’, ‘provinceCode’: ‘420001’, ‘createDate’: ‘20190320’}<br>——–完成测试——–</html></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/04/05/大数据测试之异常数据识别/" title="大数据测试之异常数据识别">http://wysh.site/2019/04/05/大数据测试之异常数据识别/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"> <i class="fa fa-tag"></i> MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/15/Selenium_Java_Best/" rel="next" title="Selenium Java best">
+                <i class="fa fa-chevron-left"></i> Selenium Java best
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wysh.site/resume/" target="_blank" title="我的 简历">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 简历</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能介绍"><span class="nav-number">2.</span> <span class="nav-text">功能介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试脚本"><span class="nav-number">3.</span> <span class="nav-text">测试脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试运行的结脚本"><span class="nav-number">4.</span> <span class="nav-text">测试运行的结脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">102.1k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共102.1k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
