@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB, Python" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="从去年年初开始，就一直在参与公司爬虫大数据的项目，爬取的是各个工商信用网站的数据，我主要负责数据的验证以及部分网站数据的解析工作。最近突然想把自己的个人网站上所有的文章都爬取下来，于是就有了这篇文章。  源代码已上传至GitHub：https://github.com/wuyongsheng/spider-for-personal-website/blob/master/mySpider 思路及">
+<meta name="keywords" content="MongoDB, Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python爬虫：爬取自己个人网站的所有文章">
+<meta property="og:url" content="http://wysh.site/2019/04/27/python爬虫：爬取自己个人网站的所有文章/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="从去年年初开始，就一直在参与公司爬虫大数据的项目，爬取的是各个工商信用网站的数据，我主要负责数据的验证以及部分网站数据的解析工作。最近突然想把自己的个人网站上所有的文章都爬取下来，于是就有了这篇文章。  源代码已上传至GitHub：https://github.com/wuyongsheng/spider-for-personal-website/blob/master/mySpider 思路及">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-6a5ffffba40916ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-49712cc9cbdb9b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-84bf663ca315c15f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-68bba5d6c3f277f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-c5e2a3fa323c7679.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-edaf7c91782fdaec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-a3b5bb8d3968752b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-4846e0188177e328.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-26T17:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python爬虫：爬取自己个人网站的所有文章">
+<meta name="twitter:description" content="从去年年初开始，就一直在参与公司爬虫大数据的项目，爬取的是各个工商信用网站的数据，我主要负责数据的验证以及部分网站数据的解析工作。最近突然想把自己的个人网站上所有的文章都爬取下来，于是就有了这篇文章。  源代码已上传至GitHub：https://github.com/wuyongsheng/spider-for-personal-website/blob/master/mySpider 思路及">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-6a5ffffba40916ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/04/27/python爬虫：爬取自己个人网站的所有文章/"/>
+
+
+
+
+
+  <title>python爬虫：爬取自己个人网站的所有文章 | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/04/27/python爬虫：爬取自己个人网站的所有文章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python爬虫：爬取自己个人网站的所有文章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-27T00:15:54+08:00">
+                2019-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/大数据/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/大数据/MongoDB/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,605
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>从去年年初开始，就一直在参与公司爬虫大数据的项目，爬取的是各个工商信用网站的数据，我主要负责数据的验证以及部分网站数据的解析工作。最近突然想把自己的个人网站上所有的文章都爬取下来，于是就有了这篇文章。</p>
+</blockquote>
+<p>源代码已上传至GitHub：<br><a href="https://github.com/wuyongsheng/spider-for-personal-website/blob/master/mySpider" target="_blank" rel="noopener">https://github.com/wuyongsheng/spider-for-personal-website/blob/master/mySpider</a></p>
+<h3 id="思路及分析"><a href="#思路及分析" class="headerlink" title="思路及分析"></a>思路及分析</h3><p>想爬取网站上所有的文章，首先得获取每一篇文章的 url ，然后通过 url 发起 http 请求，接着对响应数据的 html 页面源码使用python的爬虫工具库进行解析，从中提取出文章的相关信息。</p>
+<p>So，在编写爬虫程序之前，我们必须熟悉相关的爬虫工具库，同时对目标网站的结构也应该有所了解。</p>
+<h3 id="使用的技术"><a href="#使用的技术" class="headerlink" title="使用的技术"></a>使用的技术</h3><p>这里使用 python + BeautifulSoup4（网页装载与解析） + urllib（发起请求）+ 字符串处理函数（字符替换及去掉字符串中的空白字符等） + codecs（写入文件）+ MongoDB （写入 MongoDB）+ urlretrieve（下载网页上的图片到本地）</p>
+<h3 id="网站及页面结构"><a href="#网站及页面结构" class="headerlink" title="网站及页面结构"></a>网站及页面结构</h3><ul>
+<li>网站首页</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-6a5ffffba40916ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网站首页.png"></p>
+<p>从上图中，我们可以看到网站的首页的 url 是：<a href="http://wysh.site/">http://wysh.site/</a> ，点击下方分页栏中的页码可跳转至指定的分页</p>
+<ul>
+<li>网站总页面数<br>按下键盘的 F12 键，可以看到网页标签的 DOM 结构，下图红框中的标签显示了分页的总数</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-49712cc9cbdb9b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="总页面数png.png"></p>
+<ul>
+<li>其他分页</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-84bf663ca315c15f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="其他分页.png"></p>
+<p>从上图中可以看出，除首页以外，其他分页的 url 是：<br><a href="http://wysh.site/page/page_num/">http://wysh.site/page/page_num/</a>  ,其中 page_num 代表分页的数字</p>
+<ul>
+<li>首页及分页中文章的 url</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-68bba5d6c3f277f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文章标签.png"></p>
+<p>从上图中，我们可以看出，首页及每个分页都对应着该分页的 5 篇文章标签，每个文章标签里面都有该文章的 url 属性</p>
+<ul>
+<li>文章内容标签</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-c5e2a3fa323c7679.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文章内容部分.png"></p>
+<p>上图显示了文章内容的标签，其中文章的正文标签都是 class 为 post-body han-init-context 的直接子节点</p>
+<h3 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h3><p>进行了上述网站及页面结构的分析，接下来就可以写爬虫代码了。</p>
+<p>代码逻辑如下：</p>
+<ol>
+<li>请求首页，从响应信息中提取出分页的总数，从而可以推断出各分页的 url</li>
+<li>请求首页及个分页的 url，从响应信息中提取出首页及各分页中的文章的 url，加入到列表中，完成之后，可以得到包含所有文章的 url 的列表</li>
+<li>使用文章列表中的每一篇文章的 url 发起 http 请求，对请求的响应信息的 html 页面源码进行解析，提取出文章信息，将其写入文件及 MongoDB 中（同时将文章中的图片保存至本地）</li>
+<li>针对请求过程中可能出现的异常（比如网络不稳定导致请求识别）进行失败重试（键代码中的 post-body han-init-context 方法）</li>
+</ol>
+<h3 id="爬虫程序执行后的结果"><a href="#爬虫程序执行后的结果" class="headerlink" title="爬虫程序执行后的结果"></a>爬虫程序执行后的结果</h3><p><img src="https://upload-images.jianshu.io/upload_images/12273007-edaf7c91782fdaec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文章及图片.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-a3b5bb8d3968752b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文章内容.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-4846e0188177e328.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="存入MongoDB中的数据.png"></p>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>在线的源码中，我进行了详解的注释</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlretrieve</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"><span class="comment">#建立MongoDB的连接，插入数据时会自动创建指定的数据库及集合</span></span><br><span class="line">myclient = pymongo.MongoClient(<span class="string">"mongodb://localhost:27017/"</span>)</span><br><span class="line">mydb = myclient[<span class="string">"spider"</span>]</span><br><span class="line">mycol = mydb[<span class="string">"article"</span>]</span><br><span class="line"><span class="comment">#指定爬取的文件导出路径</span></span><br><span class="line">filePath = <span class="string">r"c:/spider/"</span></span><br><span class="line"><span class="comment">#判断路径是否存在，不存在则创建路径</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(filePath):</span><br><span class="line">    os.makedirs(filePath)</span><br><span class="line"><span class="comment">#个人网站根路径</span></span><br><span class="line">url = <span class="string">"http://wysh.site"</span></span><br><span class="line"><span class="comment">#article_list 存放网站文章的url，初始为空</span></span><br><span class="line">article_list = []</span><br><span class="line"><span class="comment">#设置一个用户代理，模拟浏览器</span></span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line"><span class="comment">#通过 urllib 发送 http 请求</span></span><br><span class="line">req = urllib.request.Request(url, headers=&#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开网页链接，针对请求发送过程中可能产生的异常</span></span><br><span class="line"><span class="comment"># （比如网络不稳定导致请求发送失败）进行异常补捕获并重试，最多重试10次</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">openlink_and_retry</span><span class="params">(req)</span>:</span></span><br><span class="line">    maNum = <span class="number">10</span></span><br><span class="line">    <span class="keyword">for</span> tries <span class="keyword">in</span> range(maNum):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = urllib.request.urlopen(req)</span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">if</span> tries &lt; (maNum):</span><br><span class="line">                print(<span class="string">"retry!!!"</span>)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="string">"Has tried %d times , all failed!"</span>, maNum)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="comment"># 请求网站首页的页面数据</span></span><br><span class="line">print(<span class="string">'发送首页的页面网络请求: '</span> + url)</span><br><span class="line">response = openlink_and_retry(req)</span><br><span class="line">content = response.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="comment">#使用 BeautifulSoup 对响应数据进行解析</span></span><br><span class="line">soup = BeautifulSoup(content, <span class="string">"lxml"</span>)</span><br><span class="line">spans = soup.select(<span class="string">'span.space'</span>)[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 获取页面数量</span></span><br><span class="line">total_page = spans.nextSibling.get_text()</span><br><span class="line">print(<span class="string">"total_page is :"</span> + total_page)</span><br><span class="line"><span class="comment">#除首页外，其他页面的公共部分</span></span><br><span class="line">urlBase = <span class="string">"http://wysh.site/page/"</span></span><br><span class="line"><span class="comment">#页面索引</span></span><br><span class="line">index = <span class="number">1</span></span><br><span class="line">total_page = int(total_page)</span><br><span class="line"><span class="comment">#依次遍历对网站的每一个分页进行遍历，获取分页中所有文章的 url</span></span><br><span class="line"><span class="keyword">while</span> index &lt;= total_page:</span><br><span class="line">    <span class="comment"># 索引大于 1 的时候需要重新指定 url</span></span><br><span class="line">    <span class="keyword">if</span> index &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="comment"># 拼装成每页的 url</span></span><br><span class="line">        url = urlBase + str(index)</span><br><span class="line">        req = urllib.request.Request(url, headers=&#123;</span><br><span class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        print(<span class="string">'发送页面网络请求 : '</span> + url)</span><br><span class="line">    response = openlink_and_retry(req)</span><br><span class="line">    content = response.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    soup = BeautifulSoup(content, <span class="string">"lxml"</span>)</span><br><span class="line">    articles = soup.select(<span class="string">".post-block"</span>)</span><br><span class="line">    <span class="comment">#遍历分页中的每一篇文章</span></span><br><span class="line">    <span class="keyword">for</span> article <span class="keyword">in</span> articles:</span><br><span class="line">        <span class="comment"># 从页面中提取出每一篇文章的 url</span></span><br><span class="line">        article_url = article.select(<span class="string">"link"</span>)[<span class="number">0</span>].attrs[<span class="string">'href'</span>]</span><br><span class="line">        print(article_url)</span><br><span class="line">        <span class="comment"># 将文章的 url 添加到文章列表中</span></span><br><span class="line">        article_list.append(article_url)</span><br><span class="line">    <span class="comment"># 每循环一次后，索引加一，指向下一页</span></span><br><span class="line">    index = index + <span class="number">1</span></span><br><span class="line">j = <span class="number">1</span></span><br><span class="line"><span class="comment"># 依次从文章列表中取出每一篇文章的 url ，通过BeautifulSoup 提取该文章的相关信息</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> article_list:</span><br><span class="line">    print(i)</span><br><span class="line">    <span class="comment"># url中有中文，因此我们需要使用 urllib.request.quote(link)</span></span><br><span class="line">    <span class="comment"># 来把链接中的中文编码成 url 中的正确编码</span></span><br><span class="line">    trans_url = urllib.request.quote(i)</span><br><span class="line">    <span class="comment"># 这里会把: 也转码了，转换成 % 3</span></span><br><span class="line">    <span class="comment"># 因此，转换之后，我们还需要还原为:</span></span><br><span class="line">    urlMain = trans_url.replace(<span class="string">'%3A'</span>, <span class="string">':'</span>)</span><br><span class="line">    print(urlMain)</span><br><span class="line">    req = urllib.request.Request(urlMain, headers=&#123;</span><br><span class="line">        <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">    &#125;)</span><br><span class="line">    response = openlink_and_retry(req)</span><br><span class="line">    content = response.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    soup = BeautifulSoup(content, <span class="string">"lxml"</span>)</span><br><span class="line">    <span class="comment"># 获取文章的标题</span></span><br><span class="line">    heading = soup.h1.string</span><br><span class="line">    heading1 = <span class="string">"标题是 ："</span> + heading</span><br><span class="line">    rep = soup.select(<span class="string">"#posts &gt; article &gt; div &gt; header &gt; div &gt; span.post-time &gt; time"</span>)[<span class="number">0</span>].get_text()</span><br><span class="line">    <span class="comment">#去掉首位空格、回车、换行</span></span><br><span class="line">    rep = rep.strip().replace(<span class="string">"\n"</span>, <span class="string">""</span>).replace(<span class="string">"\r"</span>, <span class="string">""</span>)</span><br><span class="line">    <span class="comment"># 获取发布时间</span></span><br><span class="line">    rep1 = <span class="string">"\n"</span> + <span class="string">"发表于："</span> + rep</span><br><span class="line">    print(heading1)</span><br><span class="line">    print(rep1)</span><br><span class="line">    print(str(j))</span><br><span class="line">    <span class="comment"># 获取文章的分类标签列表，一篇文章可能属于多个分类</span></span><br><span class="line">    cata_tag = soup.find_all(<span class="string">"span"</span>, itemprop=<span class="string">"about"</span>, itemscope=<span class="string">""</span>, itemtype=<span class="string">"http://schema.org/Thing"</span>)</span><br><span class="line">    <span class="comment">#标签名称列表</span></span><br><span class="line">    cata_list = []</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> cata_tag:</span><br><span class="line">        <span class="comment"># 将标签名称添加到标签名称列表里面</span></span><br><span class="line">        cata_list.append(c.text.strip().replace(<span class="string">"\n"</span>, <span class="string">""</span>).replace(<span class="string">"\r"</span>, <span class="string">""</span>))</span><br><span class="line">    <span class="comment">#将标签名称列表转化为字符串</span></span><br><span class="line">    cata_name = <span class="string">"，"</span>.join(cata_list)</span><br><span class="line">    cata_name1 = <span class="string">"\n"</span> + <span class="string">"分类于： "</span> + cata_name</span><br><span class="line">    print(cata_name1)</span><br><span class="line">    <span class="comment"># 获取文章字数</span></span><br><span class="line">    word_count = soup.find(<span class="string">"span"</span>, title=<span class="string">"字数统计"</span>).text.strip().replace(<span class="string">"\n"</span>, <span class="string">""</span>).replace(<span class="string">"\r"</span>, <span class="string">""</span>)</span><br><span class="line">    word_count1 = <span class="string">"\n"</span> + <span class="string">"字数是： "</span> + word_count</span><br><span class="line">    print(word_count)</span><br><span class="line">    j = j + <span class="number">1</span></span><br><span class="line">    <span class="comment">#获取文章正文</span></span><br><span class="line">    body = soup.select(<span class="string">"#posts &gt; article &gt; div &gt; div.post-body.han-init-context"</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">#获取正文最前面的引文</span></span><br><span class="line">    blockquote = body.blockquote</span><br><span class="line">    <span class="comment">#获取引文信息</span></span><br><span class="line">    <span class="keyword">if</span> blockquote != <span class="keyword">None</span>:</span><br><span class="line">        quote = blockquote.text.strip()</span><br><span class="line">        quote1 = <span class="string">"\n"</span> + <span class="string">"引文是 ： "</span> + quote</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        quote = <span class="keyword">None</span></span><br><span class="line">        quote1 = <span class="string">"\n"</span> + <span class="string">"引文为空"</span></span><br><span class="line">    print(quote1)</span><br><span class="line">    <span class="comment">#正文的内容初始值为空</span></span><br><span class="line">    content = <span class="string">''</span></span><br><span class="line">    <span class="comment"># 对正文的孩子节点（直接子节点）进行遍历，获取正文内容</span></span><br><span class="line">    <span class="keyword">for</span> nextTag <span class="keyword">in</span> body.children:</span><br><span class="line">        <span class="comment">#如果正文的子节点有 text 属性，则获取其文本</span></span><br><span class="line">        <span class="keyword">if</span> (hasattr(nextTag, <span class="string">'text'</span>)):</span><br><span class="line">            tagContent = nextTag.text.strip()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            tagContent = <span class="string">"没有 text 属性 ！！！"</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        print(tagContent)</span><br><span class="line">        <span class="comment">#如果正文的子节点是一号标题</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'h1'</span>:</span><br><span class="line">            tagContent = <span class="string">"一号标题： "</span> + tagContent + <span class="string">'\n'</span></span><br><span class="line">            content = content + tagContent</span><br><span class="line">            <span class="comment"># file.write("一号标题： " + tagContent + '\n')</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是二号标题</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'h2'</span>:</span><br><span class="line">            tagContent = <span class="string">"二号标题： "</span> + tagContent + <span class="string">'\n'</span></span><br><span class="line">            content = content + tagContent</span><br><span class="line">            <span class="comment"># file.write("二号标题：" + tagContent + '\n')</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是三号标题</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'h3'</span>:</span><br><span class="line">            tagContent = <span class="string">"三号标题： "</span> + tagContent + <span class="string">'\n'</span></span><br><span class="line">            content = content + tagContent</span><br><span class="line">            <span class="comment"># file.write("三号标题：" + tagContent + '\n')</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是四号标题</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'h4'</span>:</span><br><span class="line">            tagContent = <span class="string">"四号标题： "</span> + tagContent + <span class="string">'\n'</span></span><br><span class="line">            content = content + tagContent</span><br><span class="line">            <span class="comment"># file.write("四号标题：" + tagContent + '\n')</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是代码块</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.select(<span class="string">'figure'</span>).__len__() &gt; <span class="number">0</span> <span class="keyword">or</span> nextTag.name == <span class="string">'figure'</span>:</span><br><span class="line">            <span class="comment"># 如果 select 的 length 大于 0 则表示这个元素包含 figure 的元素</span></span><br><span class="line">            <span class="keyword">if</span> nextTag.select(<span class="string">'figure'</span>).__len__() &gt; <span class="number">0</span>:</span><br><span class="line">                nextTag = nextTag.select(<span class="string">'figure'</span>)[<span class="number">0</span>]</span><br><span class="line">            <span class="comment">#代码内容，初始值为空</span></span><br><span class="line">            codeLine = <span class="string">''</span></span><br><span class="line">            <span class="comment">#依次读取并添加每一行代码内容</span></span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> nextTag.table.tr.find(<span class="string">'td'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'code'</span>&#125;).find_all(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'line'</span>&#125;):</span><br><span class="line">                codeLine += line.text.strip() + <span class="string">'\n'</span></span><br><span class="line">            codeLine  = <span class="string">"代码块： "</span>+ <span class="string">"\n"</span> + codeLine</span><br><span class="line">            content = content + codeLine</span><br><span class="line">            print(codeLine)</span><br><span class="line">            <span class="comment"># file.write("代码块： "+ codeLine )</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是无序列表</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'ul'</span>:</span><br><span class="line">            <span class="comment">#列表内容初始值为空</span></span><br><span class="line">            li_text = <span class="string">''</span></span><br><span class="line">            <span class="keyword">for</span> li <span class="keyword">in</span> nextTag.find_all(<span class="string">'li'</span>):</span><br><span class="line">                li_text = li_text + <span class="string">'- '</span> + li.text.strip() + <span class="string">'\n'</span></span><br><span class="line">                <span class="comment"># file.write('- ' + li.text.strip() + '\n')</span></span><br><span class="line">            content = content + li_text</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 如果正文的子节点是有序列表</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'ol'</span>:</span><br><span class="line">            olIndex = <span class="number">1</span></span><br><span class="line">            li_text = <span class="string">''</span></span><br><span class="line">            <span class="keyword">for</span> li <span class="keyword">in</span> nextTag.find_all(<span class="string">'li'</span>):</span><br><span class="line">                li_text = li_text + str(olIndex) + <span class="string">'. '</span> + li.text.strip() + <span class="string">'\n'</span></span><br><span class="line">                <span class="comment"># file.write(str(olIndex) + '. ' + li.text.strip() + '\n')</span></span><br><span class="line">                olIndex += <span class="number">1</span></span><br><span class="line">            content = content + li_text</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment">#如果正文的子节点是段落</span></span><br><span class="line">        <span class="keyword">if</span> nextTag.name == <span class="string">'p'</span>:</span><br><span class="line">            tagContent = nextTag.text.strip()</span><br><span class="line">            <span class="comment"># 为空表示是图片</span></span><br><span class="line">            <span class="keyword">if</span> tagContent == <span class="string">''</span>:</span><br><span class="line">                <span class="comment">#获取图片的 url</span></span><br><span class="line">                pic_url = nextTag.find(<span class="string">'img'</span>)[<span class="string">'src'</span>]</span><br><span class="line">                content =  content + pic_url</span><br><span class="line">                <span class="comment"># file.write(pic_url)</span></span><br><span class="line">                <span class="comment">#获取图片的名称</span></span><br><span class="line">                pic_name = nextTag.find(<span class="string">'img'</span>)[<span class="string">'alt'</span>]</span><br><span class="line">                urlretrieve(pic_url, filePath + heading + <span class="string">'__'</span> + pic_name)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                links = nextTag.find_all(<span class="string">'a'</span>)</span><br><span class="line">                <span class="keyword">for</span> link <span class="keyword">in</span> links:</span><br><span class="line">                    tagContent = tagContent.replace(link.text, link[<span class="string">'href'</span>])</span><br><span class="line">                content = content + tagContent</span><br><span class="line">                <span class="comment"># file.write(tagContent + '\n')</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">    i1 = <span class="string">'文章的 url 是 ： '</span> + i</span><br><span class="line">    file = codecs.open(filePath + <span class="string">'/'</span> + heading + <span class="string">'.txt'</span>, <span class="string">"w"</span>, encoding=<span class="string">'utf8'</span>)  <span class="comment"># 指定文件的编码格式</span></span><br><span class="line">    <span class="comment">#将文章的标题、url 、发布时间、字数、引文、正文信息写入文件</span></span><br><span class="line">    file.writelines(heading1)</span><br><span class="line">    file.writelines(i1)</span><br><span class="line">    file.writelines(rep1)</span><br><span class="line">    file.writelines(cata_name1)</span><br><span class="line">    file.writelines(word_count1)</span><br><span class="line">    file.writelines(quote1)</span><br><span class="line">    file.writelines(content)</span><br><span class="line">    <span class="comment"># 使用urlretrieve下载文章中的图片到本地</span></span><br><span class="line">    file.close()</span><br><span class="line">    post = &#123;<span class="string">"heading"</span>:heading,<span class="string">"url"</span>:i,<span class="string">"reportTime"</span>:rep,<span class="string">"category"</span>:cata_name,<span class="string">"wordCount"</span>:word_count,<span class="string">"quote"</span>:quote,<span class="string">"content"</span>:content&#125;</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        mycol.insert_one(post)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">"写入 MongoDB 出错 ！！！"</span>)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment">#关闭 MongoDB 连接</span></span><br><span class="line">        myclient.close()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/04/27/python爬虫：爬取自己个人网站的所有文章/" title="python爬虫：爬取自己个人网站的所有文章">http://wysh.site/2019/04/27/python爬虫：爬取自己个人网站的所有文章/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"> <i class="fa fa-tag"></i> MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/大数据测试之异常数据识别/" rel="next" title="大数据测试之异常数据识别">
+                <i class="fa fa-chevron-left"></i> 大数据测试之异常数据识别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路及分析"><span class="nav-number">1.</span> <span class="nav-text">思路及分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用的技术"><span class="nav-number">2.</span> <span class="nav-text">使用的技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网站及页面结构"><span class="nav-number">3.</span> <span class="nav-text">网站及页面结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码逻辑"><span class="nav-number">4.</span> <span class="nav-text">代码逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#爬虫程序执行后的结果"><span class="nav-number">5.</span> <span class="nav-text">爬虫程序执行后的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number">6.</span> <span class="nav-text">源码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">104.7k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共104.7k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
