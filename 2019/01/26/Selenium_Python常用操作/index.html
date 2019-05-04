@@ -108,21 +108,21 @@
 
 
 
-<meta name="description" content="自2016年开始接触 web 自动化测试工具 selenium 以来，在网上查阅了很多相关的资料，购买了 selenium 的书籍和视频，在工作中也使用过 selenium ，目前已经能够熟练地使用 Python 及 Java 语言操作 selenium了。这篇笔记用来对 selenium 的一些基本操作进行一个总结。  安装selenium3使用 selenium 之前，需要准备好相应的环境">
+<meta name="description" content="写这篇笔记是用来对 selenium 的一些基本操作进行一个总结。  提示：文中的图片点击可放大 安装selenium3使用 selenium 之前，需要准备好相应的环境：安装 Python（我使用的是Python 3.7），安装 Python 的编辑器（我使用的是eclipse），安装Python 的 selenium 库（可以通过 pip 安装：pip3 install selenium）">
 <meta name="keywords" content="Selenium, Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Selenium Python常用操作">
 <meta property="og:url" content="http://wysh.site/2019/01/26/Selenium_Python常用操作/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="自2016年开始接触 web 自动化测试工具 selenium 以来，在网上查阅了很多相关的资料，购买了 selenium 的书籍和视频，在工作中也使用过 selenium ，目前已经能够熟练地使用 Python 及 Java 语言操作 selenium了。这篇笔记用来对 selenium 的一些基本操作进行一个总结。  安装selenium3使用 selenium 之前，需要准备好相应的环境">
+<meta property="og:description" content="写这篇笔记是用来对 selenium 的一些基本操作进行一个总结。  提示：文中的图片点击可放大 安装selenium3使用 selenium 之前，需要准备好相应的环境：安装 Python（我使用的是Python 3.7），安装 Python 的编辑器（我使用的是eclipse），安装Python 的 selenium 库（可以通过 pip 安装：pip3 install selenium）">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-ff9dca61971bf04e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-91541215f95b41b8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-e448b163c6394fc6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-26T15:42:10.000Z">
+<meta property="og:updated_time" content="2019-05-04T16:44:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Selenium Python常用操作">
-<meta name="twitter:description" content="自2016年开始接触 web 自动化测试工具 selenium 以来，在网上查阅了很多相关的资料，购买了 selenium 的书籍和视频，在工作中也使用过 selenium ，目前已经能够熟练地使用 Python 及 Java 语言操作 selenium了。这篇笔记用来对 selenium 的一些基本操作进行一个总结。  安装selenium3使用 selenium 之前，需要准备好相应的环境">
+<meta name="twitter:description" content="写这篇笔记是用来对 selenium 的一些基本操作进行一个总结。  提示：文中的图片点击可放大 安装selenium3使用 selenium 之前，需要准备好相应的环境：安装 Python（我使用的是Python 3.7），安装 Python 的编辑器（我使用的是eclipse），安装Python 的 selenium 库（可以通过 pip 安装：pip3 install selenium）">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-ff9dca61971bf04e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -444,7 +444,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6,385
+                  6,329
                 </span>
               
 
@@ -482,8 +482,9 @@
 
       
         <blockquote>
-<p> 自2016年开始接触 web 自动化测试工具 selenium 以来，在网上查阅了很多相关的资料，购买了 selenium 的书籍和视频，在工作中也使用过 selenium ，目前已经能够熟练地使用 Python 及 Java 语言操作 selenium了。这篇笔记用来对 selenium 的一些基本操作进行一个总结。</p>
+<p> 写这篇笔记是用来对 selenium 的一些基本操作进行一个总结。</p>
 </blockquote>
+<p><strong><em>提示：文中的图片点击可放大</em></strong></p>
 <h3 id="安装selenium3"><a href="#安装selenium3" class="headerlink" title="安装selenium3"></a>安装selenium3</h3><p>使用 selenium 之前，需要准备好相应的环境：安装 Python（我使用的是Python 3.7），安装 Python 的编辑器（我使用的是eclipse），安装Python 的 selenium 库（可以通过 pip 安装：pip3 install selenium），因为 selenium 是驱动浏览器进行自动化测试的，所有还要准备好浏览器及其驱动（我使用的浏览器是Chrome，驱动是Chromedriver），同时浏览器驱动的版本要和浏览器的版本对应。</p>
 <p>这些网上很容易就能查的到，不做详述。</p>
 <p>基本的环境都准备好了之后，可以通过下面的代码进行测试：<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium import webdriver</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">driver</span> = webdriver.Chrome()</span><br><span class="line"><span class="built_in">driver</span>.get(<span class="string">'http://www.wysh.site'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="built_in">driver</span>.title)</span><br><span class="line"></span><br><span class="line"><span class="built_in">driver</span>.quit()</span><br></pre></td></tr></table></figure></p>

@@ -108,19 +108,19 @@
 
 
 
-<meta name="description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta name="description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  提示：文中的图片点击可放大 背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数">
 <meta name="keywords" content="MongoDB, Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据测试之异常数据识别">
 <meta property="og:url" content="http://wysh.site/2019/04/05/大数据测试之异常数据识别/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Home">
-<meta property="og:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta property="og:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  提示：文中的图片点击可放大 背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-eb3e972eeaa1293b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-05T14:14:26.000Z">
+<meta property="og:updated_time" content="2019-05-04T16:40:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据测试之异常数据识别">
-<meta name="twitter:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些">
+<meta name="twitter:description" content="从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效  提示：文中的图片点击可放大 背景介绍对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-eb3e972eeaa1293b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,958
+                  2,970
                 </span>
               
 
@@ -482,6 +482,7 @@
         <blockquote>
 <p>从去年开始就一直在参与公司爬虫和大数据项目的测试，测试的对象主要是数据：测试爬虫爬取的数据的准确性、完整性、一致性、惟一性、适时性等，使用的测试方法有很多，这篇文章记录了我通过Python脚本对MongoDB数据库中的异常数据进行识别的一些操作，自认为写的还算简单高效</p>
 </blockquote>
+<p><strong><em>提示：文中的图片点击可放大</em></strong></p>
 <h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><p>对于已经入库的数据（比如 MongoDB、ElasticSearch中的数据），为了验证数据的正确性，我们可以借助一些数据库的客户端工具(比如：MongoDB 的 NoSQLBooster，ElasticSearch 的 Kibana)，通过手工查询是否存在异常数据，但通常数据库中会有很多表、每个表有很多个字段，每个字段都要从多个维度（比如是否为空，字段是否缺失，是否存在异常字符等）进行验证，工作量会很大</p>
 <p>对于那些普遍的、基本的验证操作，我们可以通过 Python 操作对应的数据库，通过脚本的方式进行验证，这样可以大大加快测试的速度</p>
 <h3 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h3><p>本文通过 Python 代码，对 MongoDB 数据库中的数据进行了以下几方面的验证：</p>
