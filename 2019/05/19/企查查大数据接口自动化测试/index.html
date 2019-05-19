@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+  <meta name="baidu-site-verification" content="Mvrbc3hoBS" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="true" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/xin32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/xin16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="requests, Jenkins, 接口, 自动化测试" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Vincent's Home" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="近期在测试公司的大数据接口开放平台，原型及设计都是参照企查查的大数据接口平台（简直就是企查查的翻版，不过目前功能还没有企查查强大），针对公司的大数据接口开放平台，我自己设计了一套接口自动化测试框架。在这篇文章里，我把那套框架重新运用到对企查查大数据接口的自动化测试上  提示：文中的图片点击可放大  代码已上传至我的 Github ，在代码中，我加入了详尽的注释：  Github 代码路径">
+<meta name="keywords" content="requests, Jenkins, 接口, 自动化测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="接口自动化测试（基于企查查大数据接口）">
+<meta property="og:url" content="http://wysh.site/2019/05/19/企查查大数据接口自动化测试/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Home">
+<meta property="og:description" content="近期在测试公司的大数据接口开放平台，原型及设计都是参照企查查的大数据接口平台（简直就是企查查的翻版，不过目前功能还没有企查查强大），针对公司的大数据接口开放平台，我自己设计了一套接口自动化测试框架。在这篇文章里，我把那套框架重新运用到对企查查大数据接口的自动化测试上  提示：文中的图片点击可放大  代码已上传至我的 Github ，在代码中，我加入了详尽的注释：  Github 代码路径">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-ea8abe3ae80dcb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-7628d9d574f5dfad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3698b79dc85f31e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3a4adfd24c5b5359.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-7ae8af0264cb63f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-fa701bbce402c724.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-ab55622d176b5942.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-67562ef607e8a97a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-87166bcc649fb238.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-5243e80ded5f35a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-69fa2d6bcbaac272.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-9e8c31ce09e95d86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-41e45c6c143399af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-f73c5a10833a5eb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-3a677de33f669df1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12273007-0bc1d8cfc3f8a0fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-05-19T07:31:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="接口自动化测试（基于企查查大数据接口）">
+<meta name="twitter:description" content="近期在测试公司的大数据接口开放平台，原型及设计都是参照企查查的大数据接口平台（简直就是企查查的翻版，不过目前功能还没有企查查强大），针对公司的大数据接口开放平台，我自己设计了一套接口自动化测试框架。在这篇文章里，我把那套框架重新运用到对企查查大数据接口的自动化测试上  提示：文中的图片点击可放大  代码已上传至我的 Github ，在代码中，我加入了详尽的注释：  Github 代码路径">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12273007-ea8abe3ae80dcb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wysh.site/2019/05/19/企查查大数据接口自动化测试/"/>
+
+
+
+
+
+  <title>接口自动化测试（基于企查查大数据接口） | Vincent's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/wuyongsheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vincent's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎访问！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音乐">
+          <a href="/music" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            音乐
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wysh.site/2019/05/19/企查查大数据接口自动化测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="吴勇胜（Vincent）">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">接口自动化测试（基于企查查大数据接口）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-19T15:02:34+08:00">
+                2019-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/requests/" itemprop="url" rel="index">
+                    <span itemprop="name">requests</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/requests/自动化测试/" itemprop="url" rel="index">
+                    <span itemprop="name">自动化测试</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/requests/自动化测试/接口/" itemprop="url" rel="index">
+                    <span itemprop="name">接口</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,226
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 近期在测试公司的大数据接口开放平台，原型及设计都是参照企查查的大数据接口平台（简直就是企查查的翻版，不过目前功能还没有企查查强大），针对公司的大数据接口开放平台，我自己设计了一套接口自动化测试框架。在这篇文章里，我把那套框架重新运用到对企查查大数据接口的自动化测试上</p>
+</blockquote>
+<p><strong><em>提示：文中的图片点击可放大</em></strong></p>
+<ul>
+<li>代码已上传至我的 Github ，在代码中，我加入了详尽的注释：</li>
+</ul>
+<p><a href="https://github.com/wuyongsheng/interface_auto_test_qichacha" target="_blank" rel="noopener">Github 代码路径 </a></p>
+<ul>
+<li>之前也写过 2 篇关于接口自动化测试的文章，在文章列表中可以找的到，分别是用 Python 的 requests 库和 jmeter 作为测试工具的</li>
+</ul>
+<h3 id="接口自动化测试框架的功能介绍"><a href="#接口自动化测试框架的功能介绍" class="headerlink" title="接口自动化测试框架的功能介绍"></a>接口自动化测试框架的功能介绍</h3><ol>
+<li>使用Python 的 requests 库作为接口测试工具（Python 的 requests 库非常强大，可以作为接口测试工具，也可以作为爬虫获取网页数据的工具，同时开源性能测试工具 Locust 也是使用 requests 库对待测接口进行压力测试的）</li>
+<li>使用 yaml 文件作为参数的配置文件（在公司搭建测试环境时，经常会使用 yaml 文件作为配置文件，yaml 和 python 一样简洁高效，二者的组合简直就是 perfect，CSDN 上的这篇文章介绍了 yaml 及 如何用 Python 操作 yaml：<a href="https://blog.csdn.net/lmj19851117/article/details/78843486" target="_blank" rel="noopener">yaml 介绍的链接</a>）</li>
+<li>完全实现了参数化及数据驱动：所有的数据都写在 yaml 文件中，实现了代码与数据的分离。可同时对任意多个不同的接口以及同一个接口的不同用户输入进行自动化测试，需要新增测试的接口或新增用户输入参数时，只需将相应的参数加入到 yaml 文件即可</li>
+<li>使用 unittest 作为单元测试框架，使用 HTMLTestRunner 对生成的测试报告进行美化</li>
+<li>使用 jenkins 作为持续集成工具，可手工启动 jenkins 进行构建，或在 jenkins 中设置定时执行</li>
+<li>测试执行完成并生成测试报告后，通过邮件将测试报告发送给指定的接收人</li>
+</ol>
+<h3 id="企查查接口的介绍"><a href="#企查查接口的介绍" class="headerlink" title="企查查接口的介绍"></a>企查查接口的介绍</h3><h4 id="申请接口"><a href="#申请接口" class="headerlink" title="申请接口"></a>申请接口</h4><p>要对企查查接口进行自动化测试，首先必须对其有所了解，我们通过手机号注册企查查开放接口平台后，可以申请企查查的接口并免费使用指定的次数，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-ea8abe3ae80dcb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="申请企查查接口.png"></p>
+<p>申请的每个接口都有一定的免费使用测试</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-7628d9d574f5dfad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="免费使用次数.png"></p>
+<h4 id="通过页面调用接口"><a href="#通过页面调用接口" class="headerlink" title="通过页面调用接口"></a>通过页面调用接口</h4><p>我们点击上图某一已申请接口的调用测试链接，会进入接口调用页面，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-3698b79dc85f31e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="页面请求png.png"></p>
+<p>在页面的左下方输入请求参数，点击“调用新街口”按钮，页面的右上方会显示请求参数，右下方会显示响应参数</p>
+<h3 id="接口参数及调用介绍"><a href="#接口参数及调用介绍" class="headerlink" title="接口参数及调用介绍"></a>接口参数及调用介绍</h3><p>上面介绍的是通过页面对接口进行调用，下面进入正题：使用 Python 自动化测试框架调用接口</p>
+<p>在介绍自动化测试框架之前，我们必须对待测的接口有所了解，企查查在页面上对每一个接口都有详细非介绍，可以作为我们的需求文档，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-3a4adfd24c5b5359.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="接口参数png.png"></p>
+<p>响应参数的错误码：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-7ae8af0264cb63f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="错误码.png"></p>
+<p>通过上面接口详情页面对接口的介绍，我们可以得到接口的  URL、接口的权限验证、输入参数、输出参数、错误码等信息，这些参数可以作为我们设计用例的依据</p>
+<h3 id="测试框架代码的介绍"><a href="#测试框架代码的介绍" class="headerlink" title="测试框架代码的介绍"></a>测试框架代码的介绍</h3><p>测试框架代码的目录结构如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-fa701bbce402c724.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目目录结果.png"></p>
+<ol>
+<li>case目录</li>
+</ol>
+<ul>
+<li>run.py：脚本执行的入口</li>
+<li>test_case.py：存放测试用例的目录</li>
+</ul>
+<ol start="2">
+<li>conf目录</li>
+</ol>
+<ul>
+<li>conf.yal：接口参数的配置文件，存放测试数据</li>
+<li>setting.py：存放系统中各个模块的路径</li>
+</ul>
+<ol start="3">
+<li>report目录：</li>
+</ol>
+<p>存放生成的测试报告</p>
+<ol start="4">
+<li>util 目录：</li>
+</ol>
+<ul>
+<li>get_request_parameters.py：获取yaml文件中存放的接口参数，用来进行参数化</li>
+</ul>
+<ol start="5">
+<li>HTMLTestRunner.py：</li>
+</ol>
+<p>用来对unittest 生成的报告进行美化</p>
+<ol start="6">
+<li>send_email.py：</li>
+</ol>
+<p>将生成的测试报告发送给指定的接收人</p>
+<ul>
+<li>通过前面的介绍，我们知道，在页面上调用接口时，只需要在输入框填写参数，然后点击“调用新接口”按钮即可成功调用接口，但是通过代码调用接口时，必须把所有的参数准备好，下面介绍接口的请求参数</li>
+</ul>
+<h3 id="权限验证"><a href="#权限验证" class="headerlink" title="权限验证"></a>权限验证</h3><p>一般接口在设计时，都会给接口添加相应的访问权限，如果没有权限调用，任何人都可以调用高接口。企查查的接口也有权限验证，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-ab55622d176b5942.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="权限验证.png"></p>
+<ul>
+<li><p>从上图我们可以得知，在接口请求的 URL 中，除了用户输入的请求参数外，我们还需要带上权限验证的参数，上图要求我们 通过 http header 头的方式传统 Token ：验证加密值（key+Timespan+SecretKey组成的32位md5加密的大写字符串）和 Timespan：精确到秒的Unix时间戳 这两个参数</p>
+</li>
+<li><p>如果我们在请求参数中不带上包含这两个参数的 header，请求就会被拦截，进而请求失败</p>
+</li>
+</ul>
+<p>下面是用来生成请求参数的 header 的代码，在 util.get_request_parameters.py 文件中写了生成权限验证的<br>代码，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取时间戳</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_time_tup</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">""" :return: 13位精确到秒的时间戳</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    time_tup = str(int(time.time()))</span><br><span class="line">    <span class="keyword">return</span> time_tup</span><br><span class="line"></span><br><span class="line"><span class="comment"># md5加密</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_md5</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :param s: 拼接的字符串</span></span><br><span class="line"><span class="string">    :return: md5加密再转化为大写的字符串</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    new_md5 = md5()</span><br><span class="line">    new_md5.update(s.encode(encoding=<span class="string">'utf-8'</span>))</span><br><span class="line">    s_md5 = new_md5.hexdigest().upper()</span><br><span class="line">    <span class="keyword">return</span>  s_md5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置请求头</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_headers</span><span class="params">(key, screat_key)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :param key: 我的key</span></span><br><span class="line"><span class="string">    :param screat_key: 我的密钥</span></span><br><span class="line"><span class="string">    :return: 请求头</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    headers = dict()</span><br><span class="line">    token = key + get_time_tup() + screat_key</span><br><span class="line">    headers[<span class="string">"Token"</span>] = set_md5(token)</span><br><span class="line">    headers[<span class="string">"Timespan"</span>] = get_time_tup()</span><br><span class="line">    <span class="keyword">return</span> headers</span><br></pre></td></tr></table></figure>
+<h3 id="参数化"><a href="#参数化" class="headerlink" title="参数化"></a>参数化</h3><ul>
+<li>测试过程中，我们需要使用不同的请求参数对接口进行测试，这时候就需要对这些参数进行参数化，我使用的是 nose-parameterized（一个针对Python单元测试框架实现参数化的扩展）来进行参数化的，需要 pip install 一下相应的安装包。如下的链接介绍了nose-parameterized 的使用：<a href="https://www.cnblogs.com/royfans/p/7226360.html" target="_blank" rel="noopener">nose-parameterized 介绍的链接</a></li>
+<li>nose-parameterized 参数化的具体使用，我在代码中有详尽的注释</li>
+</ul>
+<h3 id="测试用例的设计"><a href="#测试用例的设计" class="headerlink" title="测试用例的设计"></a>测试用例的设计</h3><ul>
+<li><p>设计了针对如下4个接口的的自动化测试： 企查查的企业对外投资接口（3个用例）、企业对外投资穿透接口（2个用例）、受益人穿透接口（2个用例）、企业人员董监高信息（1个接口），共8个接口<br>如下图：<br><img src="https://upload-images.jianshu.io/upload_images/12273007-67562ef607e8a97a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="测试的接口.png"></p>
+</li>
+<li><p>在设计测试用例时，为了测试方便起见，只对接口返回的 http 响应状态码进行验证（也可以对多个其他的字段进行验证）</p>
+<h3 id="Jenkins-构建"><a href="#Jenkins-构建" class="headerlink" title="Jenkins 构建"></a>Jenkins 构建</h3><p>构建的过程如下：<br>1、首先得在 jenkins 里面新建一个项目，输入项目名称，选择构建一个自由风格的软件项目，再点击确定，如下图所示：</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-87166bcc649fb238.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建一个自由风格的任务.png"></p>
+<p>2、接着，在构建里面填上添加 Windows 批处理命令，然后点击确定，如下：<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator<span class="symbol">\e</span>clipse-workspace1<span class="symbol">\q</span>ichacha_interface_auto_test<span class="symbol">\c</span>ase</span><br><span class="line">C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator<span class="symbol">\A</span>ppData<span class="symbol">\L</span>ocal<span class="symbol">\P</span>rograms<span class="symbol">\P</span>ython<span class="symbol">\P</span>ython37-32<span class="symbol">\p</span>ython.exe  run.py</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-5243e80ded5f35a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="windows批处理.png"></p>
+<p>3、在jenkins 中找保存成功的项目，点击立即构建。构建完成后，发现构建失败了，报错信息如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> <span class="keyword">last</span>):</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"run.py"</span>, line <span class="number">3</span>, <span class="keyword">in</span> &lt;<span class="keyword">module</span>&gt;</span><br><span class="line">    <span class="keyword">from</span> util.HTMLTestRunner <span class="keyword">import</span> HTMLTestRunner</span><br><span class="line">ModuleNotFoundError: <span class="keyword">No</span> <span class="keyword">module</span> named <span class="string">'util'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="截图如下："><a href="#截图如下：" class="headerlink" title="截图如下："></a>截图如下：</h2><p>layout: post<br>title: 接口自动化测试（基于企查查大数据接口）<br>top: 70<br>keywords: ‘Selenium, Python’<br>categories:</p>
+<ul>
+<li>Selenium</li>
+<li>自动化测试</li>
+<li>Python<br>tags: Selenium<br>abbrlink: 7084<br>date: 2019-02-15 00:54:14</li>
+</ul>
+<hr>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-69fa2d6bcbaac272.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="找不到模块.png"></p>
+<p>但是，在eclipse 中运行时，没有报错</p>
+<ul>
+<li>产生的原因：</li>
+</ul>
+<p>IDE运行时，会搜索全部相关的模块；而通过Jenkins来配置时，则只会搜索当前目录下的模块</p>
+<ul>
+<li>解决的方法<br>配置Jenkins的环境变量 PYTHONPATH，值为该 Python 工程的路径，如下：<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator<span class="symbol">\e</span>clipse-workspace1<span class="symbol">\q</span>ichacha_interface_auto_test</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-9e8c31ce09e95d86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="全局环境变量.png"></p>
+<h3 id="构建日志"><a href="#构建日志" class="headerlink" title="构建日志"></a>构建日志</h3><p>添加了Jenkins的环境变量 PYTHONPATH 后，就可以构建成功了，构建的日志如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-41e45c6c143399af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建日志.png"></p>
+<h3 id="生成的测试报告"><a href="#生成的测试报告" class="headerlink" title="生成的测试报告"></a>生成的测试报告</h3><p>生成的测试报告如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-f73c5a10833a5eb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="报告测试结果汇总.png"></p>
+<p>点击测试报告中的 pass 或 fail 链接，会显示测试执行的详情信息，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-3a677de33f669df1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="报告错误的详情.png"></p>
+<h3 id="邮件通知"><a href="#邮件通知" class="headerlink" title="邮件通知"></a>邮件通知</h3><p>生成测试报告后，会自动将生成的测试报告发送给指定的接收人，邮件如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/12273007-0bc1d8cfc3f8a0fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="邮件png.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+	
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吴勇胜（Vincent）
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysh.site/2019/05/19/企查查大数据接口自动化测试/" title="接口自动化测试（基于企查查大数据接口）">http://wysh.site/2019/05/19/企查查大数据接口自动化测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	<div>
+	
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读------------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自动化测试/" rel="tag"> <i class="fa fa-tag"></i> 自动化测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/27/python爬虫：爬取自己个人网站的所有文章/" rel="next" title="python爬虫：爬取自己个人网站的所有文章">
+                <i class="fa fa-chevron-left"></i> python爬虫：爬取自己个人网站的所有文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTkwNi8xMjQ0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="吴勇胜（Vincent）" />
+            
+              <p class="site-author-name" itemprop="name">吴勇胜（Vincent）</p>
+              <p class="site-description motion-element" itemprop="description">本网站用于整理个人学习笔记，发布日记，杂文，所见所想，By：吴勇胜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+          </nav>
+		  
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2204722853&auto=0&height=32"></iframe>
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyongsheng" target="_blank" title="我的 GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>我的 GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1025362683@qq.com" target="_blank" title="我的 E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>我的 E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                常用网站
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.runoob.com/" title="菜鸟教程" target="_blank">菜鸟教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.csdn.net/" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.w3school.com.cn/" title="w3school" target="_blank">w3school</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51cto.com/" title="51CTO" target="_blank">51CTO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.oschina.net/" title="开源中国" target="_blank">开源中国</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口自动化测试框架的功能介绍"><span class="nav-number">1.</span> <span class="nav-text">接口自动化测试框架的功能介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#企查查接口的介绍"><span class="nav-number">2.</span> <span class="nav-text">企查查接口的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#申请接口"><span class="nav-number">2.1.</span> <span class="nav-text">申请接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过页面调用接口"><span class="nav-number">2.2.</span> <span class="nav-text">通过页面调用接口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口参数及调用介绍"><span class="nav-number">3.</span> <span class="nav-text">接口参数及调用介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试框架代码的介绍"><span class="nav-number">4.</span> <span class="nav-text">测试框架代码的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限验证"><span class="nav-number">5.</span> <span class="nav-text">权限验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数化"><span class="nav-number">6.</span> <span class="nav-text">参数化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试用例的设计"><span class="nav-number">7.</span> <span class="nav-text">测试用例的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins-构建"><span class="nav-number">8.</span> <span class="nav-text">Jenkins 构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截图如下："><span class="nav-number"></span> <span class="nav-text">截图如下：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建日志"><span class="nav-number">1.</span> <span class="nav-text">构建日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成的测试报告"><span class="nav-number">2.</span> <span class="nav-text">生成的测试报告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮件通知"><span class="nav-number">3.</span> <span class="nav-text">邮件通知</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吴勇胜（Vincent）</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">106.7k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/wuyongsheng">wuyongsheng</a></div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共106.7k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6"  zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":120,"height":240,"position":"right","bottom":-200,"hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.1},"react":{"opacityDefault":0.4,"opacityOnHover":0.2}});</script></body>
+</html>
